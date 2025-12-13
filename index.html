@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <title>Osaka Slow Journal｜大阪五日慢旅行手帳</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <title>Osaka 5-Day Timeline · Slow Travel Journal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 可選：如果你想要更穩定的中文字體，可以啟用這行（但不是必須）
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+  -->
   <style>
     :root {
-      --bg-paper: #f6f0e6;
-      --bg-inner: #fdfaf4;
+      --bg-body: #f2ebe0;
+      --bg-card: #fdf8ee;
+      --bg-hero: #f7efe3;
+      --bg-chip: #fffaf4;
       --ink-main: #2b2117;
       --ink-muted: #7a6a57;
-      --ink-accent: #b07b4a;
+      --ink-soft: #a28f78;
+      --ink-accent: #b2743f;
       --border-soft: #e0d4c4;
+      --border-strong: #c3ac8e;
       --accent: #c48a54;
+      --accent-soft: rgba(196, 138, 84, 0.12);
+      --shadow-soft: 0 10px 25px rgba(56, 44, 33, 0.18);
+      --radius-card: 18px;
     }
 
     * {
@@ -25,8 +34,9 @@
     html, body {
       margin: 0;
       padding: 0;
-      font-family: "Noto Serif TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", serif;
-      background: var(--bg-paper);
+      background: radial-gradient(circle at top, #f7efe4 0, #f2ebe0 40%, #ecdfcf 90%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Serif TC",
+        "Segoe UI", sans-serif;
       color: var(--ink-main);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
@@ -34,69 +44,62 @@
 
     body {
       min-height: 100vh;
-      padding: 16px 12px 80px;
+      padding: 14px 10px 84px;
     }
 
-    .journal-shell {
+    @media (min-width: 768px) {
+      body {
+        display: flex;
+        justify-content: center;
+        padding: 28px 20px 104px;
+      }
+    }
+
+    .app-shell {
+      width: 100%;
       max-width: 960px;
       margin: 0 auto;
-      background: var(--bg-inner);
-      border-radius: 18px;
-      border: 1px solid rgba(156, 136, 111, 0.35);
+      background: var(--bg-card);
+      border-radius: 24px;
+      border: 1px solid rgba(156, 136, 111, 0.4);
       box-shadow:
-        0 20px 40px rgba(88, 70, 48, 0.18),
-        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
-      padding: 24px 22px 90px;
+        0 28px 60px rgba(74, 55, 36, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+      padding: 18px 14px 96px;
       position: relative;
       overflow: hidden;
     }
 
     @media (min-width: 768px) {
-      body {
-        padding: 32px 16px 96px;
-      }
-      .journal-shell {
-        padding: 32px 40px 96px;
-        border-radius: 22px;
+      .app-shell {
+        padding: 22px 24px 110px;
       }
     }
 
-    .journal-shell::before {
+    .app-shell::before {
       content: "";
       position: absolute;
-      inset: 0;
+      inset: -12%;
       background-image:
-        linear-gradient(transparent 0, rgba(255, 255, 255, 0.4) 2px, transparent 4px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 3px);
-      background-size: 100% 36px, 40px 100%;
-      opacity: 0.38;
+        linear-gradient(transparent 0, rgba(255, 255, 255, 0.45) 2px, transparent 4px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 3px),
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.4), transparent 55%);
+      background-size: 100% 32px, 36px 100%, 100% 100%;
+      opacity: 0.5;
       mix-blend-mode: soft-light;
       pointer-events: none;
     }
 
-    .journal-inner {
+    .app-inner {
       position: relative;
       z-index: 1;
     }
 
-    .section {
-      display: none;
-      animation: fadeIn 320ms ease-out;
-    }
-
-    .section-active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
     }
 
     h1, h2, h3, h4 {
@@ -108,495 +111,496 @@
     p {
       margin: 0 0 0.8em;
       line-height: 1.7;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
     }
 
-    .eyebrow {
-      font-size: 0.78rem;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
+    /* HERO */
+
+    .hero {
+      background:
+        radial-gradient(circle at top left, #fdf5e7 0, #f8efe1 40%, #f2e5d4 100%);
+      border-radius: 20px;
+      padding: 16px 14px 10px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 18px 40px rgba(60, 42, 27, 0.18),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        padding: 20px 20px 14px;
+        margin-bottom: 22px;
+      }
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(255, 255, 255, 0.7), transparent 60%),
+        radial-gradient(circle at 90% 100%, rgba(198, 149, 96, 0.22), transparent 55%);
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 640px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-main {
+      position: relative;
+      padding-right: 4px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.25rem, 4.2vw, 1.7rem);
+      margin-top: 6px;
+    }
+
+    .hero-subtitle {
+      font-size: 0.9rem;
       color: var(--ink-muted);
+      margin-top: 6px;
+    }
+
+    .hero-date-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+      align-items: center;
+    }
+
+    .hero-date {
+      font-weight: 500;
+      color: var(--ink-main);
+    }
+
+    .hero-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hero-location span:first-child {
+      font-size: 0.96rem;
+    }
+
+    .hero-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 3px 10px 4px;
+      padding: 4px 11px;
       border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.06);
-      background: rgba(255, 255, 255, 0.8);
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background: rgba(255, 255, 255, 0.92);
+      font-size: 0.78rem;
       color: var(--ink-muted);
+      box-shadow:
+        0 1px 3px rgba(90, 68, 44, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
     }
 
-    .pill-dot {
-      width: 5px;
-      height: 5px;
+    .pill-icon {
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
       background: var(--accent);
+      flex-shrink: 0;
     }
 
-    .cover-heading {
-      text-align: center;
-      padding: 48px 8px 8px;
-    }
-
-    .cover-title {
-      font-size: clamp(1.9rem, 4vw, 2.3rem);
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      margin-top: 6px;
-      margin-bottom: 10px;
-    }
-
-    .cover-subtitle {
-      max-width: 540px;
-      margin: 0.5rem auto 0.75rem;
-      font-size: 0.95rem;
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(255, 252, 246, 0.9);
+      border: 1px solid rgba(150, 128, 101, 0.6);
+      font-size: 0.76rem;
       color: var(--ink-muted);
     }
 
-    .cover-meta {
-      font-size: 0.8rem;
-      color: var(--ink-muted);
-      margin-top: 0.75rem;
-    }
-
-    .cover-tagline {
-      margin-top: 1.5rem;
+    .chip-icon {
       font-size: 0.9rem;
-      color: var(--ink-accent);
     }
 
-    .cover-image-band {
-      margin-top: 26px;
-      border-radius: 18px;
-      overflow: hidden;
-      position: relative;
-      background: radial-gradient(circle at top, #e1d6c5 0, #d5c7b1 26%, #cbbfab 60%, #c0b39e 100%);
-      height: 190px;
-    }
-
-    @media (min-width: 768px) {
-      .cover-image-band {
-        height: 220px;
-      }
-    }
-
-    .cover-image-band::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(120deg, rgba(255, 255, 255, 0.32), transparent 35%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0.28));
-      mix-blend-mode: soft-light;
-    }
-
-    .cover-image-band-inner {
-      position: absolute;
-      inset: 18px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.65);
-      box-shadow:
-        0 12px 30px rgba(60, 42, 27, 0.25),
-        0 0 0 1px rgba(158, 138, 112, 0.16);
-      overflow: hidden;
+    .hero-weather {
       display: flex;
-      align-items: stretch;
-      gap: 0;
+      align-items: center;
+      gap: 8px;
+      margin-top: 11px;
+      font-size: 0.86rem;
+      color: var(--ink-muted);
     }
 
-    .cover-image-band-photo {
-      flex: 2;
-      background-image: url("https://commons.wikimedia.org/wiki/Special:FilePath/Sunset_%40_Osaka_Bay_(13381942235).jpg");
-      background-size: cover;
-      background-position: center center;
-      filter: saturate(1.05) contrast(1.02);
+    .hero-weather-temp {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ink-main);
     }
 
-    .cover-image-band-info {
-      flex: 1.4;
-      padding: 16px 16px 14px;
-      background: linear-gradient(145deg, rgba(27,21,14,0.9), rgba(41,31,20,0.94));
+    .hero-weather-desc {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hero-secondary {
+      border-radius: 16px;
+      padding: 11px 11px 9px;
+      background: radial-gradient(circle at top left, #302218, #1f1811);
       color: #f9f3ea;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-    }
-
-    .cover-image-band-info h3 {
-      font-size: 0.9rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .cover-image-band-info p {
-      font-size: 0.78rem;
-      margin-bottom: 4px;
-      color: rgba(249,243,234,0.82);
-    }
-
-    .cover-image-band-info small {
-      font-size: 0.72rem;
-      color: rgba(249,243,234,0.68);
-    }
-
-    @media (max-width: 720px) {
-      .cover-image-band-inner {
-        inset: 14px 12px;
-      }
-      .cover-image-band-info {
-        padding: 12px 12px 11px;
-      }
-      .cover-image-band-info h3 {
-        font-size: 0.82rem;
-      }
-      .cover-image-band-info p {
-        font-size: 0.75rem;
-      }
-    }
-
-    .section-header {
-      margin-bottom: 24px;
-    }
-
-    .section-header h2 {
-      font-size: 1.2rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    .section-header p {
-      margin-top: 4px;
-      color: var(--ink-muted);
-      font-size: 0.9rem;
-    }
-
-    .index-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    @media (min-width: 720px) {
-      .index-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .index-card {
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--border-soft);
-      background: rgba(255, 255, 255, 0.8);
-      cursor: pointer;
-      transition: transform 140ms ease-out, box-shadow 140ms ease-out, border-color 140ms ease-out, background 140ms ease-out;
-    }
-
-    .index-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 18px rgba(40, 27, 16, 0.16);
-      border-color: rgba(196, 138, 84, 0.7);
-      background: #fffdf8;
-    }
-
-    .index-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
-    .index-card-day {
-      font-size: 0.88rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink-accent);
-    }
-
-    .index-card-date {
-      font-size: 0.78rem;
-      color: var(--ink-muted);
-      white-space: nowrap;
-    }
-
-    .index-card-title {
-      font-size: 1rem;
-      margin-bottom: 2px;
-    }
-
-    .index-card-mood {
-      font-size: 0.85rem;
-      color: var(--ink-muted);
-    }
-
-    .hero {
       position: relative;
-      width: 100%;
-      border-radius: 18px;
       overflow: hidden;
-      margin-bottom: 18px;
-      background: #222;
-      aspect-ratio: 16 / 9;
-      max-height: 420px;
-      display: flex;
+      box-shadow:
+        0 14px 36px rgba(32, 23, 15, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     }
 
-    .hero img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      flex: 1;
-      transform: scale(1.02);
-      filter: saturate(1.05) contrast(1.04);
-    }
-
-    .hero-overlay {
+    .hero-secondary::before {
+      content: "";
       position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        140deg,
-        rgba(8, 7, 5, 0.82) 0%,
-        rgba(18, 13, 8, 0.7) 28%,
-        rgba(28, 18, 10, 0.25) 55%,
-        rgba(0, 0, 0, 0.02) 100%
-      );
+      inset: -25%;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.26), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.5), transparent 70%);
+      mix-blend-mode: soft-light;
+      opacity: 1;
     }
 
-    .hero-content {
-      position: absolute;
-      inset: 18px 18px auto 18px;
-      max-width: 70%;
-      color: #fdf7ee;
+    .hero-secondary-inner {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       gap: 8px;
+      height: 100%;
     }
 
-    .hero-badges {
-      display: inline-flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .hero-badge {
-      padding: 2px 9px 3px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.35);
-      background: rgba(12, 8, 4, 0.6);
-      font-size: 0.7rem;
+    .hero-secondary h3 {
+      font-size: 0.86rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
+      margin-bottom: 4px;
     }
 
-    .hero-title {
-      font-size: clamp(1.2rem, 3vw, 1.6rem);
-      letter-spacing: 0.06em;
-      margin-top: 2px;
-    }
-
-    .hero-subtitle {
-      font-size: 0.86rem;
-      color: rgba(248,240,228,0.86);
-    }
-
-    .hero-meta {
-      font-size: 0.78rem;
-      color: rgba(248,240,228,0.78);
-      margin-top: 4px;
-    }
-
-    @media (max-width: 640px) {
-      .hero-content {
-        inset: 14px 14px auto 14px;
-        max-width: 100%;
-      }
-      .hero-title {
-        font-size: 1.1rem;
-      }
-      .hero-subtitle {
-        font-size: 0.8rem;
-      }
-      .hero-meta {
-        font-size: 0.74rem;
-      }
-    }
-
-    .day-meta-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 10px;
-      font-size: 0.82rem;
-      color: var(--ink-muted);
-    }
-
-    .day-meta-row span:nth-child(2) {
+    .hero-secondary p {
       font-size: 0.8rem;
-    }
-
-    .day-body {
-      margin-top: 6px;
-      margin-bottom: 20px;
-    }
-
-    .day-body p:last-child {
+      color: rgba(249, 243, 234, 0.86);
       margin-bottom: 0;
     }
 
-    .section-block {
-      margin-top: 20px;
-      padding-top: 12px;
-      border-top: 1px dashed rgba(153, 130, 100, 0.6);
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
     }
 
-    .section-block-heading {
-      font-size: 0.88rem;
-      letter-spacing: 0.2em;
+    .hero-tag {
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(249, 243, 234, 0.6);
+      font-size: 0.72rem;
       text-transform: uppercase;
-      color: var(--ink-accent);
-      margin-bottom: 10px;
+      letter-spacing: 0.16em;
+      color: rgba(249, 243, 234, 0.9);
+      background: rgba(0, 0, 0, 0.06);
     }
 
-    .flow-grid {
+    .hero-note {
+      font-size: 0.76rem;
+      color: rgba(249, 243, 234, 0.78);
+      margin-top: 4px;
+    }
+
+    /* SECTION HEADER */
+
+    .section-header {
+      margin: 10px 3px 10px;
+    }
+
+    .section-header h2 {
+      font-size: 1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .section-header p {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      margin-top: 4px;
+    }
+
+    /* TIMELINE */
+
+    .timeline {
+      margin-top: 6px;
+      padding-left: 6px;
+    }
+
+    .timeline-item {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      position: relative;
+      padding: 8px 0;
     }
 
-    @media (min-width: 720px) {
-      .flow-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+    .timeline-time {
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+      text-align: right;
+      width: 58px;
+      padding-right: 6px;
+      position: relative;
     }
 
-    .flow-card {
-      border-radius: 12px;
+    .timeline-dot {
+      position: absolute;
+      top: 13px;
+      right: -3px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 22px;
+      right: 1px;
+      bottom: -10px;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(176, 123, 74, 0.65), transparent 80%);
+    }
+
+    .timeline-card {
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.96);
       border: 1px solid var(--border-soft);
-      background: rgba(255,255,255,0.92);
-      padding: 10px 12px 11px;
+      padding: 9px 10px 9px;
+      box-shadow:
+        0 7px 16px rgba(48, 36, 24, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+      position: relative;
+      overflow: hidden;
     }
 
-    .flow-label {
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
+    .timeline-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.4),
+        transparent 40%,
+        transparent 60%,
+        rgba(255, 255, 255, 0.3)
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .timeline-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-card-title {
+      font-size: 0.96rem;
+      font-weight: 600;
+    }
+
+    .timeline-card-type {
+      font-size: 0.74rem;
       text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-soft);
+    }
+
+    .timeline-location {
+      font-size: 0.82rem;
       color: var(--ink-muted);
       margin-bottom: 4px;
     }
 
-    .flow-title {
-      font-size: 0.9rem;
-      margin-bottom: 3px;
+    .timeline-location a {
+      color: var(--ink-accent);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(176, 123, 74, 0.75);
     }
 
-    .flow-text {
-      font-size: 0.82rem;
+    .timeline-location a:hover {
+      opacity: 0.85;
+    }
+
+    .timeline-body {
+      font-size: 0.84rem;
+      color: var(--ink-main);
+      margin-bottom: 4px;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .timeline-tag {
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      font-size: 0.74rem;
+      color: var(--ink-accent);
+    }
+
+    .keyword-link {
+      color: var(--ink-accent);
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      cursor: pointer;
+    }
+
+    .keyword-link:hover {
+      opacity: 0.85;
+    }
+
+    /* TRIP CHEAT SHEET */
+
+    .overall-map {
+      margin-top: 18px;
+      padding: 11px 12px 13px;
+      border-radius: 17px;
+      border: 1px dashed rgba(153, 130, 100, 0.9);
+      background: rgba(255, 252, 246, 0.98);
+      font-size: 0.86rem;
       color: var(--ink-muted);
+      box-shadow:
+        0 10px 26px rgba(70, 50, 32, 0.18),
+        0 0 0 1px rgba(255, 255, 255, 0.9) inset;
     }
 
-    .scene-grid {
+    .overall-map h3 {
+      font-size: 0.92rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+      color: var(--ink-accent);
+    }
+
+    .cheat-intro {
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+    }
+
+    .cheat-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.2fr);
+      gap: 12px 18px;
+      margin-top: 6px;
     }
 
-    @media (min-width: 640px) {
-      .scene-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    @media (max-width: 640px) {
+      .cheat-grid {
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
-    .scene-box {
-      border-radius: 12px;
-      border: 1px dashed rgba(176, 123, 74, 0.6);
-      background: rgba(255, 252, 246, 0.96);
-      padding: 9px 11px;
-      font-size: 0.84rem;
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-    }
-
-    .scene-bullet {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      margin-top: 6px;
-      background: rgba(176, 123, 74, 1);
-      flex-shrink: 0;
-    }
-
-    .scene-text-eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
+    .cheat-section h4 {
+      font-size: 0.82rem;
+      margin: 0 0 4px;
+      color: var(--ink-main);
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--ink-muted);
+    }
+
+    .cheat-section p {
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+    }
+
+    .cheat-section ul {
+      margin: 0 0 4px 1.1em;
+      padding: 0;
+      list-style: disc;
+      font-size: 0.8rem;
+    }
+
+    .cheat-section li {
       margin-bottom: 2px;
     }
 
-    .scene-text {
-      font-size: 0.84rem;
-    }
-
-    .note-box {
-      border-radius: 12px;
-      border: 1px solid rgba(176, 123, 74, 0.68);
-      background: rgba(255, 248, 237, 0.96);
-      padding: 10px 12px;
-      font-size: 0.86rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .note-label {
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-accent);
-      white-space: nowrap;
-    }
-
-    .note-text {
-      font-size: 0.86rem;
-      color: var(--ink-main);
-    }
-
-    .map-placeholder {
-      border-radius: 16px;
-      border: 1px dashed rgba(153, 130, 100, 0.8);
-      padding: 14px 14px 16px;
-      background: rgba(255, 252, 246, 0.96);
-      font-size: 0.88rem;
-      color: var(--ink-muted);
-      margin-top: 10px;
-    }
-
-    .map-tags {
+    .map-pills {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 10px;
+      margin-top: 4px;
       font-size: 0.78rem;
     }
 
-    .map-tag {
+    .map-pill {
       padding: 3px 8px;
       border-radius: 999px;
-      border: 1px solid rgba(153, 130, 100, 0.5);
-      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(153, 130, 100, 0.6);
+      background: #fff;
       color: var(--ink-muted);
     }
+
+    .trip-mood-list {
+      margin: 4px 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0.8rem;
+    }
+
+    .trip-mood-list li {
+      margin-bottom: 2px;
+    }
+
+    /* BOTTOM NAV */
 
     .bottom-nav {
       position: fixed;
@@ -605,9 +609,9 @@
       bottom: 0;
       padding: 6px 10px 8px;
       background: linear-gradient(to top, rgba(245, 235, 220, 0.98), rgba(245, 235, 220, 0.92));
-      border-top: 1px solid rgba(150, 128, 101, 0.45);
-      backdrop-filter: blur(8px);
-      z-index: 10;
+      border-top: 1px solid rgba(150, 128, 101, 0.5);
+      backdrop-filter: blur(10px);
+      z-index: 20;
     }
 
     @media (min-width: 768px) {
@@ -627,16 +631,22 @@
 
     .bottom-nav-group {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
     }
 
-    .nav-button {
+    .bottom-nav-group::-webkit-scrollbar {
+      height: 0;
+    }
+
+    .nav-btn {
       border-radius: 999px;
-      border: 1px solid rgba(125, 103, 78, 0.55);
+      border: 1px solid rgba(125, 103, 78, 0.5);
       background: #fdf7ed;
-      padding: 6px 14px;
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
+      padding: 6px 10px;
+      font-size: 0.76rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: #4a3a29;
       cursor: pointer;
@@ -644,769 +654,1064 @@
       align-items: center;
       gap: 6px;
       box-shadow:
-        0 3px 6px rgba(100, 80, 55, 0.25),
-        0 0 0 1px rgba(255, 255, 255, 0.7) inset;
-      transition: transform 110ms ease-out, box-shadow 110ms ease-out, background 110ms ease-out;
+        0 3px 6px rgba(100, 80, 55, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+      white-space: nowrap;
+      background-image: linear-gradient(to bottom, #fffaf3, #f7efe3);
+      transition: transform 100ms ease-out, box-shadow 100ms ease-out,
+        background 100ms ease-out, border-color 100ms ease-out;
     }
 
-    .nav-button span {
-      font-size: 0.7rem;
-    }
-
-    .nav-button-dot {
+    .nav-btn-dot {
       width: 6px;
       height: 6px;
       border-radius: 999px;
       background: var(--accent);
     }
 
-    .nav-button:hover {
-      transform: translateY(-1px);
-      background: #fffaf3;
+    .nav-btn.active {
+      border-color: rgba(196, 138, 84, 0.9);
       box-shadow:
         0 5px 10px rgba(100, 80, 55, 0.28),
-        0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+        0 0 0 1px rgba(255, 255, 255, 0.95) inset;
+      background-image: linear-gradient(to bottom, #fffdf7, #f6ebdd);
     }
 
-    .nav-notes {
-      font-size: 0.78rem;
+    .nav-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .bottom-nav-note {
+      font-size: 0.76rem;
       color: var(--ink-muted);
       text-align: right;
       display: none;
     }
 
     @media (min-width: 768px) {
-      .nav-notes {
+      .bottom-nav-note {
         display: block;
       }
     }
 
-    .subtle {
+    /* MODAL */
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 20, 12, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal {
+      width: min(92vw, 420px);
+      max-height: 80vh;
+      background: #fdf9f2;
+      border-radius: 18px;
+      border: 1px solid rgba(156, 136, 111, 0.4);
+      box-shadow:
+        0 24px 55px rgba(0, 0, 0, 0.26),
+        0 0 0 1px rgba(255, 255, 255, 0.92) inset;
+      padding: 14px 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      transform: translateY(8px);
+      opacity: 0;
+      transition: opacity 140ms ease-out, transform 140ms ease-out;
+    }
+
+    .modal-backdrop.active .modal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modal-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .modal-badge {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .modal-close {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+    }
+
+    .modal-close:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .modal-body {
+      font-size: 0.86rem;
+      color: var(--ink-main);
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .modal-meta {
       font-size: 0.78rem;
       color: var(--ink-muted);
+      margin-bottom: 6px;
+    }
+
+    .modal-image {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      margin: 6px 0;
+    }
+
+    .modal-footer {
+      font-size: 0.76rem;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .modal-link {
+      color: var(--ink-accent);
+      text-decoration: underline;
+      text-decoration-style: dotted;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
   </style>
 </head>
 <body>
-  <div class="journal-shell">
-    <div class="journal-inner">
+  <div class="app-shell">
+    <div class="app-inner">
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-grid">
+          <div class="hero-main">
+            <div class="eyebrow">OSAKA · TRAVEL TIMELINE</div>
+            <h1 class="hero-title" id="hero-title">Day 1 · 抵達與初見</h1>
+            <p class="hero-subtitle" id="hero-subtitle">
+              從關西機場到難波，把第一天當成慢慢調整節奏的緩衝。
+            </p>
 
-      <section id="section-cover" class="section section-active">
-        <div class="cover-heading">
-          <div class="eyebrow">TRAVEL NOTEBOOK · WINTER 2025</div>
-          <h1 class="cover-title">OSAKA SLOW JOURNAL</h1>
-          <p class="cover-subtitle">
-            把大阪五天當成一本翻得出邊角的手帳，不追景點清單，只記下抵達、迷路、走慢一點時真正看到的風景。
-          </p>
-          <div class="cover-meta">
-            Dec 15 – Dec 19 · Osaka / Nara · Winter Slow Trip
-          </div>
-          <div class="cover-tagline">
-            「有些記憶，不必完整紀錄，只要在頁面上留下能被自己看懂的線索就好。」
-          </div>
-        </div>
+            <div class="hero-date-row">
+              <span class="hero-date" id="hero-date">2025 年 12 月 15 日 · Sun</span>
+              <span>｜</span>
+              <span class="hero-location" id="hero-location">
+                <span>📍</span><span>Osaka · Namba</span>
+              </span>
+            </div>
 
-        <div class="cover-image-band">
-          <div class="cover-image-band-inner">
-            <div class="cover-image-band-photo" aria-hidden="true"></div>
-            <div class="cover-image-band-info">
+            <div class="hero-pill-row">
+              <div class="pill">
+                <span class="pill-icon"></span>
+                <span id="hero-day-range">Day 1 of 5</span>
+              </div>
+              <div class="pill">
+                <span class="pill-icon"></span>
+                <span>Slow · Journal Mode</span>
+              </div>
+              <div class="chip">
+                <span class="chip-icon">🕒</span>
+                <span id="hero-today-label">今天 · OSAKA 時區</span>
+              </div>
+            </div>
+
+            <div class="hero-weather">
+              <span class="hero-weather-temp" id="hero-temp">--°C</span>
+              <span class="hero-weather-desc" id="hero-weather-desc">
+                載入天氣中…
+              </span>
+            </div>
+          </div>
+
+          <aside class="hero-secondary">
+            <div class="hero-secondary-inner">
               <div>
-                <h3>ARRIVAL OVER OSAKA BAY</h3>
-                <p>
-                  抵達關西機場前，機翼下是漸暗的海灣和橋。這一刻，旅程才真正開始。
+                <h3>旅程摘要</h3>
+                <p id="hero-summary">
+                  大阪五日慢旅行，以「一天一條主線」方式編排。滑動時間軸，就像翻閱旅行手帳，把每個地點與當下心情對起來。
                 </p>
+                <div class="hero-tags" id="hero-tags">
+                  <span class="hero-tag">OSAKA</span>
+                  <span class="hero-tag">NARA</span>
+                  <span class="hero-tag">5 DAYS</span>
+                </div>
               </div>
-              <div>
-                <small>Osaka Bay · Kansai International Airport (KIX)</small><br>
-                <small>Sunset @ Osaka Bay, Japan</small>
+              <div class="hero-note">
+                小提醒：點地點名稱可開啟 Google Maps，點航班號或飯店名會跳出詳細資訊；滑到底可以看到「旅程小抄」。
               </div>
             </div>
+          </aside>
+        </div>
+      </header>
+
+      <!-- SECTION HEADER -->
+      <section class="section-header">
+        <div class="eyebrow" id="day-eyebrow">DAY 01 · ARRIVAL</div>
+        <h2 id="day-title">TIME · LINE · DAY 1</h2>
+        <p id="day-caption">
+          以時間軸方式整理當天行程，左側是時間，右側是可以點擊互動的卡片。
+        </p>
+      </section>
+
+      <!-- TIMELINE -->
+      <main id="timeline" class="timeline" aria-label="當日旅程時間軸">
+        <!-- 由 JS 動態產生 -->
+      </main>
+
+      <!-- TRIP CHEAT SHEET -->
+      <section id="trip-cheat-sheet" class="overall-map">
+        <h3>旅程小抄 · TRIP CHEAT SHEET</h3>
+        <p class="cheat-intro">
+          不想翻找信箱或相簿時，只要滑到這裡，就能快速確認這趟大阪五日行的關鍵資訊。需要時再把文字改成實際資料即可。
+        </p>
+
+        <div class="cheat-grid">
+          <!-- 左欄：航班 + 住宿 + 交通 -->
+          <div class="cheat-section">
+            <h4>航班資訊 · FLIGHTS</h4>
+            <p>
+              去程：
+              <span class="keyword-link" data-modal-key="flight-jl812">
+                JL812（TPE → KIX）
+              </span>
+            </p>
+            <p>
+              回程：
+              <span class="keyword-link" data-modal-key="flight-jl815">
+                JL815（KIX → TPE）
+              </span>
+            </p>
+            <p style="font-size:0.78rem;">
+              建議起飛前 24 小時完成網路預辦登機，當天只需辦托運即可。
+            </p>
+
+            <h4 style="margin-top:8px;">住宿 · HOTEL</h4>
+            <p>
+              <span class="keyword-link" data-modal-key="hotel-granbell">
+                GRANBELL HOTEL OSAKA NAMBA
+              </span>
+            </p>
+            <p style="font-size:0.8rem;">
+              地址可直接存到 Google Maps，當成整趟旅行的「大阪基地」。
+            </p>
+
+            <h4 style="margin-top:8px;">交通 · TRANSPORT</h4>
+            <div class="map-pills">
+              <span class="map-pill">ICOCA · 儲值交通卡</span>
+              <span class="map-pill">近鐵電車 · 奈良往返</span>
+              <span class="map-pill">南海電鐵 · 機場線</span>
+            </div>
+            <p style="font-size:0.78rem; margin-top:4px;">
+              事前決定好奈良當天用哪種票券，其餘以儲值卡搭配即可。
+            </p>
+          </div>
+
+          <!-- 右欄：緊急資訊 + Daily Ritual + 五日小記 -->
+          <div class="cheat-section">
+            <h4>緊急資訊 · EMERGENCY</h4>
+            <ul>
+              <li>飯店電話：可在此填寫實際電話</li>
+              <li>航空公司客服：日航台灣／日本客服</li>
+              <li>護照號碼：EJ12****56（僅自己看得懂即可）</li>
+              <li>緊急聯絡人：家人／伴侶電話（建議另存手機）</li>
+            </ul>
+
+            <h4 style="margin-top:6px;">每日儀式 · DAILY RITUAL</h4>
+            <ul>
+              <li>回房先幫手機與行動電源充電</li>
+              <li>睡前挑 3 張照片備份到雲端</li>
+              <li>手帳寫下當天最想記住的一句話</li>
+            </ul>
+
+            <h4 style="margin-top:6px;">五日一句話 · 5-DAY SNAPSHOT</h4>
+            <ul class="trip-mood-list">
+              <li>Day 1：新的空氣與海風，把旅程開在臨空城。</li>
+              <li>Day 2：北濱河面很乾淨，城市比想像中安靜。</li>
+              <li>Day 3：在大阪城公園待最久的一天，腳步自然放慢。</li>
+              <li>Day 4：奈良鹿與樹林的距離感，讓時間變得很長。</li>
+              <li>Day 5：在機場寫完最後一頁，接受「這次就先到這裡」。</li>
+            </ul>
           </div>
         </div>
       </section>
-
-      <section id="section-overview" class="section">
-        <div class="section-header">
-          <div class="eyebrow">CONTENTS</div>
-          <h2>OSAKA SLOW JOURNAL · INDEX</h2>
-          <p>五天的頁面，從抵達到告別。每一頁都是那天的溫度、步伐與心情。</p>
-        </div>
-
-        <div class="index-grid">
-          <article class="index-card" onclick="openDay(1)">
-            <div class="index-card-header">
-              <div class="index-card-day">DAY 01</div>
-              <div class="index-card-date">Dec 15 · Sun</div>
-            </div>
-            <div class="index-card-title">抵達與初見</div>
-            <div class="index-card-mood">海風、機場、臨空城的黃昏，把腳步從日常抽離出來。</div>
-          </article>
-
-          <article class="index-card" onclick="openDay(2)">
-            <div class="index-card-header">
-              <div class="index-card-day">DAY 02</div>
-              <div class="index-card-date">Dec 16 · Mon</div>
-            </div>
-            <div class="index-card-title">河畔與街巷慢散步</div>
-            <div class="index-card-mood">從北濱的河岸走到中崎町的小巷，城市也有安靜的一面。</div>
-          </article>
-
-          <article class="index-card" onclick="openDay(3)">
-            <div class="index-card-header">
-              <div class="index-card-day">DAY 03</div>
-              <div class="index-card-date">Dec 17 · Tue</div>
-            </div>
-            <div class="index-card-title">城與冬日陽光</div>
-            <div class="index-card-mood">大阪城公園裡，冬天的樹影和石牆，比觀光照更耐看。</div>
-          </article>
-
-          <article class="index-card" onclick="openDay(4)">
-            <div class="index-card-header">
-              <div class="index-card-day">DAY 04</div>
-              <div class="index-card-date">Dec 18 · Wed</div>
-            </div>
-            <div class="index-card-title">奈良的一天</div>
-            <div class="index-card-mood">和鹿一起慢慢走路，感覺時間在奈良公園裡變得比較鬆。</div>
-          </article>
-
-          <article class="index-card" onclick="openDay(5)">
-            <div class="index-card-header">
-              <div class="index-card-day">DAY 05</div>
-              <div class="index-card-date">Dec 19 · Thu</div>
-            </div>
-            <div class="index-card-title">告別大阪</div>
-            <div class="index-card-mood">在機場玻璃窗前回望幾天的節奏，把不想忘記的畫面寫進最後一頁。</div>
-          </article>
-        </div>
-      </section>
-
-      <section id="section-day1" class="section">
-        <div class="section-header">
-          <div class="eyebrow">DAY 01 · ARRIVAL</div>
-          <h2>抵達與初見</h2>
-          <p>從海風與橋開始的旅程，先學會把節奏放慢半拍。</p>
-        </div>
-
-        <div class="hero">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sunset_%40_Osaka_Bay_(13381942235).jpg" alt="大阪灣夕陽與港口剪影，遠方是城市與橋的輪廓">
-          <div class="hero-overlay"></div>
-          <div class="hero-content">
-            <div class="hero-badges">
-              <div class="hero-badge">DAY 01 · ARRIVAL</div>
-              <div class="hero-badge">KIX &amp; RINKU</div>
-            </div>
-            <div class="hero-title">海風裡的第一口大阪空氣</div>
-            <div class="hero-subtitle">KIX → 臨空城海邊散步 → GRANBELL OSAKA NAMBA</div>
-            <div class="hero-meta">Sunset over Osaka Bay · Kansai International Airport</div>
-          </div>
-        </div>
-
-        <div class="day-meta-row">
-          <span>Dec 15 · 抵達關西國際機場</span>
-          <span class="subtle">Mood：從工作模式慢慢登出</span>
-        </div>
-
-        <div class="day-body">
-          <p>
-            飛機落地時已經接近黃昏，機艙燈還沒完全打亮，窗外的海和跑道被同一片橘光染成一個顏色。
-            關西機場特有的人工島與長橋，讓人一眼就知道「真的到了大阪」。
-          </p>
-          <p>
-            拎著行李搭上前往臨空城的電車，風從海邊吹過來，混著冷空氣與一點鹹味。
-            先在海邊散步一小圈，讓身體意識到：接下來的日子不需要趕場，只要好好把走過的路記在心裡。
-          </p>
-          <p>
-            晚上入住 GRANBELL OSAKA NAMBA，房間不大，卻剛好裝得下這幾天的行李與心情。
-            把明天的行程隨手寫在手帳上，沒有一定要做到的清單，只有一些想去看看、如果時間允許就繞過去的地方。
-          </p>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">FLOW OF THE DAY</div>
-          <div class="flow-grid">
-            <div class="flow-card">
-              <div class="flow-label">MORNING</div>
-              <div class="flow-title">機場到達 · 調整狀態</div>
-              <div class="flow-text">
-                抵達 KIX，慢慢通關、領行李，找一個角落喝水伸展，讓身體跟上時差。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">AFTERNOON</div>
-              <div class="flow-title">臨空城海邊散步</div>
-              <div class="flow-text">
-                搭車到臨空城，沿著海邊步道走一圈，看橋、看飛機起落，不急著進市區。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">EVENING</div>
-              <div class="flow-title">進大阪 · 安頓下來</div>
-              <div class="flow-text">
-                入住 GRANBELL OSAKA NAMBA，附近隨意找一間小店吃晚餐，回飯店整理明後天的隨筆計畫。
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">SCENES TO COLLECT</div>
-          <div class="scene-grid">
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">01</div>
-                <div class="scene-text">機翼下方的大阪灣與夕陽，把手機收起來，只讓眼睛記住顏色。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">02</div>
-                <div class="scene-text">臨空城海邊長椅，遠方橋上的車燈一點一點連成線。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">03</div>
-                <div class="scene-text">南海電鐵上的車廂廣播聲，第一次聽到這趟旅程裡的大阪口音。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">04</div>
-                <div class="scene-text">飯店房間小小的書桌，把護照、房卡與手帳排好，像開啟一個新的頁面。</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">NOTE TO SELF</div>
-          <div class="note-box">
-            <div class="note-label">REMEMBER</div>
-            <div class="note-text">到新的城市，不用立刻開始「完成任務」，先容許自己什麼都不做地感受一下空氣。</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="section-day2" class="section">
-        <div class="section-header">
-          <div class="eyebrow">DAY 02 · CITY RIVER &amp; STREETS</div>
-          <h2>河畔與街巷慢散步</h2>
-          <p>沿著河走、鑽進巷子，看見大阪不像觀光手冊那一面的日常。</p>
-        </div>
-
-        <div class="hero">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Osaka_Tonbori_River_(135268307).jpeg" alt="夜晚的大阪道頓堀河與兩岸霓虹燈光倒影">
-          <div class="hero-overlay"></div>
-          <div class="hero-content">
-            <div class="hero-badges">
-              <div class="hero-badge">DAY 02 · CITY WALK</div>
-              <div class="hero-badge">KITAHAMA &amp; NAKAZAKI</div>
-            </div>
-            <div class="hero-title">在河岸與小巷之間慢慢醒來</div>
-            <div class="hero-subtitle">北濱河畔 → 中崎町小店巡禮 → 夜走道頓堀</div>
-            <div class="hero-meta">Dōtonbori River Night View · Osaka City</div>
-          </div>
-        </div>
-
-        <div class="day-meta-row">
-          <span>Dec 16 · 河畔與市區散步日</span>
-          <span class="subtle">Mood：城市也可以被溫柔地對待</span>
-        </div>
-
-        <div class="day-body">
-          <p>
-            早上搭地鐵到北濱，從河岸開始一天。
-            冬日的陽光反射在水面上，建築與橋的線條都變得柔軟一點。
-            河邊咖啡店裡有人打著筆電、有上班族匆匆路過，也有人只是發呆看水。
-          </p>
-          <p>
-            午後慢慢往中崎町走，舊公寓改成的選物店、巷子裡藏著的小咖啡館，
-            都不像非去不可的景點，卻會讓人想回來第二次。
-            在一間小店點了一杯手沖和簡單的甜點，看著窗外行人，
-            把這裡當成今天的暫時據點。
-          </p>
-          <p>
-            晚上回到熱鬧的道頓堀，霓虹燈與人潮提醒自己：這裡同時是觀光城市。
-            站在橋上看河面的倒影，發現只要選擇走得慢一點，
-            即使是最觀光的景點，也還是有屬於自己的安靜角度。
-          </p>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">FLOW OF THE DAY</div>
-          <div class="flow-grid">
-            <div class="flow-card">
-              <div class="flow-label">MORNING</div>
-              <div class="flow-title">北濱河畔咖啡</div>
-              <div class="flow-text">
-                河邊散步、找一間喜歡的咖啡店坐下，緩慢吃完一份早餐，順便整理昨天的抵達心情。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">AFTERNOON</div>
-              <div class="flow-title">中崎町小巷巡禮</div>
-              <div class="flow-text">
-                巷弄選物店、古著、咖啡館，自在地繞路，看到有興趣的地方就停下來，不預先排滿行程。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">EVENING</div>
-              <div class="flow-title">道頓堀夜景散步</div>
-              <div class="flow-text">
-                以橋為中心慢慢走一圈，不一定要排隊吃名店，只選一兩樣想嘗試的味道就好。
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">SCENES TO COLLECT</div>
-          <div class="scene-grid">
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">01</div>
-                <div class="scene-text">北濱橋邊的風，把河面上的光切成一格一格的小碎片。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">02</div>
-                <div class="scene-text">中崎町某間小店的木窗，把街景框成一張靜止的照片。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">03</div>
-                <div class="scene-text">道頓堀橋上，霓虹燈倒映在河面上，卻只聽得到身邊人的笑聲。</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">NOTE TO SELF</div>
-          <div class="note-box">
-            <div class="note-label">REMEMBER</div>
-            <div class="note-text">城市有很多種走法，不一定要走在最亮的那條街上，慢一點比較容易看見細節。</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="section-day3" class="section">
-        <div class="section-header">
-          <div class="eyebrow">DAY 03 · CASTLE &amp; PARK</div>
-          <h2>城與冬日陽光</h2>
-          <p>不是為了集滿景點，而是想在城與公園之間給今天一個寬闊的留白。</p>
-        </div>
-
-        <div class="hero">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Grand_Ginkgo_Tree_in_Osaka_Castle_Park.jpg" alt="大阪城公園裡一棵高大的銀杏樹，樹後是藍天與公園步道">
-          <div class="hero-overlay"></div>
-          <div class="hero-content">
-            <div class="hero-badges">
-              <div class="hero-badge">DAY 03 · OSAKA CASTLE PARK</div>
-              <div class="hero-badge">WINTER LIGHT</div>
-            </div>
-            <div class="hero-title">在城與公園之間多待一會</div>
-            <div class="hero-subtitle">大阪城公園 → 城外散步 → 傍晚回到市區</div>
-            <div class="hero-meta">Ginkgo &amp; Pathways · Osaka Castle Park</div>
-          </div>
-        </div>
-
-        <div class="day-meta-row">
-          <span>Dec 17 · 城與樹的一天</span>
-          <span class="subtle">Mood：把時間拉長，讓思緒慢一點跟上</span>
-        </div>
-
-        <div class="day-body">
-          <p>
-            從飯店出發到大阪城公園，選擇從比較少人的入口走進去。
-            冬天的樹枝看起來有點稀疏，卻因此更能看見城與天空的比例。
-            遊客不少，但只要刻意走遠一點，就可以找到相對安靜的角落。
-          </p>
-          <p>
-            沒有急著排隊上天守閣，只在城外慢慢繞一圈。
-            走過石牆、護城河、散步中的上班族和跑步的人，
-            每個人的節奏都不太一樣，卻理所當然地共存在同一個公園裡。
-          </p>
-          <p>
-            下午在附近的咖啡館躲一下風，把剛剛看到的畫面寫進手帳。
-            不一定要有結論，只要讓今天有一段時間是留給自己的就好。
-          </p>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">FLOW OF THE DAY</div>
-          <div class="flow-grid">
-            <div class="flow-card">
-              <div class="flow-label">MORNING</div>
-              <div class="flow-title">從側門走進大阪城公園</div>
-              <div class="flow-text">
-                選一條不是最熱門的路線，沿著樹蔭與石牆慢慢走，讓城慢慢出現在視線裡。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">AFTERNOON</div>
-              <div class="flow-title">城外散步與咖啡休息</div>
-              <div class="flow-text">
-                找一間喜歡的店坐下，點一杯熱飲，回顧早上的路線與心情，讓腳和腦都稍微休息。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">EVENING</div>
-              <div class="flow-title">回到市區的過渡時間</div>
-              <div class="flow-text">
-                在回程電車上發呆，不滑手機，只看窗外的城市切換成夜景，當作今天的收尾儀式。
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">SCENES TO COLLECT</div>
-          <div class="scene-grid">
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">01</div>
-                <div class="scene-text">銀杏樹下的長椅，陽光穿過枝葉落在石地上的形狀。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">02</div>
-                <div class="scene-text">護城河邊跑步的人與停下來拍照的觀光客，各自專心在自己的節奏裡。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">03</div>
-                <div class="scene-text">咖啡館窗邊的座位，桌上攤開的手帳與熱飲升起的小小水蒸氣。</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">NOTE TO SELF</div>
-          <div class="note-box">
-            <div class="note-label">REMEMBER</div>
-            <div class="note-text">不是每個「必去景點」都一定要進到最裡面，有時候在外圍停留久一點就很足夠。</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="section-day4" class="section">
-        <div class="section-header">
-          <div class="eyebrow">DAY 04 · NARA DAY TRIP</div>
-          <h2>奈良的一天</h2>
-          <p>和鹿共享同一條步道的一日小旅行，讓腳步跟著牠們的速度走。</p>
-        </div>
-
-        <div class="hero">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/003_Nara_deer_in_Japan_-_deer_of_Nara_Park_under_autumn_leaves.jpg" alt="奈良公園裡在秋色樹蔭下吃草的鹿，背景是暖色落葉與草地">
-          <div class="hero-overlay"></div>
-          <div class="hero-content">
-            <div class="hero-badges">
-              <div class="hero-badge">DAY 04 · NARA PARK</div>
-              <div class="hero-badge">DEER &amp; STREETS</div>
-            </div>
-            <div class="hero-title">和鹿一起走路的奈良一日</div>
-            <div class="hero-subtitle">奈良公園 → 神社與老街 → 夜車回大阪</div>
-            <div class="hero-meta">Deer under Autumn Leaves · Nara Park, Japan</div>
-          </div>
-        </div>
-
-        <div class="day-meta-row">
-          <span>Dec 18 · 奈良一日小旅行</span>
-          <span class="subtle">Mood：把一天交給樹、鹿與石階</span>
-        </div>
-
-        <div class="day-body">
-          <p>
-            早上從大阪搭電車前往奈良，車窗外慢慢從高樓變成住宅與樹。
-            一出站就能感覺到城市節奏變慢——空氣裡有草地、落葉和神社燈籠的味道。
-          </p>
-          <p>
-            走進奈良公園沒多久就遇到第一群鹿。
-            牠們既熟悉人類又保有自己的距離感，
-            偶爾抬頭望一眼，更多時候只是專心低頭吃草。
-          </p>
-          <p>
-            午後沿著石階往神社與寺院方向走，途中停在小店吃點心、買幾張明信片。
-            沒特別安排必看的建築，只順著當下想走的路前進，
-            讓這一天自然被分成幾段不同的顏色。
-          </p>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">FLOW OF THE DAY</div>
-          <div class="flow-grid">
-            <div class="flow-card">
-              <div class="flow-label">MORNING</div>
-              <div class="flow-title">電車前往奈良 · 初遇鹿群</div>
-              <div class="flow-text">
-                從難波搭電車出發，在車上補一點睡眠，到奈良站後先在公園附近隨意散步。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">AFTERNOON</div>
-              <div class="flow-title">神社石階與老街</div>
-              <div class="flow-text">
-                走訪神社、寺院與周邊商店街，挑一間順眼的小店吃午餐或喝茶，不必硬要排進名店。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">EVENING</div>
-              <div class="flow-title">沿著暮色回到大阪</div>
-              <div class="flow-text">
-                傍晚搭電車回大阪，車窗外慢慢暗下來，把今天看到的鹿、石燈籠與樹影整理進腦海。
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">SCENES TO COLLECT</div>
-          <div class="scene-grid">
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">01</div>
-                <div class="scene-text">在公園長椅前悠閒吃草的鹿，時不時抬頭看一下路過的人。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">02</div>
-                <div class="scene-text">通往神社的石階，旁邊一排石燈籠被苔與時間柔化了棱角。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">03</div>
-                <div class="scene-text">老街小店門口的風鈴，微風經過時發出輕輕的聲音。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">04</div>
-                <div class="scene-text">回程電車上往窗外看的那一刻，遠方山的輪廓慢慢變成剪影。</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">NOTE TO SELF</div>
-          <div class="note-box">
-            <div class="note-label">REMEMBER</div>
-            <div class="note-text">對動物和城市都溫柔一點，不為了拍照而打擾牠們，也不為了集點而壓縮自己的節奏。</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="section-day5" class="section">
-        <div class="section-header">
-          <div class="eyebrow">DAY 05 · DEPARTURE</div>
-          <h2>告別大阪</h2>
-          <p>最後一天不是結束，只是把這次的節奏收好，留一些空白給下次。</p>
-        </div>
-
-        <div class="hero">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_view_from_airplane_cabin,_Kansai,_Japan_(8629499291).jpg" alt="從飛機艙窗往外看見關西機場與跑道的景色，天色接近黃昏">
-          <div class="hero-overlay"></div>
-          <div class="hero-content">
-            <div class="hero-badges">
-              <div class="hero-badge">DAY 05 · FAREWELL</div>
-              <div class="hero-badge">KIX RETURN</div>
-            </div>
-            <div class="hero-title">在機場玻璃窗前說再見</div>
-            <div class="hero-subtitle">難波收拾 → KIX → 在機場寫完最後一頁</div>
-            <div class="hero-meta">View from Airplane Cabin · Kansai, Japan</div>
-          </div>
-        </div>
-
-        <div class="day-meta-row">
-          <span>Dec 19 · 回程與收尾</span>
-          <span class="subtle">Mood：把旅程折成一張可以帶走的書籤</span>
-        </div>
-
-        <div class="day-body">
-          <p>
-            早上在飯店把行李收好，把不再需要的票根與紙張整理成一小疊，
-            留下幾張對自己有意義的，其他的就大方丟掉。
-            把房卡放在桌上，看房間最後一眼才拉上門。
-          </p>
-          <p>
-            前往機場路上，窗外的城市景色快速往後退，
-            好像把這幾天去過的地方倒帶再播放一次。
-            在心裡默默標記幾個想回來再訪的角落。
-          </p>
-          <p>
-            抵達 KIX 之後，找一個靠窗的位置坐下，
-            一邊看飛機起降，一邊完成手帳的最後幾行文字。
-            不是為了總結什麼，而是想要在頁面上留下：「這次就先到這裡」的訊號。
-          </p>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">FLOW OF THE DAY</div>
-          <div class="flow-grid">
-            <div class="flow-card">
-              <div class="flow-label">MORNING</div>
-              <div class="flow-title">收拾房間與小小告別</div>
-              <div class="flow-text">
-                整理行李、檢查抽屜與床底，確定沒有遺漏，
-                在心裡跟這幾天當作基地的房間說再見。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">AFTERNOON</div>
-              <div class="flow-title">前往機場 · 候機時間</div>
-              <div class="flow-text">
-                提早到機場，不為了逛免稅店，
-                只是想多留一點可以慢慢走、慢慢寫字的空間。
-              </div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-label">EVENING</div>
-              <div class="flow-title">起飛前的最後一行字</div>
-              <div class="flow-text">
-                在登機廣播響起前，把最後一句寫完，
-                關上手帳，就當作這次旅程的句點與逗點同時存在的地方。
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">SCENES TO COLLECT</div>
-          <div class="scene-grid">
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">01</div>
-                <div class="scene-text">飯店房門關上那一刻，走廊的燈光與地毯花紋一起變成記憶的一部分。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">02</div>
-                <div class="scene-text">機場大廳的玻璃窗，倒映出自己拖著行李的身影與跑道上的飛機。</div>
-              </div>
-            </div>
-            <div class="scene-box">
-              <div class="scene-bullet"></div>
-              <div>
-                <div class="scene-text-eyebrow">03</div>
-                <div class="scene-text">起飛時機翼外的燈光，城市逐漸縮小成幾個亮點。</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block">
-          <div class="section-block-heading">NOTE TO SELF</div>
-          <div class="note-box">
-            <div class="note-label">REMEMBER</div>
-            <div class="note-text">每一趟旅行都不會被完全記錄下來，留下可以喚醒記憶的小片段就已經足夠。</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="section-map" class="section">
-        <div class="section-header">
-          <div class="eyebrow">ITINERARY MAP</div>
-          <h2>路線與記憶的小地圖</h2>
-          <p>這是一張給自己的簡易索引，用來記得那些想再去一次的區域與散步路線。</p>
-        </div>
-
-        <div class="map-placeholder">
-          之後可以在這裡嵌入地圖（Google My Maps / Screenshot 等），
-          把五天的路線標上簡單標記。現在先用文字記下幾個主軸：
-          <ul>
-            <li>Day 01：KIX → 臨空城海邊 → 難波</li>
-            <li>Day 02：北濱河岸 → 中崎町 → 道頓堀一帶</li>
-            <li>Day 03：大阪城公園 → 周邊咖啡館 → 市區</li>
-            <li>Day 04：奈良站 → 奈良公園 → 神社與老街 → 回大阪</li>
-            <li>Day 05：難波 → KIX → 回程</li>
-          </ul>
-          <div class="map-tags">
-            <span class="map-tag">KIX</span>
-            <span class="map-tag">Rinku Town</span>
-            <span class="map-tag">Namba</span>
-            <span class="map-tag">Kitahama</span>
-            <span class="map-tag">Nakazakicho</span>
-            <span class="map-tag">Osaka Castle Park</span>
-            <span class="map-tag">Nara Park</span>
-          </div>
-        </div>
-      </section>
-
     </div>
   </div>
 
-  <div class="bottom-nav">
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav" aria-label="每日切換導航">
     <div class="bottom-nav-inner">
-      <div class="bottom-nav-group">
-        <button class="nav-button" type="button" onclick="showCover()">
-          <div class="nav-button-dot"></div>
-          <span>COVER</span>
+      <div class="bottom-nav-group" id="bottom-nav-group">
+        <button class="nav-btn active" data-day-index="0" type="button">
+          <span class="nav-btn-dot"></span>
+          <span>DAY 1</span>
         </button>
-        <button class="nav-button" type="button" onclick="showOverview()">
-          <div class="nav-button-dot"></div>
-          <span>INDEX</span>
+        <button class="nav-btn" data-day-index="1" type="button">
+          <span class="nav-btn-dot"></span>
+          <span>DAY 2</span>
         </button>
-        <button class="nav-button" type="button" onclick="showSection('section-map')">
-          <div class="nav-button-dot"></div>
-          <span>MAP</span>
+        <button class="nav-btn" data-day-index="2" type="button">
+          <span class="nav-btn-dot"></span>
+          <span>DAY 3</span>
+        </button>
+        <button class="nav-btn" data-day-index="3" type="button">
+          <span class="nav-btn-dot"></span>
+          <span>DAY 4</span>
+        </button>
+        <button class="nav-btn" data-day-index="4" type="button">
+          <span class="nav-btn-dot"></span>
+          <span>DAY 5</span>
+        </button>
+        <button class="nav-btn" data-nav-cheat="true" type="button">
+          <span class="nav-btn-dot"></span>
+          <span>CHEAT</span>
         </button>
       </div>
-      <div class="nav-notes">
-        Tap a tab to切換頁面 · 進入日頁時會自動回到頂端
+      <div class="bottom-nav-note">
+        左右滑動選擇日期 · 點 CHEAT 檢視旅程小抄
+      </div>
+    </div>
+  </nav>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="modal-title">詳細資訊</div>
+          <div class="modal-badge" id="modal-badge">DETAIL</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="關閉詳細資訊" id="modal-close">
+          ✕
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta" id="modal-meta"></div>
+        <img id="modal-image" class="modal-image" src="" alt="" style="display:none;" />
+        <div id="modal-content-text"></div>
+      </div>
+      <div class="modal-footer">
+        <span id="modal-footer-note"></span>
       </div>
     </div>
   </div>
 
   <script>
-    function showSection(id) {
-      var sections = document.querySelectorAll(".section");
-      for (var i = 0; i < sections.length; i++) {
-        if (sections[i].id === id) {
-          sections[i].classList.add("section-active");
-        } else {
-          sections[i].classList.remove("section-active");
+    // ======= DATA MODEL =======
+
+    const DAYS = [
+      {
+        id: 1,
+        label: "DAY 01 · ARRIVAL",
+        heroTitle: "Day 1 · 抵達與初見",
+        heroSubtitle: "從關西機場到難波，把第一天當成慢慢調整節奏的緩衝。",
+        heroSummary:
+          "以 KIX 與臨空城為起點，重點是讓身體和心情從日常模式切換到旅行模式，不急著把行程排滿。",
+        heroTags: ["KIX", "RINKU TOWN", "NAMBA"],
+        date: "2025-12-15",
+        dateLabel: "2025 年 12 月 15 日 · Sun",
+        locationLabel: "Osaka · Namba",
+        weatherCity: "Osaka",
+        eyebrow: "DAY 01 · ARRIVAL",
+        caption: "抵達日就是緩衝日，給自己多一點空白，可以更清楚記得第一口大阪空氣。",
+        dayRangeLabel: "Day 1 of 5",
+        timeline: [
+          {
+            time: "08:30",
+            title: "出發 · 前往桃園機場",
+            type: "FLIGHT",
+            location: "桃園國際機場 T1",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Taoyuan+International+Airport",
+            description:
+              "提早抵達機場辦理托運，留一點時間吃簡單早餐，確認護照與登機證都在身上。",
+            tags: ["CHECK-IN", "BREAKFAST"],
+            keywords: [
+              {
+                label: "航班 JL812",
+                modalKey: "flight-jl812"
+              }
+            ]
+          },
+          {
+            time: "13:30",
+            title: "抵達關西機場 · 海邊換氣",
+            type: "ARRIVAL",
+            location: "關西國際機場 KIX",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Kansai+International+Airport",
+            description:
+              "下機後慢慢通關，不用急著離開機場島。可以先在窗邊看海與跑道，讓眼睛先習慣新的光線。",
+            tags: ["KIX", "ARRIVAL"]
+          },
+          {
+            time: "15:00",
+            title: "臨空城散步 · 看大阪灣",
+            type: "WALK",
+            location: "Rinku Town 臨空城",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Rinku+Town+Osaka",
+            description:
+              "搭乘電車到臨空城，在海邊步道散步，看橋與海風，把旅程的第一張照片留給大阪灣。",
+            tags: ["SEA WALK", "SUNSET"]
+          },
+          {
+            time: "18:30",
+            title: "入住飯店 · 整理第一晚",
+            type: "HOTEL",
+            location: "GRANBELL HOTEL OSAKA NAMBA",
+            mapsUrl:
+              "https://www.google.com/maps/search/?api=1&query=GRANBELL+HOTEL+OSAKA+NAMBA",
+            description:
+              "Check-in 後稍作休息，打開行李箱把必需品就位，為接下來幾天建立一個小小基地。",
+            tags: ["CHECK-IN", "SETTLE"],
+            keywords: [
+              {
+                label: "飯店預訂資訊",
+                modalKey: "hotel-granbell"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 2,
+        label: "DAY 02 · CITY WALK",
+        heroTitle: "Day 2 · 河畔與街巷慢散步",
+        heroSubtitle:
+          "從北濱河岸到中崎町小巷，晚上再回到道頓堀，感受大阪不同面向。",
+        heroSummary:
+          "安排一條從安靜到熱鬧的動線，一天體驗大阪的多重節奏：咖啡、巷弄、夜色。",
+        heroTags: ["KITAHAMA", "NAKAZAKICHO", "DOTONBORI"],
+        date: "2025-12-16",
+        dateLabel: "2025 年 12 月 16 日 · Mon",
+        locationLabel: "Osaka · Kitahama / Namba",
+        weatherCity: "Osaka",
+        eyebrow: "DAY 02 · CITY RIVER & STREETS",
+        caption: "用一條路線把北濱、中崎町與道頓堀串起來，感受城市從安靜到熱鬧的漸層。",
+        dayRangeLabel: "Day 2 of 5",
+        timeline: [
+          {
+            time: "09:30",
+            title: "北濱河畔咖啡",
+            type: "CAFE",
+            location: "北濱 Riverside Café 一帶",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Kitahama+Osaka",
+            description:
+              "沿著河岸散步，找一間順眼的咖啡店坐下，讓早晨從一杯手沖和河面的光開始。",
+            tags: ["COFFEE", "RIVER"]
+          },
+          {
+            time: "13:00",
+            title: "中崎町小店巡禮",
+            type: "WALK",
+            location: "中崎町商店街一帶",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Nakazakicho+Osaka",
+            description:
+              "鑽進小巷看二手店和選物店，不一定要買什麼，只是把喜歡的店記在心裡。",
+            tags: ["BACKSTREET", "LUNCH"]
+          },
+          {
+            time: "17:30",
+            title: "黃昏回到難波",
+            type: "EVENING",
+            location: "難波周邊",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Namba+Osaka",
+            description:
+              "黃昏時間回到難波，找一條比較不吵的路線散步回飯店，途中順便覓食。",
+            tags: ["DINNER", "NIGHT WALK"]
+          },
+          {
+            time: "20:00",
+            title: "道頓堀夜色",
+            type: "NIGHT",
+            location: "道頓堀",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Dotonbori",
+            description:
+              "短暫走一圈熱鬧的道頓堀，看看霓虹與人潮，把今天的對比收在同一個晚上。",
+            tags: ["LIGHTS", "CITY"]
+          }
+        ]
+      },
+      {
+        id: 3,
+        label: "DAY 03 · CASTLE PARK",
+        heroTitle: "Day 3 · 大阪城公園的一天",
+        heroSubtitle:
+          "留一整天給大阪城公園，在樹蔭與城牆間慢慢走，把腳步放得比前兩天更慢。",
+        heroSummary:
+          "不急著進天守閣，重點是公園本身：樹影、護城河和不斷變化的視角。",
+        heroTags: ["OSAKA CASTLE", "PARK", "GREEN"],
+        date: "2025-12-17",
+        dateLabel: "2025 年 12 月 17 日 · Tue",
+        locationLabel: "Osaka · Osaka Castle Park",
+        weatherCity: "Osaka",
+        eyebrow: "DAY 03 · CASTLE & GREEN",
+        caption: "第三天留給大阪城公園，讓行程有一個真正意義上的『空檔日』。",
+        dayRangeLabel: "Day 3 of 5",
+        timeline: [
+          {
+            time: "10:00",
+            title: "大阪城外圍散步",
+            type: "WALK",
+            location: "大阪城公園 外圍步道",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Osaka+Castle+Park",
+            description:
+              "先沿著護城河外圍慢慢走一圈，找幾個喜歡的角度拍照，不一定要靠近城。",
+            tags: ["CASTLE VIEW", "SLOW START"]
+          },
+          {
+            time: "12:30",
+            title: "公園裡的午餐休息",
+            type: "LUNCH",
+            location: "公園樹蔭或長椅",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Osaka+Castle+Park+Bench",
+            description:
+              "在便利商店買簡單便當或飯糰，在公園找一個安靜的地方坐著吃，讓腳和耳朵一起休息。",
+            tags: ["CONVENI STORE", "PICNIC"]
+          },
+          {
+            time: "14:30",
+            title: "靠近天守閣 · 但不一定要進去",
+            type: "VIEW",
+            location: "天守閣廣場一帶",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Osaka+Castle+Tower",
+            description:
+              "走近城樓看看細節，如果排隊人太多，不勉強自己排隊，只在廣場上慢慢晃就好。",
+            tags: ["PHOTO", "OPTIONAL"]
+          },
+          {
+            time: "17:00",
+            title: "黃昏慢慢離開公園",
+            type: "EVENING",
+            location: "大阪城公園車站周邊",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Osakajokoen+Station",
+            description:
+              "選一條不同的路走回車站，看公園從白天轉成傍晚，一天的節奏剛好收在這裡。",
+            tags: ["SUNSET", "COOL DOWN"]
+          }
+        ]
+      },
+      {
+        id: 4,
+        label: "DAY 04 · NARA DAY TRIP",
+        heroTitle: "Day 4 · 奈良鹿與老街的一天",
+        heroSubtitle:
+          "搭電車到奈良公園，看鹿、逛老街，再慢慢回大阪，把節奏拉得更鬆。",
+        heroSummary:
+          "奈良不是打卡清單，而是一個讓時間變慢的地方；順著鹿與樹的步調走就好。",
+        heroTags: ["NARA PARK", "DEER", "OLD TOWN"],
+        date: "2025-12-18",
+        dateLabel: "2025 年 12 月 18 日 · Wed",
+        locationLabel: "Nara · Nara Park / Naramachi",
+        weatherCity: "Nara",
+        eyebrow: "DAY 04 · NARA PARK",
+        caption: "用一整天在奈良公園與老街散步，看鹿也看自己在旅行模式下的步調。",
+        dayRangeLabel: "Day 4 of 5",
+        timeline: [
+          {
+            time: "09:00",
+            title: "前往奈良 · 電車小旅程",
+            type: "TRAIN",
+            location: "大阪 → 奈良 (近鐵)",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Kintetsu+Nara+Station",
+            description:
+              "從大阪搭近鐵前往奈良，中途看窗外風景慢慢變化，當成一小段移動儀式。",
+            tags: ["TRAIN", "MORNING MOVE"]
+          },
+          {
+            time: "10:30",
+            title: "奈良公園 · 和鹿保持剛好的距離",
+            type: "PARK",
+            location: "奈良公園",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Nara+Park",
+            description:
+              "在樹林與草地間散步，看鹿接近、遠離，嘗試找到一個彼此都舒服的距離。",
+            tags: ["DEER", "GREEN"]
+          },
+          {
+            time: "13:00",
+            title: "東大寺周邊 · 午餐與散步",
+            type: "LUNCH",
+            location: "東大寺周邊商店與餐廳",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Todai-ji",
+            description:
+              "在東大寺周邊找一間順眼的小店用餐，之後依狀態決定要不要進寺內參觀。",
+            tags: ["TEMPLES", "OPTIONAL"]
+          },
+          {
+            time: "15:30",
+            title: "奈良町老街",
+            type: "WALK",
+            location: "奈良町",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Naramachi",
+            description:
+              "往奈良町方向走，看看老房子、茶屋與雜貨店，如果累了就在其中一間坐久一點。",
+            tags: ["OLD STREET", "TEA"]
+          },
+          {
+            time: "18:00",
+            title: "回大阪 · 晚上留給自己",
+            type: "RETURN",
+            location: "近鐵奈良站 → 大阪",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Kintetsu+Nara+Station",
+            description:
+              "搭電車回大阪，這一晚不一定要安排行程，可以回飯店早點休息，整理照片與心情。",
+            tags: ["RETURN", "REST"]
+          }
+        ]
+      },
+      {
+        id: 5,
+        label: "DAY 05 · DEPARTURE",
+        heroTitle: "Day 5 · 收尾與回程",
+        heroSubtitle:
+          "最後一天收拾房間與心情，在機場的等候時間裡，把這趟旅程好好收掉。",
+        heroSummary:
+          "不是匆忙離開，而是讓回程本身成為緩慢的結尾：再看一次大阪的天空，再確認一次自己想帶走什麼。",
+        heroTags: ["CHECK-OUT", "AIRPORT", "RETURN"],
+        date: "2025-12-19",
+        dateLabel: "2025 年 12 月 19 日 · Thu",
+        locationLabel: "Osaka · Namba / KIX",
+        weatherCity: "Osaka",
+        eyebrow: "DAY 05 · RETURN",
+        caption: "最後一天預留足夠緩衝，不搶時間，把離開也當成旅程的一部分。",
+        dayRangeLabel: "Day 5 of 5",
+        timeline: [
+          {
+            time: "09:00",
+            title: "最後一次在附近散步",
+            type: "MORNING",
+            location: "飯店周邊小街",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Namba+Osaka",
+            description:
+              "簡單在飯店附近走一圈，看白天版本的街景，把還沒看清楚的角落補上。",
+            tags: ["MORNING WALK", "GOODBYE"]
+          },
+          {
+            time: "11:00",
+            title: "退房 · 向房間道別",
+            type: "CHECKOUT",
+            location: "GRANBELL HOTEL OSAKA NAMBA",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=GRANBELL+HOTEL+OSAKA+NAMBA",
+            description:
+              "整理行李、確認沒有遺漏物品，退房前回頭看房間一眼，讓自己有一個結束的感覺。",
+            tags: ["CHECK-OUT", "BASE"]
+          },
+          {
+            time: "13:00",
+            title: "前往關西機場",
+            type: "TRAIN",
+            location: "難波 → KIX",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Kansai+Airport+Station",
+            description:
+              "搭乘南海電鐵或其他交通工具前往機場，途中看窗外景色往海邊移動。",
+            tags: ["TRAIN", "AIRPORT"]
+          },
+          {
+            time: "15:00",
+            title: "機場辦理登機 · 最後一杯飲料",
+            type: "AIRPORT",
+            location: "關西機場離境大廳",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Kansai+International+Airport+Departure",
+            description:
+              "辦理托運與出境後，在候機室找一個靠窗座位，點一杯飲料，寫下最後一段手帳。",
+            tags: ["BOARDING", "REFLECTION"],
+            keywords: [
+              {
+                label: "回程航班 JL815",
+                modalKey: "flight-jl815"
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+    const MODAL_CONTENT = {
+      "flight-jl812": {
+        title: "去程航班 · JL812",
+        badge: "FLIGHT · OUTBOUND",
+        meta: "TPE → KIX · 建議起飛前 3 小時抵達機場",
+        text: `
+          <p>預設去程航班為 <strong>JL812 台北 → 大阪</strong>。實際時間可以依你的電子機票為準，這裡僅作為旅程手帳的占位資訊。</p>
+          <p>可以在這裡自行補上：</p>
+          <ul>
+            <li>實際起飛／抵達時間</li>
+            <li>訂位代號或 QR Code 下載位置</li>
+            <li>座位喜好（靠窗／靠走道）</li>
+          </ul>
+        `,
+        image: "",
+        imageAlt: "",
+        footer: "建議前一晚就把護照、實體票據與隨身藥品放到同一個小包。"
+      },
+      "flight-jl815": {
+        title: "回程航班 · JL815",
+        badge: "FLIGHT · RETURN",
+        meta: "KIX → TPE · 回程也可以是整理心情的時間",
+        text: `
+          <p>預設回程航班為 <strong>JL815 大阪 → 台北</strong>。你可以在這裡記下：</p>
+          <ul>
+            <li>預計到機場的時間與交通方式</li>
+            <li>回程後的行程（是否直接回家或有其他安排）</li>
+            <li>這趟旅行最想帶回去的三件事（物品／畫面／感受）</li>
+          </ul>
+        `,
+        image: "",
+        imageAlt: "",
+        footer: "如果覺得捨不得離開，可以在候機室寫一段給未來自己的話。"
+      },
+      "hotel-granbell": {
+        title: "住宿 · GRANBELL HOTEL OSAKA NAMBA",
+        badge: "HOTEL · BASE",
+        meta: "建議在這裡記下地址、電話與訂房資訊，方便旅程中隨時查詢。",
+        text: `
+          <p>這裡可以放上：</p>
+          <ul>
+            <li>飯店完整地址（中／英文）</li>
+            <li>電話與分機（遇到狀況時可立即聯絡）</li>
+            <li>Check-in / Check-out 日期與時間</li>
+            <li>訂房編號或預訂平台（如：Booking / Agoda）</li>
+          </ul>
+          <p>也可以寫下第一晚住進來的感覺，為這個「大阪基地」做一個簡短註解。</p>
+        `,
+        image: "",
+        imageAlt: "",
+        footer: "建議把飯店地址也加入手機地圖的收藏，迷路時會非常有用。"
+      }
+    };
+
+    // ======= DOM & RENDER =======
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const heroTitleEl = document.getElementById("hero-title");
+      const heroSubtitleEl = document.getElementById("hero-subtitle");
+      const heroDateEl = document.getElementById("hero-date");
+      const heroLocationEl = document.getElementById("hero-location");
+      const heroSummaryEl = document.getElementById("hero-summary");
+      const heroTagsEl = document.getElementById("hero-tags");
+      const heroDayRangeEl = document.getElementById("hero-day-range");
+      const heroTodayLabelEl = document.getElementById("hero-today-label");
+
+      const dayEyebrowEl = document.getElementById("day-eyebrow");
+      const dayTitleEl = document.getElementById("day-title");
+      const dayCaptionEl = document.getElementById("day-caption");
+      const timelineEl = document.getElementById("timeline");
+
+      const navGroupEl = document.getElementById("bottom-nav-group");
+      const navButtons = Array.from(
+        navGroupEl.querySelectorAll(".nav-btn[data-day-index]")
+      );
+      const cheatBtn = navGroupEl.querySelector(".nav-btn[data-nav-cheat]");
+
+      const modalBackdrop = document.getElementById("modal-backdrop");
+      const modalCloseBtn = document.getElementById("modal-close");
+      const modalTitleEl = document.getElementById("modal-title");
+      const modalBadgeEl = document.getElementById("modal-badge");
+      const modalMetaEl = document.getElementById("modal-meta");
+      const modalImageEl = document.getElementById("modal-image");
+      const modalContentTextEl = document.getElementById("modal-content-text");
+      const modalFooterNoteEl = document.getElementById("modal-footer-note");
+
+      const cheatSheetSection = document.getElementById("trip-cheat-sheet");
+
+      let currentDayIndex = 0;
+
+      function renderDay(index) {
+        const day = DAYS[index];
+        if (!day) return;
+
+        currentDayIndex = index;
+
+        // 更新 HERO
+        heroTitleEl.textContent = day.heroTitle;
+        heroSubtitleEl.textContent = day.heroSubtitle;
+        heroDateEl.textContent = day.dateLabel;
+        heroLocationEl.innerHTML = `<span>📍</span><span>${day.locationLabel}</span>`;
+        heroSummaryEl.textContent = day.heroSummary;
+        heroDayRangeEl.textContent = day.dayRangeLabel;
+
+        heroTagsEl.innerHTML = "";
+        day.heroTags.forEach((tag) => {
+          const span = document.createElement("span");
+          span.className = "hero-tag";
+          span.textContent = tag;
+          heroTagsEl.appendChild(span);
+        });
+
+        // 更新 Section Header
+        dayEyebrowEl.textContent = day.eyebrow;
+        dayTitleEl.textContent = `TIME · LINE · DAY ${day.id}`;
+        dayCaptionEl.textContent = day.caption;
+
+        // 更新 Timeline
+        timelineEl.innerHTML = "";
+        day.timeline.forEach((item, idx) => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "timeline-item";
+
+          const timeCol = document.createElement("div");
+          timeCol.className = "timeline-time";
+          timeCol.textContent = item.time;
+
+          const dot = document.createElement("div");
+          dot.className = "timeline-dot";
+          timeCol.appendChild(dot);
+
+          if (idx < day.timeline.length - 1) {
+            const line = document.createElement("div");
+            line.className = "timeline-line";
+            timeCol.appendChild(line);
+          }
+
+          const card = document.createElement("article");
+          card.className = "timeline-card";
+          card.setAttribute("aria-label", `${item.time} · ${item.title}`);
+
+          const inner = document.createElement("div");
+          inner.className = "timeline-card-inner";
+
+          const header = document.createElement("div");
+          header.className = "timeline-card-header";
+
+          const titleEl = document.createElement("h3");
+          titleEl.className = "timeline-card-title";
+          titleEl.textContent = item.title;
+
+          const typeEl = document.createElement("div");
+          typeEl.className = "timeline-card-type";
+          typeEl.textContent = item.type;
+
+          header.appendChild(titleEl);
+          header.appendChild(typeEl);
+
+          const locEl = document.createElement("div");
+          locEl.className = "timeline-location";
+          if (item.mapsUrl) {
+            locEl.innerHTML = `📍 <a href="${item.mapsUrl}" target="_blank" rel="noopener noreferrer">${item.location}</a>`;
+          } else {
+            locEl.textContent = item.location || "";
+          }
+
+          const bodyEl = document.createElement("div");
+          bodyEl.className = "timeline-body";
+
+          // 處理內文中的 keyword-link
+          let descHtml = item.description || "";
+          if (item.keywords && item.keywords.length > 0) {
+            item.keywords.forEach((kw) => {
+              const safeLabel = kw.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+              const regex = new RegExp(safeLabel, "g");
+              descHtml = descHtml.replace(
+                regex,
+                `<span class="keyword-link" data-modal-key="${kw.modalKey}">${kw.label}</span>`
+              );
+            });
+          }
+          bodyEl.innerHTML = descHtml;
+
+          const tagsEl = document.createElement("div");
+          tagsEl.className = "timeline-tags";
+          (item.tags || []).forEach((t) => {
+            const tagEl = document.createElement("span");
+            tagEl.className = "timeline-tag";
+            tagEl.textContent = t;
+            tagsEl.appendChild(tagEl);
+          });
+
+          inner.appendChild(header);
+          inner.appendChild(locEl);
+          inner.appendChild(bodyEl);
+          if ((item.tags || []).length > 0) inner.appendChild(tagsEl);
+          card.appendChild(inner);
+
+          wrapper.appendChild(timeCol);
+          wrapper.appendChild(card);
+          timelineEl.appendChild(wrapper);
+        });
+
+        // 更新 Bottom Nav Active 狀態
+        navButtons.forEach((btn) => {
+          const idxAttr = Number(btn.getAttribute("data-day-index"));
+          btn.classList.toggle("active", idxAttr === index);
+        });
+
+        // 捲動到頁面上方
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+        // 呼叫天氣
+        fetchWeather(day.weatherCity);
+      }
+
+      // 更新 Hero 中「今天」標籤（單純視覺提示）
+      function updateTodayLabel() {
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, "0");
+        const d = String(now.getDate()).padStart(2, "0");
+        heroTodayLabelEl.textContent = `今天 · ${y}/${m}/${d}`;
+      }
+
+      // 天氣 API：OpenWeather
+      async function fetchWeather(city) {
+        const tempEl = document.getElementById("hero-temp");
+        const descEl = document.getElementById("hero-weather-desc");
+
+        const API_KEY = "114990648a29158a87a2f3950a472776";
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+          city
+        )},JP&units=metric&lang=zh_tw&appid=${API_KEY}`;
+
+        try {
+          if (!API_KEY) {
+            tempEl.textContent = "--°C";
+            descEl.textContent = `天氣資料尚未設定 API key（目前城市：${city}）`;
+            return;
+          }
+
+          const res = await fetch(url);
+          if (!res.ok) throw new Error("Weather API error");
+          const data = await res.json();
+          const temp = Math.round(data.main.temp);
+          const desc = data.weather[0]?.description || "天氣狀況";
+
+          tempEl.textContent = `${temp}°C`;
+          descEl.textContent = `${city} · ${desc}`;
+        } catch (err) {
+          tempEl.textContent = "--°C";
+          descEl.textContent = `無法載入天氣（${city}），請稍後再試。`;
         }
       }
-      window.scrollTo(0, 0);
-    }
 
-    function showCover() {
-      showSection("section-cover");
-    }
+      // Modal 開關
+      function openModal(key) {
+        const info = MODAL_CONTENT[key];
+        if (!info) {
+          modalTitleEl.textContent = "詳細資訊";
+          modalBadgeEl.textContent = "DETAIL";
+          modalMetaEl.textContent = "";
+          modalContentTextEl.innerHTML =
+            "<p>這裡可以放上與此關鍵字相關的備註與截圖連結。</p>";
+          modalImageEl.style.display = "none";
+          modalFooterNoteEl.textContent = "";
+        } else {
+          modalTitleEl.textContent = info.title;
+          modalBadgeEl.textContent = info.badge;
+          modalMetaEl.textContent = info.meta;
+          modalContentTextEl.innerHTML = info.text;
 
-    function showOverview() {
-      showSection("section-overview");
-    }
+          if (info.image) {
+            modalImageEl.src = info.image;
+            modalImageEl.alt = info.imageAlt || "";
+            modalImageEl.style.display = "block";
+          } else {
+            modalImageEl.style.display = "none";
+          }
+          modalFooterNoteEl.textContent = info.footer || "";
+        }
 
-    function openDay(n) {
-      var id = "section-day" + n;
-      showSection(id);
-    }
+        modalBackdrop.classList.add("active");
+        modalBackdrop.setAttribute("aria-hidden", "false");
+      }
+
+      function closeModal() {
+        modalBackdrop.classList.remove("active");
+        modalBackdrop.setAttribute("aria-hidden", "true");
+      }
+
+      // Event: Bottom Nav 切換
+      navButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-day-index"));
+          if (!Number.isNaN(idx)) {
+            renderDay(idx);
+          }
+        });
+      });
+
+      // Event: CHEAT 按鈕
+      if (cheatBtn) {
+        cheatBtn.addEventListener("click", () => {
+          const rect = cheatSheetSection.getBoundingClientRect();
+          const offset = window.scrollY + rect.top - 80;
+          window.scrollTo({
+            top: offset,
+            behavior: "smooth"
+          });
+          navButtons.forEach((btn) => btn.classList.remove("active"));
+          cheatBtn.classList.add("active");
+        });
+      }
+
+      // Event: Timeline 與 Cheat Sheet 的 keyword link（事件委派）
+      document.body.addEventListener("click", (e) => {
+        const target = e.target;
+        if (target && target.classList && target.classList.contains("keyword-link")) {
+          const key = target.getAttribute("data-modal-key");
+          if (key) {
+            openModal(key);
+          }
+        }
+      });
+
+      // Event: Modal 關閉
+      modalCloseBtn.addEventListener("click", closeModal);
+      modalBackdrop.addEventListener("click", (e) => {
+        if (e.target === modalBackdrop) {
+          closeModal();
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          if (modalBackdrop.classList.contains("active")) {
+            closeModal();
+          }
+        }
+      });
+
+      // 初始化
+      updateTodayLabel();
+      renderDay(0);
+    });
   </script>
 </body>
 </html>
