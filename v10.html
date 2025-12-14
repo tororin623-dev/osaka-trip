@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <!-- BUILD: v10 · offline-safe visual · 2025-12-15 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Osaka 5-Day Strategy · Visual Journal (v10)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body:#f4f1ea;
+      --bg-card:#fdfaf6;
+      --bg-hero:#efece5;
+      --ink-main:#332c26;
+      --ink-muted:#7d7266;
+      --ink-soft:#a89c8e;
+      --ink-accent:#a67c52;
+      --border-soft:#e6ded5;
+      --accent:#b08d55;
+      --shadow:0 10px 30px rgba(66,56,46,.08);
+    }
+
+    * { box-sizing:border-box; }
+
+    html,body {
+      margin:0; padding:0;
+      background:var(--bg-body);
+      font-family:"Noto Serif TC", system-ui, sans-serif;
+      color:var(--ink-main);
+    }
+
+    body { padding:16px 10px 96px; }
+
+    .app {
+      max-width:900px;
+      margin:auto;
+      background:var(--bg-card);
+      border-radius:20px;
+      border:1px solid rgba(166,124,82,.2);
+      box-shadow:var(--shadow);
+      padding:20px 16px 96px;
+    }
+
+    /* HERO */
+    .hero {
+      background:var(--bg-hero);
+      border-radius:18px;
+      padding:24px 20px;
+      margin-bottom:24px;
+    }
+    .eyebrow {
+      font-size:.75rem;
+      letter-spacing:.2em;
+      color:var(--ink-soft);
+    }
+    .hero-title {
+      font-size:1.6rem;
+      margin:8px 0 0;
+    }
+    .hero-sub {
+      font-size:.92rem;
+      color:var(--ink-muted);
+      margin-top:8px;
+      line-height:1.6;
+    }
+    .meta {
+      display:flex; gap:12px;
+      margin-top:16px;
+      font-size:.85rem;
+      color:var(--ink-muted);
+    }
+    .pill {
+      background:#fff;
+      border:1px solid rgba(0,0,0,.05);
+      padding:4px 12px;
+      border-radius:99px;
+    }
+
+    /* PHOTO */
+    .photo {
+      margin:24px 0;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid var(--border-soft);
+    }
+    .photo svg { display:block; width:100%; height:auto; }
+
+    /* TIMELINE */
+    .timeline { padding-left:10px; }
+    .item {
+      display:grid;
+      grid-template-columns:60px 1fr;
+      gap:16px;
+      padding-bottom:24px;
+      position:relative;
+    }
+    .time {
+      text-align:right;
+      font-size:.85rem;
+      color:var(--ink-muted);
+    }
+    .card {
+      background:#fff;
+      border:1px solid var(--border-soft);
+      border-radius:12px;
+      padding:14px 16px;
+    }
+    .title {
+      font-weight:600;
+      margin-bottom:4px;
+    }
+    .loc {
+      font-size:.8rem;
+      color:var(--ink-muted);
+      margin-bottom:8px;
+    }
+    .desc {
+      font-size:.9rem;
+      line-height:1.6;
+    }
+
+    /* NAV */
+    .nav {
+      position:fixed;
+      bottom:0; left:0; right:0;
+      background:rgba(253,250,246,.95);
+      border-top:1px solid var(--border-soft);
+      backdrop-filter:blur(12px);
+      padding:10px 16px;
+      display:flex;
+      justify-content:center;
+    }
+    .nav-inner {
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+    }
+    .btn {
+      padding:8px 14px;
+      border-radius:99px;
+      border:1px solid var(--border-soft);
+      background:transparent;
+      font-size:.75rem;
+      color:var(--ink-muted);
+      cursor:pointer;
+    }
+    .btn.active {
+      background:var(--ink-main);
+      color:#fff;
+      border-color:var(--ink-main);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow">DAY 01 · ARRIVAL</div>
+    <h1 class="hero-title" id="hero-title">Arrival & Winter Gear</h1>
+    <p class="hero-sub" id="hero-sub">從工作模式登出，把第一天留給節奏與保暖。</p>
+    <div class="meta">
+      <div class="pill" id="hero-date">12/15 Mon</div>
+      <div>📍 <span id="hero-loc">KIX · Rinku</span></div>
+    </div>
+  </header>
+
+  <div class="photo" id="photo"></div>
+
+  <main class="timeline" id="timeline"></main>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner" id="nav"></div>
+</nav>
+
+<script>
+/* -------- SAFE SVG GENERATOR -------- */
+function svgCard({title, subtitle, c1, c2, icon}) {
+  return `
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${c1}"/>
+      <stop offset="100%" stop-color="${c2}"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <circle cx="1200" cy="200" r="180" fill="#fff" opacity=".15"/>
+  <rect x="100" y="560" rx="28" ry="28" width="900" height="220" fill="#fff" opacity=".85"/>
+  <text x="150" y="650" font-size="64" font-family="system-ui" fill="#332c26" font-weight="700">${title}</text>
+  <text x="150" y="710" font-size="30" font-family="system-ui" fill="#7d7266">${subtitle}</text>
+  <text x="900" y="650" font-size="64">${icon}</text>
+</svg>`;
+}
+
+/* -------- DATA -------- */
+const DAYS = [
+  {
+    label:"DAY 01",
+    eyebrow:"DAY 01 · ARRIVAL",
+    title:"Arrival & Winter Gear",
+    sub:"從工作模式登出，把第一天留給節奏與保暖。",
+    date:"12/15 Mon",
+    loc:"KIX · Rinku",
+    photo:{ title:"RINKU", subtitle:"Arrival & Reset", icon:"🎡", c1:"#f6d365", c2:"#fda085" },
+    timeline:[
+      ["11:50","抵達關西機場","感受氣溫、確認 ICOCA。"],
+      ["15:00","Rinku Outlet","外套一次買齊。"],
+      ["19:00","入住難波","Granbell Hotel"]
+    ]
+  },
+  {
+    label:"DAY 02",
+    eyebrow:"DAY 02 · CITY",
+    title:"Urban Rhythm",
+    sub:"上午效率，下午放空。",
+    date:"12/16 Tue",
+    loc:"Umeda · Kitahama",
+    photo:{ title:"UMEDA", subtitle:"City Flow", icon:"🏙️", c1:"#c3cfe2", c2:"#f5f7fa" },
+    timeline:[
+      ["10:00","梅田購物","彩妝與清單品。"],
+      ["13:30","北濱咖啡","河畔放空。"]
+    ]
+  },
+  {
+    label:"DAY 03",
+    eyebrow:"DAY 03 · SLOW",
+    title:"History & Green",
+    sub:"體力調節的一天。",
+    date:"12/17 Wed",
+    loc:"Osaka Castle",
+    photo:{ title:"CASTLE", subtitle:"Winter Sun", icon:"🏯", c1:"#dfe9f3", c2:"#ffffff" },
+    timeline:[
+      ["10:00","大阪城公園","外圍散步。"],
+      ["18:30","福太郎","蔥燒大阪燒。"]
+    ]
+  },
+  {
+    label:"DAY 04",
+    eyebrow:"DAY 04 · NATURE",
+    title:"Deer & Silence",
+    sub:"順著鹿的步調。",
+    date:"12/18 Thu",
+    loc:"Nara",
+    photo:{ title:"NARA", subtitle:"Nature Day", icon:"🦌", c1:"#dfa579", c2:"#c79081" },
+    timeline:[
+      ["09:30","前往奈良","近鐵。"],
+      ["14:00","奈良公園","只走不趕。"]
+    ]
+  },
+  {
+    label:"DAY 05",
+    eyebrow:"DAY 05 · DEPART",
+    title:"Sky & Reflection",
+    sub:"好好道別。",
+    date:"12/19 Fri",
+    loc:"KIX",
+    photo:{ title:"KIX", subtitle:"Goodbye Osaka", icon:"✈️", c1:"#a18cd1", c2:"#fbc2eb" },
+    timeline:[
+      ["10:00","退房","最後整理。"],
+      ["16:00","Blue Bottle","最後一杯。"]
+    ]
+  }
+];
+
+const els = {
+  eyebrow:document.getElementById("eyebrow"),
+  title:document.getElementById("hero-title"),
+  sub:document.getElementById("hero-sub"),
+  date:document.getElementById("hero-date"),
+  loc:document.getElementById("hero-loc"),
+  photo:document.getElementById("photo"),
+  timeline:document.getElementById("timeline"),
+  nav:document.getElementById("nav")
+};
+
+function loadDay(i){
+  const d=DAYS[i];
+  els.eyebrow.textContent=d.eyebrow;
+  els.title.textContent=d.title;
+  els.sub.textContent=d.sub;
+  els.date.textContent=d.date;
+  els.loc.textContent=d.loc;
+  els.photo.innerHTML=svgCard(d.photo);
+  els.timeline.innerHTML=d.timeline.map(t=>`
+    <div class="item">
+      <div class="time">${t[0]}</div>
+      <div class="card">
+        <div class="title">${t[1]}</div>
+        <div class="desc">${t[2]}</div>
+      </div>
+    </div>
+  `).join("");
+  document.querySelectorAll(".btn").forEach((b,idx)=>b.classList.toggle("active",idx===i));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+DAYS.forEach((d,i)=>{
+  const b=document.createElement("button");
+  b.className="btn"+(i===0?" active":"");
+  b.textContent=d.label;
+  b.onclick=()=>loadDay(i);
+  els.nav.appendChild(b);
+});
+
+loadDay(0);
+</script>
+</body>
+</html>
