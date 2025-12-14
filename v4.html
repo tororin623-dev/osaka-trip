@@ -2,20 +2,21 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>Osaka 5-Day Visual Journal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Osaka 5-Day Strategy · Visual Journal</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    :root {
+    :root{
       --bg-body:#f4f1ea;
       --bg-card:#fdfaf6;
       --ink-main:#2e2722;
       --ink-muted:#7b7167;
       --ink-soft:#a39587;
+      --ink-accent:#a67c52;
       --border-soft:#e5ddd3;
       --accent:#b08d55;
     }
@@ -24,116 +25,167 @@
     body{
       margin:0;
       background:var(--bg-body);
-      font-family:"Noto Serif TC", system-ui, sans-serif;
+      font-family:"Noto Serif TC",system-ui,sans-serif;
       color:var(--ink-main);
-      padding:16px 12px 96px;
-      -webkit-font-smoothing:antialiased;
+      padding:16px 12px 110px;
     }
 
-    .app{
+    .app-shell{
       max-width:900px;
       margin:auto;
       background:var(--bg-card);
       border-radius:20px;
       border:1px solid var(--border-soft);
       box-shadow:0 18px 48px rgba(0,0,0,.08);
-      padding:22px 18px 32px;
+      padding:20px 18px 96px;
+      position:relative;
     }
 
-    header{
+    /* EDIT */
+    .edit-toggle{
+      position:absolute;top:16px;right:16px;
+      font-size:.75rem;
+      padding:4px 10px;
+      border-radius:99px;
+      border:1px solid var(--border-soft);
+      background:rgba(255,255,255,.6);
+      cursor:pointer;
+    }
+
+    /* HERO */
+    .hero{
       background:#efece5;
-      border-radius:16px;
-      padding:22px 20px;
-      margin-bottom:28px;
+      border-radius:18px;
+      padding:22px;
+      margin-bottom:24px;
     }
-
     .eyebrow{
       font-size:.75rem;
       letter-spacing:.18em;
       color:var(--ink-soft);
     }
-
-    h1{
+    .hero h1{
       font-size:1.6rem;
-      margin:.45em 0 .35em;
+      margin:.4em 0 .3em;
     }
-
-    .subtitle{
+    .hero p{
+      font-size:.95rem;
       color:var(--ink-muted);
       line-height:1.6;
-      font-size:.95rem;
+    }
+    .hero-meta{
+      display:flex;
+      gap:12px;
+      margin-top:14px;
+      font-size:.85rem;
+      color:var(--ink-muted);
+    }
+    .pill{
+      background:#fff;
+      padding:4px 12px;
+      border-radius:99px;
+      border:1px solid var(--border-soft);
+    }
+
+    .hero-strategy{
+      margin-top:14px;
+      padding:14px;
+      border-radius:12px;
+      background:#2c241b;
+      color:#eaddcf;
+      font-size:.88rem;
+    }
+    .tags{display:flex;gap:6px;margin-top:10px;}
+    .tag{
+      font-size:.7rem;
+      padding:2px 8px;
+      border-radius:4px;
+      border:1px solid rgba(255,255,255,.3);
     }
 
     /* PHOTO */
     .photo{
-      margin:28px 0 20px;
+      margin:26px 0;
       border-radius:14px;
       overflow:hidden;
-      background:#ddd;
     }
-
     .photo img{
       width:100%;
-      height:360px;
+      height:380px;
       object-fit:cover;
       display:block;
       filter:contrast(.94) saturate(.92);
     }
 
-    @media(min-width:768px){
-      .photo img{height:420px;}
-    }
-
     /* TIMELINE */
-    .timeline{
-      margin-top:8px;
-    }
-
-    .item{
+    .timeline{margin-top:10px;}
+    .timeline-item{
       display:grid;
-      grid-template-columns:72px 1fr;
+      grid-template-columns:70px 1fr;
       gap:16px;
       padding-bottom:22px;
+      position:relative;
     }
-
-    .time{
+    .timeline-time{
       text-align:right;
       font-size:.85rem;
       color:var(--ink-muted);
-      padding-top:2px;
+      position:relative;
+    }
+    .timeline-dot{
+      position:absolute;
+      right:-10px;top:6px;
+      width:8px;height:8px;
+      border-radius:50%;
+      background:#fff;
+      border:2px solid var(--accent);
+    }
+    .timeline-line{
+      position:absolute;
+      right:-7px;top:18px;bottom:-10px;
+      width:1px;
+      background:rgba(176,141,85,.4);
     }
 
-    .card{
+    .timeline-card{
       background:#fff;
       border:1px solid var(--border-soft);
       border-radius:12px;
       padding:14px 16px;
     }
-
-    .title{
+    .timeline-title{
       font-weight:600;
       margin-bottom:4px;
     }
-
-    .desc{
-      font-size:.9rem;
-      line-height:1.6;
-      color:#4b423a;
+    .timeline-type{
+      float:right;
+      font-size:.7rem;
+      letter-spacing:.08em;
+      color:var(--ink-soft);
+    }
+    .timeline-loc{
+      font-size:.8rem;
+      color:var(--ink-muted);
+      margin-bottom:6px;
+    }
+    .timeline-loc a{
+      color:inherit;
+      text-decoration:none;
+      border-bottom:1px dashed rgba(176,141,85,.4);
     }
 
     /* NAV */
     nav{
       position:fixed;
-      bottom:0; left:0; right:0;
+      bottom:0;left:0;right:0;
       background:rgba(253,250,246,.96);
       border-top:1px solid var(--border-soft);
       backdrop-filter:blur(12px);
-      padding:10px 8px;
+      padding:10px;
       display:flex;
       justify-content:center;
-      z-index:50;
+      z-index:100;
     }
-
     nav button{
       border:1px solid var(--border-soft);
       background:none;
@@ -144,26 +196,59 @@
       cursor:pointer;
       color:var(--ink-muted);
     }
-
     nav button.active{
       background:var(--ink-main);
       color:#fff;
       border-color:var(--ink-main);
     }
+
+    /* DRAWER */
+    .backdrop{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,.4);
+      opacity:0;pointer-events:none;
+      transition:.3s;
+      z-index:150;
+    }
+    .backdrop.active{opacity:1;pointer-events:auto;}
+    .drawer{
+      position:fixed;
+      bottom:0;left:0;right:0;
+      background:#fdfaf6;
+      border-radius:20px 20px 0 0;
+      transform:translateY(110%);
+      transition:.3s;
+      z-index:160;
+      max-height:80vh;
+    }
+    .drawer.active{transform:translateY(0);}
+    .drawer-header{
+      padding:16px 20px;
+      border-bottom:1px solid var(--border-soft);
+      display:flex;justify-content:space-between;
+    }
+    .drawer-body{padding:20px;font-size:.9rem;}
   </style>
 </head>
 
 <body>
-<div class="app">
+<div class="app-shell">
+  <button class="edit-toggle" id="editBtn">✎ EDIT</button>
 
-  <header>
-    <div class="eyebrow" id="eyebrow">DAY 01</div>
-    <h1 id="title">Arrival & Winter Gear</h1>
-    <p class="subtitle" id="subtitle">臨空城的夕陽，正式進入旅行節奏。</p>
-  </header>
+  <section class="hero">
+    <div class="eyebrow" id="dayEyebrow">DAY 01</div>
+    <h1 id="dayTitle"></h1>
+    <p id="daySubtitle"></p>
+    <div class="hero-meta">
+      <div class="pill" id="dayDate"></div>
+      <div>📍 <span id="dayLoc"></span></div>
+    </div>
+    <div class="hero-strategy" id="dayStrategy"></div>
+    <div class="tags" id="dayTags"></div>
+  </section>
 
   <div class="photo">
-    <img id="photo" src="./assets/day1.png?v=10" alt="Day visual" loading="eager" decoding="async">
+    <img id="dayImage" src="" alt="">
   </div>
 
   <section class="timeline" id="timeline"></section>
@@ -171,95 +256,141 @@
 
 <nav id="nav"></nav>
 
+<div class="backdrop" id="backdrop"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <strong>TRIP CHEAT SHEET</strong>
+    <span id="drawerClose" style="cursor:pointer;">✕</span>
+  </div>
+  <div class="drawer-body">
+    <p><strong>核心原則：</strong>慢半拍 × 有策略的城市旅行</p>
+    <p><strong>住宿：</strong>GRANBELL HOTEL OSAKA NAMBA</p>
+    <p><strong>航班：</strong>JL812 / JL815</p>
+  </div>
+</div>
+
 <script>
-const DAYS = [
-  {
-    title:"Arrival & Winter Gear",
-    subtitle:"臨空城的夕陽與冬裝準備，從工作模式登出。",
-    image:"./assets/day1.png?v=10",
-    timeline:[
-      ["11:50","抵達關西機場"],
-      ["13:30","臨空城午餐"],
-      ["15:00","Outlet 冬裝補齊"],
-      ["19:00","入住難波"]
-    ]
-  },
-  {
-    title:"Urban Rhythm",
-    subtitle:"北濱河岸與咖啡，城市的慢節奏。",
-    image:"./assets/day2.png?v=10",
-    timeline:[
-      ["10:00","梅田購物"],
-      ["13:30","北濱咖啡"],
-      ["16:00","城市散步"]
-    ]
-  },
-  {
-    title:"History & Green",
-    subtitle:"大阪城護城河，冬日的靜謐層次。",
-    image:"./assets/day3.png?v=10",
-    timeline:[
-      ["10:00","大阪城公園散步"],
-      ["12:30","JO-TERRACE 午餐"],
-      ["18:30","返回市區"]
-    ]
-  },
-  {
-    title:"Deer & Silence",
-    subtitle:"奈良古都，鹿與森林的節奏。",
-    image:"./assets/day4.png?v=10",
-    timeline:[
-      ["09:30","前往奈良"],
-      ["11:00","奈良公園散步"],
-      ["14:00","春日大社"]
-    ]
-  },
-  {
-    title:"Sky & Reflection",
-    subtitle:"機翼下的視角，向城市道別。",
-    image:"./assets/day5.png?v=10",
-    timeline:[
-      ["10:00","退房整理"],
-      ["14:30","前往機場"],
-      ["16:00","最後一杯咖啡"]
-    ]
-  }
+const DAYS=[
+{
+label:"DAY 01",date:"12/15 Mon",loc:"KIX · Rinku",
+title:"Arrival & Winter Gear",
+subtitle:"從工作模式登出，先處理保暖與節奏。",
+strategy:"臨空城一次解決外套與配件，避免後續分心。",
+tags:["WINTER","SLOW START"],
+image:"./assets/day1.png?v=10",
+timeline:[
+["11:50","ARRIVAL","抵達關西機場","Kansai International Airport"],
+["13:30","LUNCH","臨空城午餐","Rinku Town"],
+["15:00","SHOP","冬裝採購","Rinku Premium Outlets"],
+["19:00","HOTEL","入住難波","GRANBELL HOTEL OSAKA NAMBA"]
+]
+},
+{
+label:"DAY 02",date:"12/16 Tue",loc:"Kitahama",
+title:"Urban Rhythm",
+subtitle:"城市效率與河岸靜謐。",
+strategy:"上午處理購物，下午北濱放慢。",
+tags:["CITY","CAFE"],
+image:"./assets/day2.png?v=10",
+timeline:[
+["10:00","SHOP","梅田購物","Umeda"],
+["13:30","CAFE","北濱咖啡","Kitahama"],
+["19:00","DINNER","道頓堀晚餐","Dotonbori"]
+]
+},
+{
+label:"DAY 03",date:"12/17 Wed",loc:"Osaka Castle",
+title:"History & Green",
+subtitle:"護城河與冬日光影。",
+strategy:"體力調節，不執著登城。",
+tags:["PARK","RELAX"],
+image:"./assets/day3.png?v=10",
+timeline:[
+["10:00","WALK","大阪城公園","Osaka Castle Park"],
+["12:30","LUNCH","JO-TERRACE","JO-TERRACE OSAKA"],
+["18:30","DINNER","返回市區","Namba"]
+]
+},
+{
+label:"DAY 04",date:"12/18 Thu",loc:"Nara",
+title:"Deer & Silence",
+subtitle:"古都的安靜節奏。",
+strategy:"不看地圖，跟著鹿走。",
+tags:["NATURE","DEER"],
+image:"./assets/day4.png?v=10",
+timeline:[
+["09:30","TRAIN","前往奈良","Kintetsu-Nara Station"],
+["11:00","WALK","奈良公園","Nara Park"],
+["14:00","SHRINE","春日大社","Kasuga Taisha"]
+]
+},
+{
+label:"DAY 05",date:"12/19 Fri",loc:"KIX",
+title:"Sky & Reflection",
+subtitle:"機翼下的告別。",
+strategy:"回程的儀式感。",
+tags:["AIRPORT","BYE"],
+image:"./assets/day5.png?v=10",
+timeline:[
+["10:00","CHECKOUT","退房","GRANBELL HOTEL OSAKA NAMBA"],
+["14:30","MOVE","前往機場","Kansai International Airport"],
+["16:00","COFFEE","最後一杯咖啡","KIX"]
+]
+}
 ];
 
 const els={
-  eyebrow:document.getElementById("eyebrow"),
-  title:document.getElementById("title"),
-  subtitle:document.getElementById("subtitle"),
-  photo:document.getElementById("photo"),
-  timeline:document.getElementById("timeline"),
-  nav:document.getElementById("nav")
+eyebrow:dayEyebrow,title:dayTitle,subtitle:daySubtitle,
+date:dayDate,loc:dayLoc,strategy:dayStrategy,
+tags:dayTags,img:dayImage,timeline:timeline,
+nav:nav,drawer:drawer,backdrop:backdrop
 };
 
 function loadDay(i){
-  const d=DAYS[i];
-  els.eyebrow.textContent=`DAY ${String(i+1).padStart(2,"0")}`;
-  els.title.textContent=d.title;
-  els.subtitle.textContent=d.subtitle;
-  els.photo.src=d.image;
-  els.timeline.innerHTML=d.timeline.map(t=>`
-    <div class="item">
-      <div class="time">${t[0]}</div>
-      <div class="card">
-        <div class="title">${t[1]}</div>
-      </div>
-    </div>
-  `).join("");
-  [...els.nav.children].forEach((b,idx)=>b.classList.toggle("active",idx===i));
-  window.scrollTo({top:0,behavior:"smooth"});
+const d=DAYS[i];
+els.eyebrow.textContent=d.label;
+els.title.textContent=d.title;
+els.subtitle.textContent=d.subtitle;
+els.date.textContent=d.date;
+els.loc.textContent=d.loc;
+els.strategy.textContent=d.strategy;
+els.tags.innerHTML=d.tags.map(t=>`<span class="tag">${t}</span>`).join("");
+els.img.src=d.image;
+els.timeline.innerHTML=d.timeline.map(t=>`
+<div class="timeline-item">
+<div class="timeline-time">${t[0]}<div class="timeline-dot"></div><div class="timeline-line"></div></div>
+<div class="timeline-card">
+<div class="timeline-title">${t[1]} <span class="timeline-type">${t[2]}</span></div>
+<div class="timeline-loc"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t[3])}" target="_blank">📍 ${t[3]}</a></div>
+</div>
+</div>`).join("");
+[...els.nav.children].forEach((b,idx)=>b.classList.toggle("active",idx===i));
+window.scrollTo({top:0});
 }
 
-DAYS.forEach((_,i)=>{
-  const b=document.createElement("button");
-  b.textContent=`DAY ${i+1}`;
-  b.onclick=()=>loadDay(i);
-  if(i===0)b.classList.add("active");
-  els.nav.appendChild(b);
+DAYS.forEach((d,i)=>{
+const b=document.createElement("button");
+b.textContent=d.label;
+b.onclick=()=>loadDay(i);
+if(i===0)b.classList.add("active");
+els.nav.appendChild(b);
 });
+
+const tripBtn=document.createElement("button");
+tripBtn.textContent="TRIP";
+tripBtn.onclick=()=>{els.drawer.classList.add("active");els.backdrop.classList.add("active");};
+els.nav.appendChild(tripBtn);
+
+drawerClose.onclick=()=>{els.drawer.classList.remove("active");els.backdrop.classList.remove("active");};
+els.backdrop.onclick=drawerClose.onclick;
+
+editBtn.onclick=()=>{
+document.body.classList.toggle("editing");
+document.querySelectorAll(".timeline-card").forEach(el=>{
+el.contentEditable=document.body.classList.contains("editing");
+el.style.outline=el.contentEditable?"1px dashed var(--accent)":"none";
+});
+};
 
 loadDay(0);
 </script>
