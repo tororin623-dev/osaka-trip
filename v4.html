@@ -2,20 +2,33 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>Osaka 5-Day Strategy · AI Generated Journal</title>
+  <meta name="referrer" content="no-referrer">
+  <title>Osaka 5-Day Strategy · Slow Travel Journal (v4 rescued)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
-  
+
   <style>
     :root {
       --bg-body: #f4f1ea;
       --bg-card: #fdfaf6;
+      --bg-hero: #efece5;
+      --bg-chip: #fffbf5;
+
       --ink-main: #332c26;
       --ink-muted: #7d7266;
+      --ink-soft: #a89c8e;
       --ink-accent: #a67c52;
+
       --border-soft: #e6ded5;
+      --border-strong: #cbbba8;
+
+      --accent: #b08d55;
+      --accent-soft: rgba(176, 141, 85, 0.12);
+
+      --shadow-soft: 0 10px 30px rgba(66, 56, 46, 0.08);
       --radius-card: 16px;
     }
 
@@ -25,22 +38,16 @@
       margin: 0;
       padding: 0;
       background: var(--bg-body);
-      font-family: "Noto Serif TC", system-ui, sans-serif;
+      font-family: "Noto Serif TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink-main);
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    body {
-      min-height: 100vh;
-      padding: 14px 10px 90px;
-    }
+    body { min-height: 100vh; padding: 14px 10px 90px; }
 
     @media (min-width: 768px) {
-      body {
-        display: flex;
-        justify-content: center;
-        padding: 32px 20px 110px;
-      }
+      body { display: flex; justify-content: center; padding: 32px 20px 110px; }
     }
 
     .app-shell {
@@ -50,484 +57,1150 @@
       background: var(--bg-card);
       border-radius: 20px;
       border: 1px solid rgba(166, 124, 82, 0.2);
-      box-shadow: 0 10px 30px rgba(66, 56, 46, 0.08);
+      box-shadow: var(--shadow-soft);
       padding: 20px 16px 96px;
       position: relative;
       overflow: hidden;
     }
 
-    /* TEXTURE */
+    @media (min-width: 768px) {
+      .app-shell { padding: 32px 32px 110px; }
+    }
+
+    /* Subtle global texture */
     .app-shell::before {
       content: "";
       position: absolute;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7z' /%3E%3C/g%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 0;
     }
+
     .app-inner { position: relative; z-index: 1; }
 
     /* EDIT BUTTON */
     .edit-toggle {
-      position: absolute; top: 18px; right: 18px; z-index: 50;
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 50;
       background: rgba(255, 255, 255, 0.6);
-      border: 1px solid var(--border-soft);
-      padding: 4px 12px; border-radius: 99px;
-      font-size: 0.75rem; color: var(--ink-muted);
+      border: 1px solid var(--border-strong);
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-family: "Noto Serif TC", serif;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
       cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.05em;
+      user-select: none;
     }
+    .edit-toggle.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    [contenteditable="true"] {
+      outline: 1px dashed var(--accent);
+      outline-offset: 2px;
+      background: rgba(255, 255, 255, 0.45);
+      border-radius: 8px;
+      padding: 2px 4px;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-family: system-ui, sans-serif;
+      font-weight: 600;
+    }
+
+    h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: 0.02em; }
+    p { margin: 0 0 0.8em; line-height: 1.75; font-size: 0.95rem; color: var(--ink-main); }
 
     /* HERO */
     .hero {
-      background: #efece5;
+      background: var(--bg-hero);
       border-radius: 18px;
       padding: 24px 20px;
       margin-bottom: 24px;
+      position: relative;
     }
-    .hero-title { font-size: 1.6rem; margin-top: 8px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 700px) { .hero-grid { grid-template-columns: 1fr; } }
+
+    .hero-title { font-size: 1.6rem; margin-top: 8px; color: var(--ink-main); }
     .hero-subtitle { font-size: 0.92rem; color: var(--ink-muted); margin-top: 8px; line-height: 1.6; }
-    .eyebrow { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
 
-    .hero-meta-row { display: flex; gap: 12px; margin-top: 16px; font-size: 0.85rem; color: var(--ink-muted); align-items: center; }
-    .pill { background: #fff; padding: 4px 12px; border-radius: 99px; border: 1px solid rgba(0,0,0,0.05); }
-
-    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
-    @media(min-width: 600px) { .hero-grid { grid-template-columns: 1.6fr 1fr; } }
-
-    .hero-secondary {
-      background: #2c241b; border-radius: 14px; padding: 16px; color: #eaddcf;
-      display: flex; flex-direction: column; justify-content: space-between;
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      font-family: system-ui, sans-serif;
     }
-    .tags { display: flex; gap: 6px; margin-top: 8px; }
-    .tag { padding: 2px 8px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; font-size: 0.7rem; }
+    .meta-item { display: inline-flex; align-items: center; gap: 6px; }
+
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.05);
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      font-family: system-ui, sans-serif;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .pill-icon { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+    /* Hero Secondary */
+    .hero-secondary {
+      background: #2c241b;
+      border-radius: 14px;
+      padding: 16px;
+      color: #eaddcf;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 20px rgba(44, 36, 27, 0.25);
+    }
+    .hero-secondary h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #bcaaa4;
+      margin-bottom: 8px;
+      font-family: system-ui, sans-serif;
+    }
+    .hero-secondary p {
+      color: rgba(234, 221, 207, 0.9);
+      font-size: 0.88rem;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      padding: 3px 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.8);
+      font-family: system-ui, sans-serif;
+    }
 
     /* TIMELINE */
     .timeline { margin-top: 10px; padding-left: 10px; }
     .timeline-item { display: grid; grid-template-columns: 60px 1fr; gap: 16px; padding-bottom: 24px; position: relative; }
-    .timeline-time { text-align: right; font-size: 0.85rem; color: var(--ink-muted); padding-top: 2px; position: relative; }
-    .timeline-line { position: absolute; top: 24px; right: -8px; bottom: -16px; width: 1px; background: rgba(166, 124, 82, 0.3); }
+    .timeline-time {
+      text-align: right;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      font-family: system-ui, sans-serif;
+      padding-top: 2px;
+      position: relative;
+    }
+    .timeline-line {
+      position: absolute;
+      top: 24px;
+      right: -8px;
+      bottom: -16px;
+      width: 1px;
+      background: rgba(166, 124, 82, 0.3);
+      z-index: 0;
+    }
     .timeline-item:last-child .timeline-line { display: none; }
-    .timeline-dot { position: absolute; top: 6px; right: -12px; width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); z-index: 1; }
-    
-    .timeline-card { background: #fff; border: 1px solid var(--border-soft); border-radius: 12px; padding: 14px 16px; }
-    .timeline-title { font-size: 1rem; font-weight: 600; }
-    .timeline-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); float: right; }
-    .timeline-body { font-size: 0.9rem; margin-top: 8px; line-height: 1.6; }
+    .timeline-dot {
+      position: absolute;
+      top: 6px;
+      right: -12px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--accent);
+      z-index: 1;
+    }
 
-    /* PHOTO BREAK (AI GEN) */
+    .timeline-card {
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .timeline-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      border-color: var(--border-strong);
+    }
+
+    .timeline-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; gap: 12px; }
+    .timeline-title { font-size: 1rem; color: var(--ink-main); font-weight: 600; }
+    .timeline-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); font-family: system-ui, sans-serif; white-space: nowrap; }
+
+    .timeline-location {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .timeline-location a {
+      color: var(--ink-accent);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+    }
+    .timeline-location a:hover { border-bottom-color: var(--ink-accent); }
+
+    .timeline-body { font-size: 0.9rem; color: var(--ink-main); line-height: 1.6; }
+
+    .keyword-link {
+      color: var(--ink-accent);
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 1px dotted var(--ink-accent);
+      transition: background 0.2s;
+      padding: 0 2px;
+      border-radius: 4px;
+    }
+    .keyword-link:hover { background: var(--accent-soft); }
+
+    /* PHOTO BREAK (Safe visual, no external) */
     .photo-break {
       margin: 24px 0 10px;
       background: #fff;
       border: 1px solid var(--border-soft);
       border-radius: 12px;
       overflow: hidden;
-      display: grid; grid-template-columns: 1fr;
-      min-height: 280px;
+      display: grid;
+      grid-template-columns: 1fr;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-    @media(min-width: 600px) { .photo-break { grid-template-columns: 1.4fr 1fr; } }
+    @media(min-width: 600px) { .photo-break { grid-template-columns: 1.2fr 1fr; } }
 
     .photo-wrapper {
       position: relative;
-      background: #e0ddd5;
+      min-height: 260px;
       overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(1200px 500px at 30% 20%, rgba(255,255,255,0.35), transparent 55%),
+                  linear-gradient(135deg, #d8c7b2 0%, #b7c7d6 60%, #9aa1a8 100%);
+    }
+
+    /* subtle overlay film */
+    .photo-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(180deg, rgba(0,0,0,0.06), transparent 30%, rgba(0,0,0,0.08));
+      pointer-events: none;
+      z-index: 2;
+      mix-blend-mode: multiply;
     }
 
     .photo-img-element {
-      width: 100%; height: 100%; object-fit: cover;
-      opacity: 0; transition: opacity 1s ease;
-    }
-    .photo-img-element.loaded { opacity: 1; }
-
-    /* AI Loading State */
-    .ai-loader {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       position: absolute;
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      color: var(--ink-muted);
-      font-size: 0.75rem; letter-spacing: 0.1em;
-      transition: opacity 0.3s;
+      inset: 0;
+      z-index: 1;
+      opacity: 1;
+      transform: scale(1.02);
+      filter: contrast(1.02) saturate(1.02);
     }
-    .ai-loader.hidden { opacity: 0; pointer-events: none; }
-    
-    .spinner {
-      width: 24px; height: 24px;
-      border: 2px solid rgba(166, 124, 82, 0.2);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+
+    .photo-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255,255,255,0.82);
+      position: relative;
+      z-index: 3;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .photo-content { padding: 24px; display: flex; flex-direction: column; justify-content: center; }
-
-    /* NAV */
+    /* BOTTOM NAV */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       background: rgba(253, 250, 246, 0.95);
       border-top: 1px solid var(--border-soft);
       backdrop-filter: blur(12px);
-      padding: 10px 16px; display: flex; justify-content: center;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
       z-index: 100;
+      display: flex;
+      justify-content: center;
     }
-    .nav-scroll { display: flex; gap: 8px; overflow-x: auto; }
+    .nav-scroll {
+      display: flex; gap: 8px; overflow-x: auto;
+      padding-bottom: 4px; max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .nav-scroll::-webkit-scrollbar { display: none; }
+
     .nav-btn {
-      padding: 8px 14px; border-radius: 99px;
-      border: 1px solid var(--border-soft); background: transparent;
-      color: var(--ink-muted); font-size: 0.75rem; cursor: pointer;
+      flex: 0 0 auto;
+      padding: 8px 14px;
+      border-radius: 99px;
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--ink-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
       display: flex; align-items: center; gap: 6px;
+      font-family: system-ui, sans-serif;
+      user-select: none;
     }
+    .nav-btn span { display: block; }
+    .nav-btn-dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; border: 1px solid var(--ink-muted); }
+
     .nav-btn.active { background: var(--ink-main); color: #fff; border-color: var(--ink-main); }
-    .nav-btn-dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; border: 1px solid currentColor; }
     .nav-btn.active .nav-btn-dot { background: var(--accent); border-color: var(--accent); }
 
-    /* DRAWER */
-    .drawer {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: #fdfaf6; border-radius: 20px 20px 0 0;
-      max-height: 85vh; transform: translateY(105%);
-      transition: transform 0.3s; z-index: 160;
-      box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
-      display: flex; flex-direction: column;
+    .nav-btn.special { border-color: var(--accent); color: var(--ink-accent); }
+    .nav-btn.special.active { background: var(--accent); color: #fff; }
+
+    /* DRAWER & MODAL */
+    .backdrop {
+      position: fixed; inset: 0; background: rgba(30,25,20,0.4);
+      z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s;
     }
-    .drawer.active { transform: translateY(0); }
-    .drawer-header { padding: 16px 20px; border-bottom: 1px solid var(--border-soft); display: flex; justify-content: space-between; }
-    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 150; }
     .backdrop.active { opacity: 1; pointer-events: auto; }
 
+    .drawer {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fdfaf6;
+      border-radius: 20px 20px 0 0;
+      max-height: 85vh;
+      transform: translateY(105%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 160;
+      display: flex; flex-direction: column;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+    }
+    .drawer.active { transform: translateY(0); }
+
+    .drawer-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(253, 250, 246, 0.95);
+      border-radius: 20px 20px 0 0;
+    }
+    .drawer-title { font-size: 1rem; font-weight: 700; color: var(--ink-main); }
+    .drawer-close { background: none; border: none; font-size: 1.5rem; color: var(--ink-muted); cursor: pointer; padding: 0 8px; }
+
+    .drawer-content { padding: 20px; overflow-y: auto; }
+
+    .strategy-card {
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .strategy-card h3 {
+      font-size: 0.85rem;
+      color: var(--ink-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      font-family: system-ui, sans-serif;
+    }
+    .strategy-card p { font-size: 0.9rem; margin-bottom: 8px; }
+    .strategy-list li { margin-bottom: 6px; font-size: 0.9rem; color: var(--ink-muted); }
+
+    .modal {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.97);
+      width: 90%; max-width: 420px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      z-index: 170;
+      opacity: 0; pointer-events: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .modal.active {
+      opacity: 1; pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .modal-h { font-size: 1.05rem; margin-bottom: 4px; }
+    .modal-sub { font-size: 0.75rem; text-transform: uppercase; color: var(--ink-soft); letter-spacing: 0.1em; margin-bottom: 14px; }
+    .modal-body { font-size: 0.92rem; color: var(--ink-muted); line-height: 1.7; }
+
+    /* Small motion polish for hero text changes */
+    .fade-swap { transition: opacity 180ms ease; }
   </style>
 </head>
+
 <body>
+  <div class="app-shell">
+    <button id="edit-toggle" class="edit-toggle" type="button">✎ EDIT</button>
 
-<div class="app-shell">
-  <button id="edit-toggle" class="edit-toggle">✎ EDIT</button>
-
-  <div class="app-inner">
-    <!-- Hero -->
-    <header class="hero">
-      <div class="hero-grid">
-        <div>
-          <div class="eyebrow" id="day-eyebrow">DAY 01 · STRATEGY</div>
-          <h1 class="hero-title" id="day-title">Arrival & Winter Gear</h1>
-          <p class="hero-subtitle" id="day-subtitle">從工作模式登出，將第一天的重點放在「冬裝補齊」與「調整節奏」。</p>
-          <div class="hero-meta-row">
-            <div class="pill"><span id="day-date">12/15 Mon</span></div>
-            <div>📍 <span id="day-location">KIX · Rinku Town</span></div>
-          </div>
-        </div>
-        <div class="hero-secondary">
+    <div class="app-inner">
+      <header class="hero">
+        <div class="hero-grid">
           <div>
-            <h3 style="font-size:0.8rem; letter-spacing:0.1em; color:#bcaaa4; margin:0 0 8px;">STRATEGY</h3>
-            <p id="day-strategy" style="font-size:0.88rem; color:rgba(234, 221, 207, 0.9); margin:0;">臨空城核心任務：一次解決保暖外套與配件。</p>
+            <div class="eyebrow" id="day-eyebrow">DAY 01 · STRATEGY</div>
+            <h1 class="hero-title fade-swap" id="day-title">Arrival & Winter Gear</h1>
+            <p class="hero-subtitle fade-swap" id="day-subtitle">從工作模式登出，將第一天的重點放在「冬裝補齊」與「調整節奏」，讓後續行程輕量化。</p>
+
+            <div class="hero-meta-row">
+              <div class="pill"><span class="pill-icon"></span><span id="day-date">2025/12/15 · Mon</span></div>
+              <div class="meta-item">📍 <span id="day-location">KIX · Rinku Town</span></div>
+              <div class="meta-item">🌡️ <span id="weather-display">Loading...</span></div>
+            </div>
           </div>
-          <div class="tags" id="day-tags"></div>
-        </div>
-      </div>
-    </header>
 
-    <!-- Timeline -->
-    <main id="timeline" class="timeline"></main>
-
-    <!-- AI Photo Break -->
-    <div class="photo-break">
-      <div class="photo-wrapper">
-        <<img id="day-image" class="photo-img-element"
-  src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201600%201000%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%25%27%20stop-color%3D%27%23f6d365%27/%3E%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%23fda085%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%271600%27%20height%3D%271000%27%20fill%3D%27url(%23g)%27/%3E%3Ctext%20x%3D%2780%27%20y%3D%27160%27%20font-size%3D%2796%27%20font-family%3D%27system-ui%27%20fill%3D%27%232b2117%27%3Ev10%20TEST%20IMAGE%3C/text%3E%3C/svg%3E"
-  alt="v10 test" />
->
-        <div id="ai-loader" class="ai-loader">
-          <div class="spinner"></div>
-          <span>AI GENERATING...</span>
+          <div class="hero-secondary">
+            <div>
+              <h3>今日策略 · STRATEGY</h3>
+              <p id="day-strategy">臨空城核心任務：一次解決保暖外套與冬季配件（TNF / Beams），避免之後幾天為了買衣服分心。</p>
+            </div>
+            <div class="tags" id="day-tags">
+              <span class="tag">WINTER GEAR</span>
+              <span class="tag">NO RUSH</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="photo-content">
-        <div class="eyebrow">VIBE CHECK</div>
-        <h3 id="photo-title">Title</h3>
-        <p id="photo-desc">Description</p>
+      </header>
+
+      <main id="timeline" class="timeline"></main>
+
+      <!-- Photo Break: guaranteed render (SVG data uri) -->
+      <div class="photo-break">
+        <div class="photo-wrapper" id="photo-wrapper">
+          <img id="photo-img-element" class="photo-img-element" src="" alt="Day visual" />
+        </div>
+        <div class="photo-content">
+          <div class="eyebrow">VIBE CHECK</div>
+          <h3 id="photo-title">Title</h3>
+          <p id="photo-desc">Description</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<nav class="bottom-nav">
-  <div class="nav-scroll" id="nav-container"></div>
-</nav>
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-scroll" id="nav-container"></div>
+  </nav>
 
-<!-- Drawer -->
-<div class="backdrop" id="backdrop"></div>
-<div class="drawer" id="drawer">
-  <div class="drawer-header">
-    <div style="font-weight:600;">TRIP CHEAT SHEET</div>
-    <div style="cursor:pointer;" id="drawer-close">✕</div>
-  </div>
-  <div style="padding:20px;">
-    <p><strong>核心原則</strong>: 慢半拍 × 有策略的城市旅行</p>
-    <p><strong>住宿</strong>: GRANBELL HOTEL OSAKA NAMBA</p>
-    <p><strong>航班</strong>: JL812 (去) / JL815 (回)</p>
-  </div>
-</div>
-
-<script type="module">
-  // --- AI CONFIGURATION ---
-  const apiKey = ""; // API key injected by environment
-  
-  // High-Quality Photorealistic Prompts
-  const PROMPTS = [
-    "A cinematic wide shot of Rinku Town Ferris Wheel in Osaka at sunset, winter atmosphere, gentle sea waves in the foreground, soft golden hour lighting, photorealistic, 8k resolution, highly detailed.", // Day 1
-    "A cozy street view of Kitahama river side in Osaka, retro brick architecture cafes, soft morning sunlight, peaceful urban river reflection, photorealistic, cinematic depth of field.", // Day 2
-    "A serene photography of Osaka Castle moat reflection, winter trees with light snow dust, soft sunlight, peaceful park atmosphere, high resolution, photorealistic.", // Day 3
-    "A close-up cinematic portrait of a deer in Nara Park, soft natural light filtering through forest trees, peaceful nature, mossy stone lanterns in background, photorealistic, 8k.", // Day 4
-    "A cinematic view from Kansai International Airport observation deck, looking out at an airplane wing and the runway at twilight, blue hour sky, emotional travel vibe, photorealistic." // Day 5
-  ];
-
-  // --- DATA MODEL ---
-  const itinerary = [
-    {
-      id: 0, label: "DAY 01", date: "12/15 Mon", loc: "KIX · Rinku",
-      title: "Arrival & Winter Gear", subtitle: "抵達與冬裝補齊：從工作模式登出。",
-      strategy: "核心任務：在臨空城一次解決保暖外套 (TNF/Patagonia)，避免後續分心。",
-      tags: ["WINTER GEAR", "SLOW START"],
-      photoTitle: "臨空城的日落", photoDesc: "海風略帶寒意，摩天輪下的夕陽宣告假期正式開始。",
-      timeline: [
-        { time: "11:50", title: "抵達關西機場", type: "ARRIVAL", desc: "JL812 落地。感受大阪的氣溫，確認 ICOCA。" },
-        { time: "13:30", title: "臨空城午餐", type: "LUNCH", desc: "Seaside Area 看海用餐。" },
-        { time: "15:00", title: "冬裝採購", type: "SHOPPING", desc: "Rinku Outlet 重點：TNF, BEAMS。買好外套直接穿上。" },
-        { time: "19:00", title: "入住難波", type: "HOTEL", desc: "Granbell Hotel Check-in。" }
-      ]
-    },
-    {
-      id: 1, label: "DAY 02", date: "12/16 Tue", loc: "Umeda · Kitahama",
-      title: "Urban Rhythm", subtitle: "梅田的效率與北濱的優雅。",
-      strategy: "上午解決彩妝，下午北濱放空。",
-      tags: ["CITY", "CAFE"],
-      photoTitle: "北濱的寧靜", photoDesc: "難波的喧囂之外，這裡是大阪最像歐洲的角落。",
-      timeline: [
-        { time: "10:00", title: "梅田購物", type: "SHOPPING", desc: "鎖定：Excel, Canmake, 3COINS。" },
-        { time: "13:30", title: "北濱河畔", type: "CAFE", desc: "Gokan 本館或 &ISLAND。" },
-        { time: "15:30", title: "中崎町", type: "WALK", desc: "探索老屋改建的小店。" },
-        { time: "19:00", title: "道頓堀", type: "DINNER", desc: "味乃家大阪燒。" }
-      ]
-    },
-    {
-      id: 2, label: "DAY 03", date: "12/17 Wed", loc: "Osaka Castle",
-      title: "History & Green", subtitle: "護城河的倒影與冬日暖陽。",
-      strategy: "體力調節日，不一定要爬天守閣。",
-      tags: ["PARK", "RELAX"],
-      photoTitle: "護城河的倒影", photoDesc: "不需要爬上天守閣，光是沿著石牆走，就能感受到歷史的重量。",
-      timeline: [
-        { time: "10:00", title: "大阪城公園", type: "WALK", desc: "外圍散步，看銀杏與石牆。" },
-        { time: "12:30", title: "Jo-Terrace", type: "LUNCH", desc: "公園旁的複合設施用餐。" },
-        { time: "15:00", title: "市區備案", type: "BUFFER", desc: "心齋橋補貨或回飯店午睡。" },
-        { time: "18:30", title: "福太郎", type: "DINNER", desc: "著名的蔥燒。" }
-      ]
-    },
-    {
-      id: 3, label: "DAY 04", date: "12/18 Thu", loc: "Nara Park",
-      title: "Deer & Silence", subtitle: "整趟旅程最安靜的一天。",
-      strategy: "不看地圖，順著鹿的步調走。",
-      tags: ["NATURE", "DEER"],
-      photoTitle: "古都的眼神", photoDesc: "這裡的鹿比人更像主人。",
-      timeline: [
-        { time: "09:30", title: "前往奈良", type: "TRAIN", desc: "搭乘近鐵。" },
-        { time: "10:30", title: "Rokumei", type: "COFFEE", desc: "冠軍咖啡奈良本店。" },
-        { time: "12:00", title: "志津香", type: "LUNCH", desc: "釜飯，或奈良町定食。" },
-        { time: "14:00", title: "春日大社", type: "WALK", desc: "避開遊客，走進樹林裡。" }
-      ]
-    },
-    {
-      id: 4, label: "DAY 05", date: "12/19 Fri", loc: "KIX Airport",
-      title: "Sky & Reflection", subtitle: "透過機場玻璃窗好好道別。",
-      strategy: "回程重點是儀式感。",
-      tags: ["AIRPORT", "BYE"],
-      photoTitle: "離開的視角", photoDesc: "透過機場的玻璃窗，再看一次這座城市的天空。",
-      timeline: [
-        { time: "10:00", title: "退房", type: "CHECKOUT", desc: "行李寄放，補最後消耗品。" },
-        { time: "14:30", title: "前往機場", type: "MOVE", desc: "搭乘 Rapi:t。" },
-        { time: "16:00", title: "Blue Bottle", type: "COFFEE", desc: "KIX 最後一杯咖啡。" }
-      ]
-    }
-  ];
-
-  // --- STATE ---
-  const state = {
-    activeDay: 0,
-    imageCache: {} // Stores base64 images: { 0: "data...", 1: "data..." }
-  };
-
-  const els = {
-    title: document.getElementById('day-title'),
-    subtitle: document.getElementById('day-subtitle'),
-    date: document.getElementById('day-date'),
-    loc: document.getElementById('day-location'),
-    strategy: document.getElementById('day-strategy'),
-    tags: document.getElementById('day-tags'),
-    timeline: document.getElementById('timeline'),
-    nav: document.getElementById('nav-container'),
-    // Photo
-    photoImg: document.getElementById('ai-image'),
-    loader: document.getElementById('ai-loader'),
-    photoTitle: document.getElementById('photo-title'),
-    photoDesc: document.getElementById('photo-desc'),
-    // Drawer
-    drawer: document.getElementById('drawer'),
-    backdrop: document.getElementById('backdrop'),
-    drawerClose: document.getElementById('drawer-close')
-  };
-
-  // --- AI GENERATION LOGIC ---
-  async function generateDayImage(dayIndex) {
-    if (state.imageCache[dayIndex]) {
-      return state.imageCache[dayIndex];
-    }
-
-    try {
-      const prompt = PROMPTS[dayIndex];
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            instances: [{ prompt: prompt }],
-            parameters: { sampleCount: 1 }
-          })
-        }
-      );
-
-      if (!response.ok) throw new Error("AI Gen Failed");
-      
-      const data = await response.json();
-      const base64 = data.predictions[0].bytesBase64Encoded;
-      const dataUrl = `data:image/png;base64,${base64}`;
-      
-      // Cache it
-      state.imageCache[dayIndex] = dataUrl;
-      return dataUrl;
-    } catch (e) {
-      console.error(e);
-      return null;
-    }
-  }
-
-  async function loadDay(idx) {
-    state.activeDay = idx;
-    const data = itinerary[idx];
-
-    // Update UI Text
-    els.title.textContent = data.title;
-    els.subtitle.textContent = data.subtitle;
-    els.date.textContent = data.date;
-    els.loc.textContent = data.loc;
-    els.strategy.textContent = data.strategy;
-    els.tags.innerHTML = data.tags.map(t => `<span class="tag">${t}</span>`).join('');
-    els.photoTitle.textContent = data.photoTitle;
-    els.photoDesc.textContent = data.photoDesc;
-
-    // Render Timeline
-    els.timeline.innerHTML = data.timeline.map(item => `
-      <div class="timeline-item">
-        <div class="timeline-time">
-          ${item.time}
-          <div class="timeline-dot"></div>
-          <div class="timeline-line"></div>
-        </div>
-        <article class="timeline-card">
-          <div class="timeline-title">${item.title} <span class="timeline-type">${item.type}</span></div>
-          <div class="timeline-body">${item.desc}</div>
-        </article>
+  <!-- Drawer (Trip Cheat Sheet) -->
+  <div class="backdrop" id="backdrop"></div>
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">旅程小抄 · TRIP CHEAT SHEET</div>
+      <button class="drawer-close" id="drawer-close" type="button">✕</button>
+    </div>
+    <div class="drawer-content">
+      <div class="strategy-card">
+        <h3>核心原則 · CORE PRINCIPLES</h3>
+        <p>慢半拍 × 有策略的城市旅行</p>
+        <ul class="strategy-list" style="padding-left: 20px; margin:0;">
+          <li><strong>冬裝先決</strong>：Day 1 搞定保暖，後面只逛不買重物。</li>
+          <li><strong>缺貨風險管理</strong>：Day 2 上午優先處理熱門彩妝。</li>
+          <li><strong>奈良留白</strong>：Day 4 不看地圖，只看鹿與樹。</li>
+        </ul>
       </div>
-    `).join('');
 
-    // Update Nav Active State
-    document.querySelectorAll('.nav-btn').forEach((btn, i) => {
-      if (i < 5) { // First 5 are days
-        btn.classList.toggle('active', i === idx);
-        // Reset dot color
-        const dot = btn.querySelector('.nav-btn-dot');
-        if(dot) dot.style.backgroundColor = i === idx ? 'var(--accent)' : 'transparent';
-        if(dot) dot.style.borderColor = i === idx ? 'var(--accent)' : 'currentColor';
-      }
-    });
+      <div class="strategy-card">
+        <h3>住宿 · HOTEL</h3>
+        <p><strong>GRANBELL HOTEL OSAKA NAMBA</strong></p>
+        <p style="font-size:0.85rem; color:var(--ink-muted);">
+          大阪難波格蘭貝爾酒店<br>〒556-0011 大阪市浪速區難波中2-6-7
+        </p>
+      </div>
 
-    // Handle AI Image
-    els.photoImg.classList.remove('loaded');
-    els.loader.classList.remove('hidden'); // Show loader
-    
-    // Check Cache or Generate
-    if (state.imageCache[idx]) {
-      // Use Cached
-      els.photoImg.src = state.imageCache[idx];
-      els.photoImg.onload = () => {
-        els.loader.classList.add('hidden');
-        els.photoImg.classList.add('loaded');
-      };
-    } else {
-      // Generate Fresh
-      const imgUrl = await generateDayImage(idx);
-      if (imgUrl) {
-        els.photoImg.src = imgUrl;
-        els.photoImg.onload = () => {
-          els.loader.classList.add('hidden');
-          els.photoImg.classList.add('loaded');
-        };
-      } else {
-        // Fallback if AI fails
-        els.loader.classList.add('hidden');
-        els.photoImg.alt = "Image Generation Failed. Refresh to retry.";
-      }
+      <div class="strategy-card">
+        <h3>航班 · FLIGHTS (JL)</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div>
+            <strong>去程 JL812</strong><br>
+            <span style="font-size:0.8rem; color:var(--ink-muted);">08:20 TPE → 11:50 KIX</span>
+          </div>
+          <div>
+            <strong>回程 JL815</strong><br>
+            <span style="font-size:0.8rem; color:var(--ink-muted);">19:20 KIX → 21:35 TPE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal" id="modal">
+    <h3 class="modal-h" id="modal-title">Title</h3>
+    <div class="modal-sub" id="modal-sub">Subtitle</div>
+    <div class="modal-body" id="modal-body">Content</div>
+  </div>
+
+  <script>
+    /****************************************************************
+     * v4 RESCUED: remove "AI generating" state machine completely.
+     * Images are 100% local SVG Data URIs (photo-like).
+     ****************************************************************/
+
+    // --- PHOTO-LIKE SVG FACTORY (grain + bokeh + window grid + landmark silhouette) ---
+    function svgPhotoDataURI(scene) {
+      // scene: { key, titleColor, skyA, skyB, glowA, glowB, landmark, accent }
+      const s = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000">
+  <defs>
+    <!-- background gradient -->
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="${scene.skyA}"/>
+      <stop offset="0.65" stop-color="${scene.skyB}"/>
+      <stop offset="1" stop-color="#1e1a16"/>
+    </linearGradient>
+
+    <!-- glow / sun haze -->
+    <radialGradient id="glow" cx="35%" cy="25%" r="65%">
+      <stop offset="0" stop-color="${scene.glowA}" stop-opacity="0.65"/>
+      <stop offset="0.35" stop-color="${scene.glowB}" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- grain -->
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="
+        1 0 0 0 0
+        0 1 0 0 0
+        0 0 1 0 0
+        0 0 0 0.35 0" />
+    </filter>
+
+    <!-- cinematic blur for bokeh -->
+    <filter id="bokehBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+
+    <!-- slight vignette -->
+    <radialGradient id="vignette" cx="50%" cy="45%" r="70%">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="0.7" stop-color="#000" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.42"/>
+    </radialGradient>
+
+    <!-- window grid -->
+    <pattern id="grid" width="220" height="160" patternUnits="userSpaceOnUse">
+      <path d="M220 0H0V160" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+      <path d="M110 0V160" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="2"/>
+      <path d="M0 80H220" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  <!-- Base sky -->
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+
+  <!-- Glow / haze -->
+  <rect width="1600" height="1000" fill="url(#glow)"/>
+
+  <!-- Bokeh lights -->
+  <g filter="url(#bokehBlur)" opacity="0.45">
+    <circle cx="230" cy="180" r="60" fill="rgba(255,230,180,0.9)"/>
+    <circle cx="420" cy="260" r="40" fill="rgba(255,255,255,0.7)"/>
+    <circle cx="1180" cy="210" r="70" fill="rgba(210,235,255,0.8)"/>
+    <circle cx="1340" cy="340" r="55" fill="rgba(255,210,200,0.75)"/>
+    <circle cx="980" cy="420" r="45" fill="rgba(255,245,220,0.55)"/>
+    <circle cx="300" cy="520" r="55" fill="rgba(195,225,255,0.55)"/>
+  </g>
+
+  <!-- Landmark silhouette -->
+  <g opacity="0.9">
+    ${scene.landmark}
+  </g>
+
+  <!-- subtle fog band -->
+  <rect y="600" width="1600" height="400" fill="rgba(255,255,255,0.06)"/>
+  <rect y="680" width="1600" height="320" fill="rgba(0,0,0,0.10)"/>
+
+  <!-- window grid overlay -->
+  <rect width="1600" height="1000" fill="url(#grid)" opacity="0.55"/>
+
+  <!-- accent highlight line -->
+  <path d="M0 720 C 260 690, 520 760, 820 720 S 1320 700, 1600 740"
+        fill="none" stroke="${scene.accent}" stroke-opacity="0.28" stroke-width="6"/>
+
+  <!-- grain on top -->
+  <rect width="1600" height="1000" filter="url(#grain)" opacity="0.42"/>
+
+  <!-- vignette -->
+  <rect width="1600" height="1000" fill="url(#vignette)"/>
+
+  <!-- tiny title stamp (very subtle, like film) -->
+  <text x="70" y="930" font-family="system-ui, sans-serif" font-size="34" fill="${scene.titleColor}" opacity="0.35" letter-spacing="4">
+    ${scene.key}
+  </text>
+</svg>`.trim();
+
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);
     }
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 
-  function init() {
-    // Render Nav
-    const frag = document.createDocumentFragment();
-    itinerary.forEach((d, i) => {
-      const btn = document.createElement('button');
-      btn.className = `nav-btn ${i===0?'active':''}`;
-      btn.innerHTML = `<span class="nav-btn-dot"></span><span>${d.label}</span>`;
-      btn.onclick = () => loadDay(i);
-      frag.appendChild(btn);
-    });
-    // Add TRIP button
-    const tripBtn = document.createElement('button');
-    tripBtn.className = 'nav-btn special';
-    tripBtn.innerHTML = `<span>TRIP</span>`;
-    tripBtn.style.borderColor = 'var(--accent)';
-    tripBtn.style.color = 'var(--ink-accent)';
-    tripBtn.onclick = openDrawer;
-    frag.appendChild(tripBtn);
-    
-    els.nav.appendChild(frag);
+    // --- 5 Day "Photo-like" Scenes (match daily theme) ---
+    const DAY_VISUALS = [
+      // Day 1: Rinku sunset + ferris wheel silhouette
+      svgPhotoDataURI({
+        key: "RINKU SUNSET",
+        titleColor: "rgba(255,255,255,0.9)",
+        skyA: "#f7c58a",
+        skyB: "#6a84a6",
+        glowA: "rgba(255,240,210,1)",
+        glowB: "rgba(255,170,120,1)",
+        accent: "rgba(255,240,210,1)",
+        landmark: `
+          <g fill="rgba(10,10,10,0.72)">
+            <!-- horizon -->
+            <rect x="0" y="700" width="1600" height="300" opacity="0.65"/>
+            <!-- ferris wheel -->
+            <circle cx="1240" cy="560" r="210" fill="none" stroke="rgba(0,0,0,0.75)" stroke-width="14"/>
+            <circle cx="1240" cy="560" r="10" fill="rgba(0,0,0,0.85)"/>
+            ${Array.from({length: 12}).map((_,i)=>{
+              const a = (Math.PI*2*i)/12;
+              const x = 1240 + Math.cos(a)*210;
+              const y = 560 + Math.sin(a)*210;
+              return `<line x1="1240" y1="560" x2="${x.toFixed(2)}" y2="${y.toFixed(2)}" stroke="rgba(0,0,0,0.6)" stroke-width="6"/>`;
+            }).join("")}
+            <!-- cabins -->
+            ${Array.from({length: 10}).map((_,i)=>{
+              const a = (Math.PI*2*i)/10 + 0.25;
+              const x = 1240 + Math.cos(a)*210;
+              const y = 560 + Math.sin(a)*210;
+              return `<rect x="${(x-16).toFixed(2)}" y="${(y-12).toFixed(2)}" width="32" height="24" rx="6" fill="rgba(255,255,255,0.22)" stroke="rgba(0,0,0,0.55)" stroke-width="3"/>`;
+            }).join("")}
+            <!-- city blocks -->
+            <rect x="0" y="650" width="520" height="180" opacity="0.55"/>
+            <rect x="540" y="670" width="340" height="160" opacity="0.5"/>
+            <rect x="900" y="690" width="220" height="140" opacity="0.48"/>
+          </g>
+        `
+      }),
 
-    // Event Listeners
-    document.getElementById('edit-toggle').onclick = () => {
-      const editing = document.body.classList.toggle('editing');
-      document.querySelectorAll('.timeline-title, .timeline-body').forEach(el => {
-        el.contentEditable = editing;
-        if(editing) el.style.outline = "1px dashed var(--accent)";
-        else el.style.outline = "none";
-      });
+      // Day 2: Umeda / Kitahama river city + bridge lines
+      svgPhotoDataURI({
+        key: "RIVER CITY",
+        titleColor: "rgba(255,255,255,0.9)",
+        skyA: "#d9e3ef",
+        skyB: "#7b8da3",
+        glowA: "rgba(255,255,255,1)",
+        glowB: "rgba(200,220,255,1)",
+        accent: "rgba(190,220,255,1)",
+        landmark: `
+          <g fill="rgba(12,12,12,0.70)">
+            <!-- water -->
+            <rect x="0" y="720" width="1600" height="280" fill="rgba(0,0,0,0.55)"/>
+            <path d="M0 740 C 260 700, 520 790, 820 740 S 1320 710, 1600 770" fill="rgba(255,255,255,0.06)"/>
+            <!-- skyline -->
+            <rect x="80" y="480" width="120" height="240" opacity="0.55"/>
+            <rect x="220" y="430" width="150" height="290" opacity="0.58"/>
+            <rect x="400" y="510" width="110" height="210" opacity="0.52"/>
+            <rect x="540" y="390" width="180" height="330" opacity="0.62"/>
+            <rect x="750" y="470" width="140" height="250" opacity="0.56"/>
+            <rect x="920" y="420" width="220" height="300" opacity="0.60"/>
+            <rect x="1160" y="500" width="170" height="220" opacity="0.54"/>
+            <rect x="1350" y="450" width="160" height="270" opacity="0.57"/>
+            <!-- bridge (Kitahama vibe) -->
+            <path d="M240 700 Q 800 610 1360 700" fill="none" stroke="rgba(0,0,0,0.75)" stroke-width="18"/>
+            <path d="M240 700 Q 800 640 1360 700" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="6"/>
+            <!-- bridge rails -->
+            ${Array.from({length: 18}).map((_,i)=>{
+              const x = 260 + i*62;
+              const y = 690 - Math.sin(i/3)*10;
+              return `<rect x="${x}" y="${y}" width="10" height="40" fill="rgba(255,255,255,0.14)"/>`;
+            }).join("")}
+          </g>
+        `
+      }),
+
+      // Day 3: Osaka Castle silhouette + trees
+      svgPhotoDataURI({
+        key: "OSAKA CASTLE",
+        titleColor: "rgba(255,255,255,0.9)",
+        skyA: "#dfe8ef",
+        skyB: "#8897a7",
+        glowA: "rgba(255,255,255,1)",
+        glowB: "rgba(220,235,255,1)",
+        accent: "rgba(255,255,255,1)",
+        landmark: `
+          <g fill="rgba(8,8,8,0.76)">
+            <!-- ground -->
+            <rect x="0" y="720" width="1600" height="280" opacity="0.62"/>
+            <!-- trees -->
+            ${Array.from({length: 26}).map((_,i)=>{
+              const x = 30 + i*65;
+              const h = 140 + (i%5)*18;
+              return `
+                <rect x="${x}" y="${720-h}" width="14" height="${h}" opacity="0.35"/>
+                <circle cx="${x+7}" cy="${720-h}" r="${26 + (i%4)*6}" opacity="0.35"/>
+              `;
+            }).join("")}
+            <!-- castle base -->
+            <path d="M760 700 L 840 700 L 900 620 L 700 620 Z" opacity="0.70"/>
+            <!-- main keep (stylized) -->
+            <path d="M720 620 L 880 620 L 860 560 L 740 560 Z" opacity="0.85"/>
+            <path d="M740 560 L 860 560 L 845 515 L 755 515 Z" opacity="0.88"/>
+            <path d="M760 515 L 840 515 L 832 470 L 768 470 Z" opacity="0.92"/>
+            <!-- roofs (white highlight) -->
+            <path d="M705 620 L 895 620" stroke="rgba(255,255,255,0.22)" stroke-width="8"/>
+            <path d="M728 560 L 872 560" stroke="rgba(255,255,255,0.20)" stroke-width="7"/>
+            <path d="M748 515 L 852 515" stroke="rgba(255,255,255,0.18)" stroke-width="6"/>
+            <!-- top -->
+            <rect x="792" y="430" width="56" height="40" opacity="0.85"/>
+            <path d="M780 430 L 860 430 L 850 410 L 790 410 Z" opacity="0.8"/>
+          </g>
+        `
+      }),
+
+      // Day 4: Nara deer silhouette + shrine lantern mood
+      svgPhotoDataURI({
+        key: "NARA QUIET",
+        titleColor: "rgba(255,255,255,0.9)",
+        skyA: "#d5c1ab",
+        skyB: "#7a6b5f",
+        glowA: "rgba(255,235,210,1)",
+        glowB: "rgba(255,180,130,1)",
+        accent: "rgba(255,210,170,1)",
+        landmark: `
+          <g fill="rgba(10,10,10,0.75)">
+            <!-- forest ground -->
+            <rect x="0" y="740" width="1600" height="260" opacity="0.65"/>
+            <!-- tree trunks -->
+            ${Array.from({length: 20}).map((_,i)=>{
+              const x = 60 + i*78;
+              const w = 18 + (i%3)*6;
+              const top = 360 + (i%4)*30;
+              return `<rect x="${x}" y="${top}" width="${w}" height="${740-top}" opacity="0.28"/>`;
+            }).join("")}
+            <!-- lanterns (Kasuga vibe) -->
+            ${Array.from({length: 8}).map((_,i)=>{
+              const x = 220 + i*170;
+              const y = 560 + (i%2)*20;
+              return `
+                <rect x="${x}" y="${y}" width="20" height="90" opacity="0.35"/>
+                <rect x="${x-20}" y="${y+20}" width="60" height="46" rx="8" fill="rgba(255,210,140,0.18)" stroke="rgba(255,210,140,0.28)" stroke-width="3"/>
+              `;
+            }).join("")}
+            <!-- deer silhouette -->
+            <path d="M980 740
+                     C 940 730, 910 700, 920 670
+                     C 930 635, 965 625, 990 640
+                     C 1008 610, 1048 605, 1070 630
+                     C 1105 640, 1130 665, 1120 700
+                     C 1110 735, 1060 750, 980 740 Z"
+                  opacity="0.80"/>
+            <path d="M1000 640 C 1010 610, 1030 580, 1058 565
+                     C 1080 555, 1090 535, 1100 510
+                     C 1110 530, 1106 560, 1090 580
+                     C 1072 602, 1048 615, 1020 622 Z"
+                  opacity="0.82"/>
+            <!-- antlers -->
+            <path d="M1060 560
+                     C 1040 520, 1020 500, 990 488
+                     M1058 560
+                     C 1075 525, 1100 510, 1130 505"
+                  fill="none" stroke="rgba(0,0,0,0.78)" stroke-width="10" stroke-linecap="round"/>
+            <!-- legs -->
+            <rect x="955" y="732" width="16" height="80" opacity="0.55"/>
+            <rect x="1005" y="736" width="16" height="90" opacity="0.55"/>
+            <rect x="1060" y="734" width="16" height="86" opacity="0.55"/>
+            <rect x="1100" y="730" width="16" height="82" opacity="0.55"/>
+          </g>
+        `
+      }),
+
+      // Day 5: Airport window + airplane silhouette
+      svgPhotoDataURI({
+        key: "KIX DEPARTURE",
+        titleColor: "rgba(255,255,255,0.9)",
+        skyA: "#b9c7ff",
+        skyB: "#6b6f8a",
+        glowA: "rgba(255,255,255,1)",
+        glowB: "rgba(240,220,255,1)",
+        accent: "rgba(230,230,255,1)",
+        landmark: `
+          <g fill="rgba(12,12,12,0.72)">
+            <!-- runway -->
+            <rect x="0" y="760" width="1600" height="240" opacity="0.64"/>
+            <rect x="0" y="820" width="1600" height="14" fill="rgba(255,255,255,0.10)"/>
+            ${Array.from({length: 18}).map((_,i)=>`<rect x="${i*95}" y="872" width="48" height="10" fill="rgba(255,255,255,0.14)"/>`).join("")}
+            <!-- terminal blocks -->
+            <rect x="120" y="610" width="420" height="150" opacity="0.38"/>
+            <rect x="560" y="640" width="260" height="120" opacity="0.32"/>
+            <!-- airplane silhouette -->
+            <path d="M1080 380
+                     C 1120 372, 1180 372, 1220 380
+                     C 1245 385, 1275 396, 1292 410
+                     C 1275 416, 1245 420, 1220 422
+                     C 1180 426, 1120 426, 1080 422
+                     C 1058 420, 1035 414, 1020 410
+                     C 1035 396, 1058 385, 1080 380 Z"
+                  opacity="0.85"/>
+            <!-- wings -->
+            <path d="M1140 402 L 920 470 L 936 498 L 1180 434 Z" opacity="0.75"/>
+            <path d="M1160 404 L 1380 470 L 1360 500 L 1140 438 Z" opacity="0.75"/>
+            <!-- tail -->
+            <path d="M1220 382 L 1280 330 L 1305 340 L 1260 388 Z" opacity="0.78"/>
+          </g>
+        `
+      })
+    ];
+
+    // --- DATA MODEL (yours, kept) ---
+    const itinerary = [
+      {
+        id: 0,
+        label: "DAY 01",
+        date: "2025/12/15 · Mon",
+        location: "KIX · Rinku Town",
+        eyebrow: "DAY 01 · ARRIVAL",
+        title: "Arrival & Winter Gear",
+        subtitle: "抵達與冬裝補齊：從工作模式登出，將重點放在「調整節奏」。",
+        strategy: "核心任務：在臨空城一次解決保暖外套（TNF / Patagonia）與配件，避免後續行程為了買衣服而中斷。",
+        tags: ["WINTER GEAR", "RINKU OUTLET", "SLOW START"],
+        weatherCity: "Osaka",
+        photo: {
+          gradient: "radial-gradient(1200px 500px at 30% 20%, rgba(255,255,255,0.35), transparent 55%), linear-gradient(120deg, #f6d365 0%, #7aa0c6 70%, #2b2a2b 100%)",
+          title: "臨空城的日落",
+          desc: "海風略帶寒意，摩天輪下的夕陽宣告假期正式開始。"
+        },
+        timeline: [
+          { time: "11:50", type: "ARRIVAL", title: "抵達關西機場 (JL812)", location: "KIX T1", desc: "下機後不急著進市區。先在機場感受一下溫度，確認 ICOCA 卡與網路狀態。" },
+          { time: "13:30", type: "LUNCH", title: "Rinku Town 午餐", location: "Seaside Area", desc: "搭一站電車到 Rinku Town，在海邊餐廳簡單用餐，看看海，讓身體切換時區。" },
+          { time: "15:00", type: "SHOPPING", title: "冬裝戰略採購", location: "Rinku Premium Outlets",
+            desc: "目標明確：保暖外套、發熱衣、圍巾。<br>優先順序：<br>1. <strong>The North Face / Patagonia</strong> (保暖層)<br>2. <strong>BEAMS / United Arrows</strong> (質感大衣)<br>3. <strong>Skechers / Nike</strong> (好走的鞋)",
+            keywords: ["TNF", "BEAMS"]
+          },
+          { time: "18:30", type: "MOVE", title: "前往難波飯店", location: "Granbell Hotel Namba", desc: "搭乘南海電鐵進市區，Check-in 放置戰利品，建立這五天的基地。" },
+          { time: "20:00", type: "DINNER", title: "自由軒 難波本店", location: "Namba", desc: "簡單吃一份名物咖哩，早點回飯店休息，整理明日戰略。" }
+        ]
+      },
+      {
+        id: 1,
+        label: "DAY 02",
+        date: "2025/12/16 · Tue",
+        location: "Umeda · Kitahama",
+        eyebrow: "DAY 02 · CITY STRATEGY",
+        title: "Strategic Shopping & City Vibe",
+        subtitle: "先解決清單，再慢慢走：上午處理缺貨風險高的品項，下午留給河岸與咖啡。",
+        strategy: "上午精神最好時去梅田處理專櫃與熱門彩妝（Excel/Canmake），下午則完全放鬆，不背購物袋逛街。",
+        tags: ["SCARCITY SHOPPING", "KITAHAMA CAFE", "RIVER WALK"],
+        weatherCity: "Osaka",
+        photo: {
+          gradient: "radial-gradient(900px 450px at 30% 20%, rgba(255,255,255,0.35), transparent 60%), linear-gradient(135deg, #f5f7fa 0%, #9db0c7 55%, #2b2a2b 100%)",
+          title: "北濱的寧靜",
+          desc: "難波的喧囂之外，這裡是大阪最像歐洲的角落。"
+        },
+        timeline: [
+          { time: "10:00", type: "SHOPPING", title: "梅田戰略購物", location: "LUCUA / Grand Front",
+            desc: "鎖定缺貨高風險區：<br>• <strong>@cosme OSAKA</strong>: Excel (GB08), Canmake 睫毛膏<br>• <strong>百貨專櫃</strong>: CPB / DIOR (趁光線好試色)<br>• <strong>3COINS</strong>: 聯名商品看到就買",
+            keywords: ["EXCEL", "CANMAKE", "CPB"]
+          },
+          { time: "13:30", type: "CHILL", title: "北濱河畔咖啡", location: "Kitahama", desc: "購物結束，搭車到北濱。選擇 <strong>Gokan 五感本館</strong> 或 <strong>&ISLAND</strong>，看著河川發呆。" },
+          { time: "15:30", type: "WALK", title: "中崎町散步", location: "Nakazakicho", desc: "在老屋改建的小店間穿梭。重點店家：<strong>neel</strong> (可麗餅)、<strong>OSA COFFEE</strong> (布丁)。只看不買也無所謂。" },
+          { time: "18:30", type: "DINNER", title: "道頓堀經典", location: "Dotonbori", desc: "回到熱鬧的難波。晚餐選擇 <strong>味乃家 (大阪燒)</strong> 或隨意買 <strong>Kukuru 章魚燒</strong> 回飯店吃。" }
+        ]
+      },
+      {
+        id: 2,
+        label: "DAY 03",
+        date: "2025/12/17 · Wed",
+        location: "Osaka Castle Park",
+        eyebrow: "DAY 03 · SLOW DAY",
+        title: "Castle Park & Winter Sun",
+        subtitle: "把時間拉長：不急著進天守閣，重點是公園本身的樹影與護城河。",
+        strategy: "今日是體力調節日。如果昨天還有未買齊的高單價品（CPB/DIOR），下午可作為備案時間。",
+        tags: ["OSAKA CASTLE", "JO-TERRACE", "RELAX"],
+        weatherCity: "Osaka",
+        photo: {
+          gradient: "radial-gradient(900px 450px at 30% 15%, rgba(255,255,255,0.32), transparent 62%), linear-gradient(135deg, #cfd9df 0%, #9aa6b2 55%, #2b2a2b 100%)",
+          title: "護城河的倒影",
+          desc: "不需要爬上天守閣，光是沿著石牆走，就能感受到歷史的重量。"
+        },
+        timeline: [
+          { time: "10:00", type: "WALK", title: "大阪城公園散步", location: "Osaka Castle Park", desc: "從森之宮站進入，沿著外圍慢慢走。不用強求登上天守閣，找張長椅曬冬天的太陽。" },
+          { time: "12:30", type: "LUNCH", title: "Jo-Terrace Osaka", location: "Osakajokoen Station", desc: "公園旁的複合設施，選擇多且環境舒適。避開遊客團餐時段。" },
+          { time: "15:00", type: "BUFFER", title: "市區備案 / 休息", location: "City Center", desc: "如果昨天梅田沒買齊，這段時間可去心齋橋大丸補貨。如果累了，就回飯店午睡。" },
+          { time: "18:30", type: "DINNER", title: "福太郎 大阪燒", location: "Namba", desc: "本店氛圍極佳，蔥燒是必點。可能需要排隊，建議避開尖峰或做好等待心理準備。" }
+        ]
+      },
+      {
+        id: 3,
+        label: "DAY 04",
+        date: "2025/12/18 · Thu",
+        location: "Nara",
+        eyebrow: "DAY 04 · NATURE",
+        title: "Nara Day Trip",
+        subtitle: "鹿與樹的一天：把購物慾望降到最低，只帶相機與好走的心情。",
+        strategy: "奈良不是打卡清單，而是一個讓時間變慢的地方。不購物、不趕路，順著鹿的步調走。",
+        tags: ["DEER", "OLD TOWN", "NO SHOPPING"],
+        weatherCity: "Nara",
+        photo: {
+          gradient: "radial-gradient(900px 450px at 30% 18%, rgba(255,255,255,0.30), transparent 62%), linear-gradient(to top, #c79081 0%, #8a7a6c 55%, #2b2a2b 100%)",
+          title: "古都的眼神",
+          desc: "這裡的鹿比人更像主人。記得把餅乾藏好，保持優雅的距離。"
+        },
+        timeline: [
+          { time: "09:30", type: "TRAIN", title: "前往奈良", location: "Kintetsu Nara", desc: "搭乘近鐵前往奈良。這段車程約 40 分鐘，是轉換心情的隧道。" },
+          { time: "10:30", type: "COFFEE", title: "Rokumei Coffee", location: "Nara", desc: "抵達後先來一杯冠軍咖啡。Rokumei Coffee 奈良本店，帶走或內用都好。" },
+          { time: "12:00", type: "LUNCH", title: "志津香 釜飯", location: "Nara Park Area", desc: "著名的釜飯，米飯香氣迷人。若排隊太長，轉往奈良町找定食也不錯。" },
+          { time: "14:00", type: "WALK", title: "奈良公園 & 老街", location: "Naramachi", desc: "避開東大寺人潮最擁擠處，往春日大社參道或奈良町老街走。找間和菓子店坐坐。" },
+          { time: "17:30", type: "RETURN", title: "返回大阪", location: "Namba", desc: "晚餐隨意解決，或許是心齋橋的天婦羅，或是簡單的拉麵。今晚早點休息，整理行李。" }
+        ]
+      },
+      {
+        id: 4,
+        label: "DAY 05",
+        date: "2025/12/19 · Fri",
+        location: "Namba · KIX",
+        eyebrow: "DAY 05 · DEPARTURE",
+        title: "Departure & Rituals",
+        subtitle: "把旅程折成書籤：最後的咖啡與最後的採買。",
+        strategy: "回程日的重點是「不遺漏」與「儀式感」。機場留給最後一杯咖啡與伴手禮。",
+        tags: ["AIRPORT", "LAST BUY", "GOODBYE"],
+        weatherCity: "Osaka",
+        photo: {
+          gradient: "radial-gradient(900px 450px at 35% 20%, rgba(255,255,255,0.30), transparent 62%), linear-gradient(to top, #a18cd1 0%, #7d83a6 55%, #2b2a2b 100%)",
+          title: "離開的視角",
+          desc: "透過機場的玻璃窗，再看一次這座城市的天空。下次再來是什麼時候呢？"
+        },
+        timeline: [
+          { time: "10:00", type: "CHECKOUT", title: "退房 & 寄放行李", location: "Granbell Hotel", desc: "11:00 退房。再檢查一次床底與插座。去附近的藥妝店補齊最後的消耗品（非缺貨類）。" },
+          { time: "12:00", type: "LUNCH", title: "最後的大阪味", location: "Namba", desc: "選擇一家還沒吃到的清單，或者單純吃個御飯糰，把胃留給飛機餐或機場美食。" },
+          { time: "14:30", type: "MOVE", title: "前往關西機場", location: "Nankai Line", desc: "搭乘 Rapi:t 或空港急行前往 KIX。預留充裕時間。" },
+          { time: "16:00", type: "LAST STOP", title: "機場儀式", location: "KIX Airside", desc: "1. 最後一杯咖啡。<br>2. 購買關西限定伴手禮（賞味期限短的點心）。<br>3. 準備登機 JL815 (19:20)。" }
+        ]
+      }
+    ];
+
+    const modalDetails = {
+      "TNF": "Rinku Outlet 的北面常見尺碼與款式更齊。重點看外層防風防水＋中層保暖的組合，不要只買好看。",
+      "BEAMS": "Outlet 的 BEAMS 很多高品質基本款（羊毛、混紡外套），CP 值高。看版型、看質料、看你能不能連穿三天。",
+      "EXCEL": "Excel (GB08 等熱門色) 在觀光區容易缺。梅田一帶補貨效率高：先買缺貨高風險品，再慢慢散步。",
+      "CANMAKE": "熱門睫毛/腮紅新色常缺。原則：看到就買，別賭晚點還有。",
+      "CPB": "百貨專櫃購買可退稅。建議事先存好色號參考圖，直接給櫃姐看，省掉反覆試色的時間。"
     };
 
-    els.drawerClose.onclick = closeDrawer;
-    els.backdrop.onclick = closeDrawer;
+    const state = {
+      activeDay: 0,
+      weather: {}
+    };
 
-    // Load Initial Day
-    loadDay(0);
-  }
+    const els = {
+      timeline: document.getElementById('timeline'),
+      nav: document.getElementById('nav-container'),
+      drawer: document.getElementById('drawer'),
+      backdrop: document.getElementById('backdrop'),
+      modal: document.getElementById('modal'),
 
-  function openDrawer() {
-    els.drawer.classList.add('active');
-    els.backdrop.classList.add('active');
-  }
-  function closeDrawer() {
-    els.drawer.classList.remove('active');
-    els.backdrop.classList.remove('active');
-  }
+      date: document.getElementById('day-date'),
+      location: document.getElementById('day-location'),
+      title: document.getElementById('day-title'),
+      subtitle: document.getElementById('day-subtitle'),
+      strategy: document.getElementById('day-strategy'),
+      tags: document.getElementById('day-tags'),
+      weather: document.getElementById('weather-display'),
+      eyebrow: document.getElementById('day-eyebrow'),
 
-  init();
-</script>
+      photoWrapper: document.getElementById('photo-wrapper'),
+      photoImgElement: document.getElementById('photo-img-element'),
+      photoTitle: document.getElementById('photo-title'),
+      photoDesc: document.getElementById('photo-desc'),
+
+      editToggle: document.getElementById('edit-toggle'),
+      closeDrawer: document.getElementById('drawer-close')
+    };
+
+    function init() {
+      renderNav();
+      loadDay(0);
+      fetchWeather(itinerary[0].weatherCity);
+
+      els.editToggle.addEventListener('click', toggleEdit);
+      els.backdrop.addEventListener('click', closeAllOverlays);
+      els.closeDrawer.addEventListener('click', closeAllOverlays);
+
+      document.addEventListener('click', (e) => {
+        if (e.target.classList && e.target.classList.contains('keyword-link')) {
+          openModal(e.target.innerText, e.target.dataset.key);
+        }
+      });
+    }
+
+    function renderNav() {
+      const frag = document.createDocumentFragment();
+
+      itinerary.forEach((day, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `nav-btn ${idx === 0 ? 'active' : ''}`;
+        btn.innerHTML = `<span class="nav-btn-dot"></span><span>${day.label}</span>`;
+        btn.onclick = () => loadDay(idx);
+        frag.appendChild(btn);
+      });
+
+      const tripBtn = document.createElement('button');
+      tripBtn.className = 'nav-btn special';
+      tripBtn.innerHTML = `<span>TRIP</span>`;
+      tripBtn.onclick = openDrawer;
+      frag.appendChild(tripBtn);
+
+      els.nav.innerHTML = '';
+      els.nav.appendChild(frag);
+    }
+
+    function loadDay(idx) {
+      state.activeDay = idx;
+      const data = itinerary[idx];
+
+      // Update nav active state
+      document.querySelectorAll('.nav-btn').forEach((b, i) => {
+        if (i < itinerary.length) b.classList.toggle('active', i === idx);
+      });
+
+      // Hero swap (fade)
+      fadeSwap(els.title, data.title);
+      fadeSwap(els.subtitle, data.subtitle);
+      els.date.innerText = data.date;
+      els.location.innerText = data.location;
+      els.eyebrow.innerText = data.eyebrow;
+      els.strategy.innerHTML = data.strategy;
+
+      els.tags.innerHTML = data.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+      // Photo: guaranteed rendering (no placeholder, no "AI generating")
+      els.photoWrapper.style.background = data.photo.gradient;
+      els.photoTitle.innerText = data.photo.title;
+      els.photoDesc.innerText = data.photo.desc;
+
+      // Set SVG data uri
+      const svgURI = DAY_VISUALS[idx];
+      els.photoImgElement.src = svgURI;
+
+      // If anything goes wrong, we still keep gradient background; do NOT show any placeholder text.
+      els.photoImgElement.onerror = () => {
+        els.photoImgElement.removeAttribute('src');
+      };
+
+      renderTimeline(data.timeline);
+
+      // Weather mock
+      const prevCity = itinerary[idx > 0 ? idx - 1 : 0].weatherCity;
+      if (data.weatherCity !== prevCity || idx === 0) fetchWeather(data.weatherCity);
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderTimeline(items) {
+      els.timeline.innerHTML = items.map((item) => {
+        let desc = item.desc;
+
+        if (item.keywords) {
+          item.keywords.forEach(kw => {
+            if (modalDetails[kw]) {
+              // Replace keyword occurrences with clickable span
+              const safe = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              desc = desc.replace(new RegExp(safe, 'g'), `<span class="keyword-link" data-key="${kw}">${kw}</span>`);
+            }
+          });
+        }
+
+        const mapQuery = encodeURIComponent(item.location + ' Osaka');
+        return `
+          <div class="timeline-item">
+            <div class="timeline-time">
+              ${item.time}
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <article class="timeline-card">
+              <div class="timeline-header">
+                <div class="timeline-title" contenteditable="false">${item.title}</div>
+                <div class="timeline-type">${item.type}</div>
+              </div>
+              <div class="timeline-location">
+                📍 <a href="https://www.google.com/maps/search/?api=1&query=${mapQuery}" target="_blank" rel="noopener noreferrer">${item.location}</a>
+              </div>
+              <div class="timeline-body" contenteditable="false">${desc}</div>
+            </article>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function fadeSwap(el, html) {
+      el.style.opacity = 0;
+      setTimeout(() => {
+        el.innerHTML = html;
+        el.style.opacity = 1;
+      }, 140);
+    }
+
+    function openDrawer() {
+      els.backdrop.classList.add('active');
+      els.drawer.classList.add('active');
+    }
+
+    function closeAllOverlays() {
+      els.backdrop.classList.remove('active');
+      els.drawer.classList.remove('active');
+      els.modal.classList.remove('active');
+    }
+
+    function openModal(title, key) {
+      const content = modalDetails[key] || "暫無詳細策略資訊。";
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-sub').innerText = "SHOPPING STRATEGY";
+      document.getElementById('modal-body').innerText = content;
+
+      els.backdrop.classList.add('active');
+      els.modal.classList.add('active');
+    }
+
+    function toggleEdit() {
+      const isEditable = els.editToggle.classList.toggle('active');
+      // Editable parts: timeline title & body only
+      document.querySelectorAll('.timeline-title, .timeline-body').forEach(el => {
+        el.setAttribute('contenteditable', isEditable ? 'true' : 'false');
+      });
+      els.editToggle.innerText = isEditable ? '✓ SAVE' : '✎ EDIT';
+    }
+
+    async function fetchWeather(city) {
+      els.weather.innerText = "Loading...";
+      try {
+        setTimeout(() => {
+          const temps = { "Osaka": "8°C", "Nara": "6°C" };
+          els.weather.innerText = temps[city] || "10°C";
+        }, 420);
+      } catch (e) {
+        els.weather.innerText = "--";
+      }
+    }
+
+    init();
+  </script>
 </body>
 </html>
-
