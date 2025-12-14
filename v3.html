@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 關鍵修正：繞過圖庫防盜鏈機制 -->
+  <meta name="referrer" content="no-referrer">
+  <title>Osaka 5-Day Strategy · Slow Travel Journal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-body: #f4f1ea;
+      --bg-card: #fdfaf6;
+      --bg-hero: #efece5;
+      --bg-chip: #fffbf5;
+      --ink-main: #332c26;
+      --ink-muted: #7d7266;
+      --ink-soft: #a89c8e;
+      --ink-accent: #a67c52;
+      --border-soft: #e6ded5;
+      --border-strong: #cbbba8;
+      --accent: #b08d55;
+      --accent-soft: rgba(176, 141, 85, 0.12);
+      --shadow-soft: 0 10px 30px rgba(66, 56, 46, 0.08);
+      --radius-card: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-body);
+      font-family: "Noto Serif TC", system-ui, -apple-system, BlinkMacSystemFont, 
+        "Segoe UI", sans-serif;
+      color: var(--ink-main);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 14px 10px 90px;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        display: flex;
+        justify-content: center;
+        padding: 32px 20px 110px;
+      }
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: 20px;
+      border: 1px solid rgba(166, 124, 82, 0.2);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 16px 96px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .app-shell { padding: 32px 32px 110px; }
+    }
+
+    /* Texture Overlay */
+    .app-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' /%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app-inner { position: relative; z-index: 1; }
+
+    /* EDIT BUTTON */
+    .edit-toggle {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--border-strong);
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-family: "Noto Serif TC", serif;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.05em;
+    }
+    .edit-toggle.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    [contenteditable="true"] {
+      outline: 1px dashed var(--accent);
+      outline-offset: 2px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-family: system-ui, sans-serif;
+      font-weight: 500;
+    }
+
+    h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: 0.02em; }
+    p { margin: 0 0 0.8em; line-height: 1.75; font-size: 0.95rem; color: var(--ink-main); }
+    
+    /* HERO */
+    .hero {
+      background: var(--bg-hero);
+      border-radius: 18px;
+      padding: 24px 20px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 700px) { .hero-grid { grid-template-columns: 1fr; } }
+
+    .hero-title { font-size: 1.6rem; margin-top: 8px; color: var(--ink-main); }
+    .hero-subtitle { font-size: 0.92rem; color: var(--ink-muted); margin-top: 8px; line-height: 1.6; }
+
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      font-family: system-ui, sans-serif;
+    }
+    .meta-item { display: inline-flex; align-items: center; gap: 6px; }
+    
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.05);
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      font-family: system-ui, sans-serif;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .pill-icon { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+    /* Hero Secondary Card (Strategy) */
+    .hero-secondary {
+      background: #2c241b;
+      border-radius: 14px;
+      padding: 16px;
+      color: #eaddcf;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 20px rgba(44, 36, 27, 0.25);
+    }
+    .hero-secondary h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; color: #bcaaa4; margin-bottom: 8px; font-family: system-ui, sans-serif; }
+    .hero-secondary p { color: rgba(234, 221, 207, 0.9); font-size: 0.88rem; margin-bottom: 12px; line-height: 1.6; }
+    
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      padding: 3px 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.8);
+      font-family: system-ui, sans-serif;
+    }
+
+    /* TIMELINE */
+    .timeline { margin-top: 10px; padding-left: 10px; }
+    .timeline-item { display: grid; grid-template-columns: 60px 1fr; gap: 16px; padding-bottom: 24px; position: relative; }
+    
+    .timeline-time {
+      text-align: right;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      font-family: system-ui, sans-serif;
+      padding-top: 2px;
+      position: relative;
+    }
+    
+    .timeline-line {
+      position: absolute;
+      top: 24px;
+      right: -8px;
+      bottom: -16px;
+      width: 1px;
+      background: rgba(166, 124, 82, 0.3);
+      z-index: 0;
+    }
+    .timeline-item:last-child .timeline-line { display: none; }
+
+    .timeline-dot {
+      position: absolute;
+      top: 6px;
+      right: -12px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--accent);
+      z-index: 1;
+    }
+
+    .timeline-card {
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .timeline-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      border-color: var(--border-strong);
+    }
+
+    .timeline-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+    .timeline-title { font-size: 1rem; color: var(--ink-main); font-weight: 600; }
+    .timeline-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); font-family: system-ui, sans-serif; }
+    
+    .timeline-location { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
+    .timeline-location a { color: var(--ink-accent); text-decoration: none; border-bottom: 1px dashed transparent; }
+    .timeline-location a:hover { border-bottom-color: var(--ink-accent); }
+
+    .timeline-body { font-size: 0.9rem; color: var(--ink-main); line-height: 1.6; }
+    
+    .keyword-link {
+      color: var(--ink-accent);
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 1px dotted var(--ink-accent);
+      transition: all 0.2s;
+    }
+    .keyword-link:hover { background: var(--accent-soft); }
+
+    .task-list { margin-top: 8px; padding-left: 0; list-style: none; }
+    .task-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 4px;
+    }
+    .task-item::before { content: "•"; color: var(--accent); }
+
+    /* PHOTO BREAK */
+    .photo-break {
+      margin: 24px 0 10px;
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    @media(min-width: 600px) { .photo-break { grid-template-columns: 1.2fr 1fr; } }
+    
+    .photo-wrapper {
+      position: relative;
+      min-height: 240px;
+      background: #e0ddd5; /* Fallback color */
+      overflow: hidden;
+    }
+
+    .photo-img-element {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+      opacity: 1;
+      /* Subtle vintage filter */
+      filter: sepia(0.1) contrast(0.95) saturate(0.9);
+      transition: opacity 0.5s ease;
+    }
+    
+    .photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.1));
+      pointer-events: none;
+      z-index: 2;
+    }
+    
+    /* Noise Texture (CSS Only) for Vibe */
+    .photo-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .photo-content { 
+      padding: 24px; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center;
+      background: rgba(255,255,255,0.7);
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(253, 250, 246, 0.95);
+      border-top: 1px solid var(--border-soft);
+      backdrop-filter: blur(12px);
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      z-index: 100;
+      display: flex; justify-content: center;
+    }
+
+    .nav-scroll {
+      display: flex; gap: 8px; overflow-x: auto; 
+      padding-bottom: 4px; max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .nav-scroll::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      flex: 0 0 auto;
+      padding: 8px 14px;
+      border-radius: 99px;
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--ink-muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+      font-family: system-ui, sans-serif;
+    }
+    .nav-btn span { display: block; }
+    .nav-btn-dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; border: 1px solid var(--ink-muted); }
+    
+    .nav-btn.active { background: var(--ink-main); color: #fff; border-color: var(--ink-main); }
+    .nav-btn.active .nav-btn-dot { background: var(--accent); border-color: var(--accent); }
+    
+    .nav-btn.special { border-color: var(--accent); color: var(--ink-accent); }
+    .nav-btn.special.active { background: var(--accent); color: #fff; }
+
+    /* DRAWER & MODAL */
+    .backdrop {
+      position: fixed; inset: 0; background: rgba(30,25,20,0.4);
+      z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .backdrop.active { opacity: 1; pointer-events: auto; }
+
+    .drawer {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fdfaf6;
+      border-radius: 20px 20px 0 0;
+      max-height: 85vh;
+      transform: translateY(105%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 160;
+      display: flex; flex-direction: column;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+    }
+    .drawer.active { transform: translateY(0); }
+
+    .drawer-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(253, 250, 246, 0.95);
+      border-radius: 20px 20px 0 0;
+    }
+    .drawer-title { font-size: 1rem; font-weight: 600; color: var(--ink-main); }
+    .drawer-close { background: none; border: none; font-size: 1.5rem; color: var(--ink-muted); cursor: pointer; padding: 0 8px; }
+
+    .drawer-content { padding: 20px; overflow-y: auto; }
+
+    .strategy-card {
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .strategy-card h3 { font-size: 0.85rem; color: var(--ink-accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; font-family: system-ui, sans-serif; }
+    .strategy-card p { font-size: 0.9rem; margin-bottom: 8px; }
+    .strategy-list li { margin-bottom: 6px; font-size: 0.9rem; color: var(--ink-muted); }
+
+    /* Modal for details */
+    .modal {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95);
+      width: 90%; max-width: 400px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      z-index: 170;
+      opacity: 0; pointer-events: none;
+      transition: all 0.2s;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .backdrop.active .modal { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+    .modal-h { font-size: 1.1rem; margin-bottom: 4px; }
+    .modal-sub { font-size: 0.75rem; text-transform: uppercase; color: var(--ink-soft); letter-spacing: 0.1em; margin-bottom: 16px; }
+    .modal-body { font-size: 0.92rem; color: var(--ink-muted); line-height: 1.7; }
+
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <button id="edit-toggle" class="edit-toggle">✎ EDIT</button>
+
+  <!-- Dynamic Content Injected Here -->
+  <div class="app-inner">
+    
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow" id="day-eyebrow">DAY 01 · STRATEGY</div>
+          <h1 class="hero-title" id="day-title">Arrival & Winter Gear</h1>
+          <p class="hero-subtitle" id="day-subtitle">從工作模式登出，將第一天的重點放在「冬裝補齊」與「調整節奏」，讓後續行程輕量化。</p>
+          
+          <div class="hero-meta-row">
+            <div class="pill"><span class="pill-icon"></span><span id="day-date">2025/12/15 · Mon</span></div>
+            <div class="meta-item">📍 <span id="day-location">KIX · Rinku Town</span></div>
+            <div class="meta-item">🌡️ <span id="weather-display">Loading...</span></div>
+          </div>
+        </div>
+
+        <div class="hero-secondary">
+          <div>
+            <h3>今日策略 · STRATEGY</h3>
+            <p id="day-strategy">臨空城核心任務：一次解決保暖外套與冬季配件（TNF / Beams），避免之後幾天為了買衣服分心。</p>
+          </div>
+          <div class="tags" id="day-tags">
+            <span class="tag">WINTER GEAR</span>
+            <span class="tag">NO RUSH</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Timeline -->
+    <main id="timeline" class="timeline"></main>
+
+    <!-- Photo Break (Replaced with Real High-Res Photos) -->
+    <div class="photo-break">
+      <div class="photo-wrapper" id="photo-wrapper">
+        <img id="photo-img-element" class="photo-img-element" src="" alt="Travel Moment" />
+        <div class="photo-overlay"></div>
+      </div>
+      <div class="photo-content">
+        <div class="eyebrow">VIBE CHECK</div>
+        <h3 id="photo-title">Title</h3>
+        <p id="photo-desc">Description</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <div class="nav-scroll" id="nav-container">
+    <!-- Generated via JS -->
+  </div>
+</nav>
+
+<!-- Drawer (Trip Cheat Sheet) -->
+<div class="backdrop" id="backdrop"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-title">旅程小抄 · TRIP CHEAT SHEET</div>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <div class="drawer-content">
+    
+    <div class="strategy-card">
+      <h3>核心原則 · CORE PRINCIPLES</h3>
+      <p>慢半拍 × 有策略的城市旅行</p>
+      <ul class="strategy-list" style="padding-left: 20px; margin:0;">
+        <li><strong>冬裝先決</strong>：Day 1 搞定保暖，後面只逛不買重物。</li>
+        <li><strong>缺貨風險管理</strong>：Day 2 上午優先處理熱門彩妝。</li>
+        <li><strong>奈良留白</strong>：Day 4 不看地圖，只看鹿與樹。</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <h3>住宿 · HOTEL</h3>
+      <p><strong>GRANBELL HOTEL OSAKA NAMBA</strong></p>
+      <p style="font-size:0.85rem; color:var(--ink-muted);">大阪難波格蘭貝爾酒店<br>〒556-0011 大阪市浪速區難波中2-6-7</p>
+    </div>
+
+    <div class="strategy-card">
+      <h3>航班 · FLIGHTS (JL)</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div>
+          <strong>去程 JL812</strong><br>
+          <span style="font-size:0.8rem; color:var(--ink-muted);">08:20 TPE → 11:50 KIX</span>
+        </div>
+        <div>
+          <strong>回程 JL815</strong><br>
+          <span style="font-size:0.8rem; color:var(--ink-muted);">19:20 KIX → 21:35 TPE</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div class="modal" id="modal">
+  <h3 class="modal-h" id="modal-title">Title</h3>
+  <div class="modal-sub" id="modal-sub">Subtitle</div>
+  <div class="modal-body" id="modal-body">Content</div>
+</div>
+
+<script>
+  // --- DATA MODEL ---
+  // Using direct Unsplash IDs to guarantee high quality and bypass some hotlinking issues by using source.unsplash or specific direct URL patterns if possible.
+  // Using 'images.unsplash.com' with 'auto=format' is standard.
+  const itinerary = [
+    {
+      id: 0,
+      label: "DAY 01",
+      date: "2025/12/15 · Mon",
+      location: "KIX · Rinku Town",
+      eyebrow: "DAY 01 · ARRIVAL",
+      title: "Arrival & Winter Gear",
+      subtitle: "抵達與冬裝補齊：從工作模式登出，將重點放在「調整節奏」。",
+      strategy: "核心任務：在臨空城一次解決保暖外套（TNF / Patagonia）與配件，避免後續行程為了買衣服而中斷。",
+      tags: ["WINTER GEAR", "RINKU OUTLET", "SLOW START"],
+      weatherCity: "Osaka",
+      photo: {
+        // Unsplash: Ferris Wheel / Sunset vibe
+        src: "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?auto=format&fit=crop&w=800&q=80",
+        title: "臨空城的日落",
+        desc: "海風略帶寒意，摩天輪下的夕陽宣告假期正式開始。"
+      },
+      timeline: [
+        { time: "11:50", type: "ARRIVAL", title: "抵達關西機場 (JL812)", location: "KIX T1", desc: "下機後不急著進市區。先在機場感受一下溫度，確認 ICOCA 卡與網路狀態。" },
+        { time: "13:30", type: "LUNCH", title: "Rinku Town 午餐", location: "Seaside Area", desc: "搭一站電車到 Rinku Town，在海邊餐廳簡單用餐，看看海，讓身體切換時區。" },
+        { time: "15:00", type: "SHOPPING", title: "冬裝戰略採購", location: "Rinku Premium Outlets", 
+          desc: "目標明確：保暖外套、發熱衣、圍巾。<br>優先順序：<br>1. <strong>The North Face / Patagonia</strong> (保暖層)<br>2. <strong>BEAMS / United Arrows</strong> (質感大衣)<br>3. <strong>Skechers / Nike</strong> (好走的鞋)", 
+          keywords: ["TNF", "BEAMS"] 
+        },
+        { time: "18:30", type: "MOVE", title: "前往難波飯店", location: "Granbell Hotel Namba", desc: "搭乘南海電鐵進市區，Check-in 放置戰利品，建立這五天的基地。" },
+        { time: "20:00", type: "DINNER", title: "自由軒 難波本店", location: "Namba", desc: "簡單吃一份名物咖哩，早點回飯店休息，整理明日戰略。" }
+      ]
+    },
+    {
+      id: 1,
+      label: "DAY 02",
+      date: "2025/12/16 · Tue",
+      location: "Umeda · Kitahama",
+      eyebrow: "DAY 02 · CITY STRATEGY",
+      title: "Strategic Shopping & City Vibe",
+      subtitle: "先解決清單，再慢慢走：上午處理缺貨風險高的品項，下午留給河岸與咖啡。",
+      strategy: "上午精神最好時去梅田處理專櫃與熱門彩妝（Excel/Canmake），下午則完全放鬆，不背購物袋逛街。",
+      tags: ["SCARCITY SHOPPING", "KITAHAMA CAFE", "RIVER WALK"],
+      weatherCity: "Osaka",
+      photo: {
+        // Unsplash: Kitahama River/Cafe vibe
+        src: "https://images.unsplash.com/photo-1572973848784-07d0f3918858?auto=format&fit=crop&w=800&q=80",
+        title: "北濱的寧靜",
+        desc: "難波的喧囂之外，這裡是大阪最像歐洲的角落。"
+      },
+      timeline: [
+        { time: "10:00", type: "SHOPPING", title: "梅田戰略購物", location: "LUCUA / Grand Front", 
+          desc: "鎖定缺貨高風險區：<br>• <strong>@cosme OSAKA</strong>: Excel (GB08), Canmake 睫毛膏<br>• <strong>百貨專櫃</strong>: CPB / DIOR (趁光線好試色)<br>• <strong>3COINS</strong>: 聯名商品看到就買",
+          keywords: ["EXCEL", "CANMAKE", "CPB"]
+        },
+        { time: "13:30", type: "CHILL", title: "北濱河畔咖啡", location: "Kitahama", desc: "購物結束，搭車到北濱。選擇 <strong>Gokan 五感本館</strong> 或 <strong>&ISLAND</strong>，看著河川發呆。" },
+        { time: "15:30", type: "WALK", title: "中崎町散步", location: "Nakazakicho", desc: "在老屋改建的小店間穿梭。重點店家：<strong>neel</strong> (可麗餅)、<strong>OSA COFFEE</strong> (布丁)。只看不買也無所謂。" },
+        { time: "18:30", type: "DINNER", title: "道頓堀經典", location: "Dotonbori", desc: "回到熱鬧的難波。晚餐選擇 <strong>味乃家 (大阪燒)</strong> 或隨意買 <strong>Kukuru 章魚燒</strong> 回飯店吃。" }
+      ]
+    },
+    {
+      id: 2,
+      label: "DAY 03",
+      date: "2025/12/17 · Wed",
+      location: "Osaka Castle Park",
+      eyebrow: "DAY 03 · SLOW DAY",
+      title: "Castle Park & Winter Sun",
+      subtitle: "把時間拉長：不急著進天守閣，重點是公園本身的樹影與護城河。",
+      strategy: "今日是體力調節日。如果昨天還有未買齊的高單價品（CPB/DIOR），下午可作為備案時間。",
+      tags: ["OSAKA CASTLE", "JO-TERRACE", "RELAX"],
+      weatherCity: "Osaka",
+      photo: {
+        // Unsplash: Osaka Castle
+        src: "https://images.unsplash.com/photo-1621323386616-568853b49706?auto=format&fit=crop&w=800&q=80",
+        title: "護城河的倒影",
+        desc: "不需要爬上天守閣，光是沿著石牆走，就能感受到歷史的重量。"
+      },
+      timeline: [
+        { time: "10:00", type: "WALK", title: "大阪城公園散步", location: "Osaka Castle Park", desc: "從森之宮站進入，沿著外圍慢慢走。不用強求登上天守閣，找張長椅曬冬天的太陽。" },
+        { time: "12:30", type: "LUNCH", title: "Jo-Terrace Osaka", location: "Osakajokoen Station", desc: "公園旁的複合設施，選擇多且環境舒適。避開遊客團餐時段。" },
+        { time: "15:00", type: "BUFFER", title: "市區備案 / 休息", location: "City Center", desc: "如果昨天梅田沒買齊，這段時間可去心齋橋大丸補貨。如果累了，就回飯店午睡。" },
+        { time: "18:30", type: "DINNER", title: "福太郎 大阪燒", location: "Namba", desc: "本店氛圍極佳，蔥燒是必點。可能需要排隊，建議避開尖峰或做好等待心理準備。" }
+      ]
+    },
+    {
+      id: 3,
+      label: "DAY 04",
+      date: "2025/12/18 · Thu",
+      location: "Nara",
+      eyebrow: "DAY 04 · NATURE",
+      title: "Nara Day Trip",
+      subtitle: "鹿與樹的一天：把購物慾望降到最低，只帶相機與好走的心情。",
+      strategy: "奈良不是打卡清單，而是一個讓時間變慢的地方。不購物、不趕路，順著鹿的步調走。",
+      tags: ["DEER", "OLD TOWN", "NO SHOPPING"],
+      weatherCity: "Nara",
+      photo: {
+        // Unsplash: Deer
+        src: "https://images.unsplash.com/photo-1549435372-96944061a498?auto=format&fit=crop&w=800&q=80",
+        title: "古都的眼神",
+        desc: "這裡的鹿比人更像主人。記得把餅乾藏好，保持優雅的距離。"
+      },
+      timeline: [
+        { time: "09:30", type: "TRAIN", title: "前往奈良", location: "Kintetsu Nara", desc: "搭乘近鐵前往奈良。這段車程約 40 分鐘，是轉換心情的隧道。" },
+        { time: "10:30", type: "COFFEE", title: "Rokumei Coffee", location: "Nara", desc: "抵達後先來一杯冠軍咖啡。Rokumei Coffee 奈良本店，帶走或內用都好。" },
+        { time: "12:00", type: "LUNCH", title: "志津香 釜飯", location: "Nara Park Area", desc: "著名的釜飯，米飯香氣迷人。若排隊太長，轉往奈良町找定食也不錯。" },
+        { time: "14:00", type: "WALK", title: "奈良公園 & 老街", location: "Naramachi", desc: "避開東大寺人潮最擁擠處，往春日大社參道或奈良町老街走。找間和菓子店坐坐。" },
+        { time: "17:30", type: "RETURN", title: "返回大阪", location: "Namba", desc: "晚餐隨意解決，或許是心齋橋的天婦羅，或是簡單的拉麵。今晚早點休息，整理行李。" }
+      ]
+    },
+    {
+      id: 4,
+      label: "DAY 05",
+      date: "2025/12/19 · Fri",
+      location: "Namba · KIX",
+      eyebrow: "DAY 05 · DEPARTURE",
+      title: "Departure & Rituals",
+      subtitle: "把旅程折成書籤：最後的咖啡與最後的採買。",
+      strategy: "回程日的重點是「不遺漏」與「儀式感」。機場留給 Blue Bottle 與最後的伴手禮。",
+      tags: ["BLUE BOTTLE", "LAST BUY", "GOODBYE"],
+      weatherCity: "Osaka",
+      photo: {
+        // Unsplash: Airport vibe
+        src: "https://images.unsplash.com/photo-1556382363-8967ac2b3543?auto=format&fit=crop&w=800&q=80",
+        title: "離開的視角",
+        desc: "透過機場的玻璃窗，再看一次這座城市的天空。下次再來是什麼時候呢？"
+      },
+      timeline: [
+        { time: "10:00", type: "CHECKOUT", title: "退房 & 寄放行李", location: "Granbell Hotel", desc: "11:00 退房。再檢查一次床底與插座。去附近的藥妝店補齊最後的消耗品（非缺貨類）。" },
+        { time: "12:00", type: "LUNCH", title: "最後的大阪味", location: "Namba", desc: "選擇一家還沒吃到的清單，或者單純吃個御飯糰，把胃留給飛機餐或機場美食。" },
+        { time: "14:30", type: "MOVE", title: "前往關西機場", location: "Nankai Line", desc: "搭乘 Rapi:t 或空港急行前往 KIX。預留充裕時間。" },
+        { time: "16:00", type: "LAST STOP", title: "機場儀式", location: "KIX Airside", desc: "1. <strong>Blue Bottle Coffee KIX</strong> 喝最後一杯。<br>2. 購買關西限定伴手禮（賞味期限短的點心）。<br>3. 準備登機 JL815 (19:20)。" }
+      ]
+    }
+  ];
+
+  const modalDetails = {
+    "TNF": "推薦前往 Rinku Outlet 的北面專賣店，通常款式比市區多且折扣好。重點看 Mountain Light Jacket 系列。",
+    "BEAMS": "Outlet 的 BEAMS 有很多高品質的基本款毛衣與大衣，性價比極高。",
+    "EXCEL": "Excel 眉筆與眼影 (GB08) 在遊客區常缺貨，梅田 LUCUA 的 @cosme 貨源相對充足。",
+    "CANMAKE": "金蓋睫毛復活液與新色腮紅是重點。",
+    "CPB": "肌膚之鑰 (Clé de Peau Beauté) 在百貨專櫃購買可退稅。建議先看好色號圖片直接給櫃姐看。",
+  };
+
+  // --- APP LOGIC ---
+  const state = {
+    activeDay: 0,
+    weather: {}
+  };
+
+  const els = {
+    timeline: document.getElementById('timeline'),
+    nav: document.getElementById('nav-container'),
+    drawer: document.getElementById('drawer'),
+    backdrop: document.getElementById('backdrop'),
+    modal: document.getElementById('modal'),
+    
+    // Dynamic Text Elements
+    date: document.getElementById('day-date'),
+    location: document.getElementById('day-location'),
+    title: document.getElementById('day-title'),
+    subtitle: document.getElementById('day-subtitle'),
+    strategy: document.getElementById('day-strategy'),
+    tags: document.getElementById('day-tags'),
+    weather: document.getElementById('weather-display'),
+    eyebrow: document.getElementById('day-eyebrow'),
+    
+    // Photo Elements
+    photoWrapper: document.getElementById('photo-wrapper'),
+    photoImgElement: document.getElementById('photo-img-element'),
+    photoTitle: document.getElementById('photo-title'),
+    photoDesc: document.getElementById('photo-desc'),
+
+    // Buttons
+    editToggle: document.getElementById('edit-toggle'),
+    closeDrawer: document.getElementById('drawer-close')
+  };
+
+  function init() {
+    renderNav();
+    
+    // Remove opacity hiding for error state to prevent blank space
+    els.photoImgElement.onerror = () => {
+      // If error, we just let it stay visible (browser might show broken icon)
+      // or we can fallback to a colored block. 
+      // Current CSS handles fallback color on wrapper.
+      // But we ensure it's not hidden by opacity:0
+      els.photoImgElement.style.opacity = 1; 
+      els.photoImgElement.alt = "Image unavailable (Security restriction)";
+    };
+
+    loadDay(0);
+    fetchWeather(itinerary[0].weatherCity);
+    
+    // Event Listeners
+    els.editToggle.addEventListener('click', toggleEdit);
+    els.backdrop.addEventListener('click', closeAllOverlays);
+    els.closeDrawer.addEventListener('click', closeAllOverlays);
+    
+    // Global click for keywords link
+    document.addEventListener('click', (e) => {
+      if(e.target.classList.contains('keyword-link')) {
+        openModal(e.target.innerText, e.target.dataset.key);
+      }
+    });
+  }
+
+  function renderNav() {
+    const frag = document.createDocumentFragment();
+    
+    itinerary.forEach((day, idx) => {
+      const btn = document.createElement('button');
+      btn.className = `nav-btn ${idx === 0 ? 'active' : ''}`;
+      btn.innerHTML = `<span class="nav-btn-dot"></span><span>${day.label}</span>`;
+      btn.onclick = () => loadDay(idx);
+      frag.appendChild(btn);
+    });
+
+    // Special Trip Button
+    const tripBtn = document.createElement('button');
+    tripBtn.className = 'nav-btn special';
+    tripBtn.innerHTML = `<span>TRIP</span>`;
+    tripBtn.onclick = openDrawer;
+    frag.appendChild(tripBtn);
+
+    els.nav.innerHTML = '';
+    els.nav.appendChild(frag);
+  }
+
+  function loadDay(idx) {
+    state.activeDay = idx;
+    const data = itinerary[idx];
+    
+    // Update Nav State
+    document.querySelectorAll('.nav-btn').forEach((b, i) => {
+      if(i < itinerary.length) b.classList.toggle('active', i === idx);
+    });
+
+    // Update Hero
+    animateUpdate(els.title, data.title);
+    animateUpdate(els.subtitle, data.subtitle);
+    els.date.innerText = data.date;
+    els.location.innerText = data.location;
+    els.eyebrow.innerText = data.eyebrow;
+    els.strategy.innerHTML = data.strategy;
+    
+    // Update Tags
+    els.tags.innerHTML = data.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+    // Update Photo
+    els.photoImgElement.style.opacity = 0; // fade out transition
+    setTimeout(() => {
+       els.photoImgElement.src = data.photo.src;
+       // Fade in when loaded
+       els.photoImgElement.onload = () => { els.photoImgElement.style.opacity = 1; };
+    }, 200);
+    
+    els.photoTitle.innerText = data.photo.title;
+    els.photoDesc.innerText = data.photo.desc;
+
+    // Render Timeline
+    renderTimeline(data.timeline);
+
+    // Weather Update (Simple check if city changed)
+    const prevCity = itinerary[idx > 0 ? idx - 1 : 0].weatherCity;
+    if(data.weatherCity !== prevCity || idx === 0) {
+      fetchWeather(data.weatherCity);
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderTimeline(items) {
+    els.timeline.innerHTML = items.map((item, i) => {
+      // Process description to add links
+      let desc = item.desc;
+      if(item.keywords) {
+        item.keywords.forEach(kw => {
+          if(modalDetails[kw]) {
+             desc = desc.replace(kw, `<span class="keyword-link" data-key="${kw}">${kw}</span>`);
+          }
+        });
+      }
+
+      return `
+      <div class="timeline-item">
+        <div class="timeline-time">
+          ${item.time}
+          <div class="timeline-dot"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <article class="timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-title" contenteditable="false">${item.title}</div>
+            <div class="timeline-type">${item.type}</div>
+          </div>
+          <div class="timeline-location">
+            📍 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.location + ' Osaka')}" target="_blank">${item.location}</a>
+          </div>
+          <div class="timeline-body" contenteditable="false">${desc}</div>
+        </article>
+      </div>
+      `;
+    }).join('');
+  }
+
+  function animateUpdate(el, text) {
+    el.style.opacity = 0;
+    setTimeout(() => {
+      el.innerHTML = text;
+      el.style.opacity = 1;
+    }, 150);
+  }
+
+  // --- FEATURES ---
+
+  function openDrawer() {
+    els.backdrop.classList.add('active');
+    els.drawer.classList.add('active');
+  }
+
+  function closeAllOverlays() {
+    els.backdrop.classList.remove('active');
+    els.drawer.classList.remove('active');
+    els.modal.style.opacity = 0;
+    els.modal.style.pointerEvents = 'none';
+  }
+
+  function openModal(title, key) {
+    const content = modalDetails[key] || "暫無詳細策略資訊。";
+    document.getElementById('modal-title').innerText = title;
+    document.getElementById('modal-sub').innerText = "SHOPPING STRATEGY";
+    document.getElementById('modal-body').innerText = content;
+    
+    els.backdrop.classList.add('active');
+    els.modal.style.opacity = 1;
+    els.modal.style.pointerEvents = 'auto';
+  }
+
+  function toggleEdit() {
+    const isEditable = els.editToggle.classList.toggle('active');
+    const editables = document.querySelectorAll('[contenteditable]');
+    editables.forEach(el => el.setAttribute('contenteditable', isEditable));
+    els.editToggle.innerText = isEditable ? '✓ SAVE' : '✎ EDIT';
+  }
+
+  async function fetchWeather(city) {
+    els.weather.innerText = "Loading...";
+    try {
+      // Mock for stability
+      setTimeout(() => {
+        const temps = { "Osaka": "8°C", "Nara": "6°C" };
+        els.weather.innerText = temps[city] || "10°C";
+      }, 600);
+    } catch(e) {
+      els.weather.innerText = "--";
+    }
+  }
+
+  // Start
+  init();
+
+</script>
+</body>
+</html>
