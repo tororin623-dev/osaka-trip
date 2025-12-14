@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>Osaka 5-Day Strategy · AI Visual Journal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-body: #f4f1ea;
+      --bg-card: #fdfaf6;
+      --ink-main: #332c26;
+      --ink-muted: #7d7266;
+      --ink-accent: #a67c52;
+      --border-soft: #e6ded5;
+      --radius-card: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-body);
+      font-family: "Noto Serif TC", system-ui, sans-serif;
+      color: var(--ink-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 14px 10px 90px;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        display: flex;
+        justify-content: center;
+        padding: 32px 20px 110px;
+      }
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: 20px;
+      border: 1px solid rgba(166, 124, 82, 0.2);
+      box-shadow: 0 10px 30px rgba(66, 56, 46, 0.08);
+      padding: 20px 16px 96px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* TEXTURE */
+    .app-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7z' /%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+    .app-inner { position: relative; z-index: 1; }
+
+    /* EDIT BUTTON */
+    .edit-toggle {
+      position: absolute; top: 18px; right: 18px; z-index: 50;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--border-soft);
+      padding: 4px 12px; border-radius: 99px;
+      font-size: 0.75rem; color: var(--ink-muted);
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      background: #efece5;
+      border-radius: 18px;
+      padding: 24px 20px;
+      margin-bottom: 24px;
+    }
+    .hero-title { font-size: 1.6rem; margin-top: 8px; }
+    .hero-subtitle { font-size: 0.92rem; color: var(--ink-muted); margin-top: 8px; line-height: 1.6; }
+    .eyebrow { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
+
+    .hero-meta-row { display: flex; gap: 12px; margin-top: 16px; font-size: 0.85rem; color: var(--ink-muted); align-items: center; }
+    .pill { background: #fff; padding: 4px 12px; border-radius: 99px; border: 1px solid rgba(0,0,0,0.05); }
+
+    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media(min-width: 600px) { .hero-grid { grid-template-columns: 1.6fr 1fr; } }
+
+    .hero-secondary {
+      background: #2c241b; border-radius: 14px; padding: 16px; color: #eaddcf;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .tags { display: flex; gap: 6px; margin-top: 8px; }
+    .tag { padding: 2px 8px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; font-size: 0.7rem; }
+
+    /* TIMELINE */
+    .timeline { margin-top: 10px; padding-left: 10px; }
+    .timeline-item { display: grid; grid-template-columns: 60px 1fr; gap: 16px; padding-bottom: 24px; position: relative; }
+    .timeline-time { text-align: right; font-size: 0.85rem; color: var(--ink-muted); padding-top: 2px; position: relative; }
+    .timeline-line { position: absolute; top: 24px; right: -8px; bottom: -16px; width: 1px; background: rgba(166, 124, 82, 0.3); }
+    .timeline-item:last-child .timeline-line { display: none; }
+    .timeline-dot { position: absolute; top: 6px; right: -12px; width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); z-index: 1; }
+    
+    .timeline-card { background: #fff; border: 1px solid var(--border-soft); border-radius: 12px; padding: 14px 16px; }
+    .timeline-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+    .timeline-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); float: right; }
+    
+    /* MAP LINK STYLE */
+    .timeline-loc {
+      font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 8px; 
+      display: inline-flex; align-items: center; gap: 4px;
+      border-bottom: 1px dashed rgba(166, 124, 82, 0.3);
+      padding-bottom: 2px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .timeline-loc:hover { color: var(--ink-accent); border-bottom-color: var(--ink-accent); }
+    .timeline-loc a { color: inherit; text-decoration: none; }
+
+    .timeline-body { font-size: 0.9rem; line-height: 1.6; }
+
+    /* PHOTO BREAK (AI GEN) */
+    .photo-break {
+      margin: 24px 0 10px;
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      overflow: hidden;
+      display: grid; grid-template-columns: 1fr;
+      min-height: 300px;
+    }
+    @media(min-width: 600px) { .photo-break { grid-template-columns: 1.4fr 1fr; } }
+
+    .photo-wrapper {
+      position: relative;
+      background: #e0ddd5;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .photo-img-element {
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0; transition: opacity 1s ease;
+    }
+    .photo-img-element.loaded { opacity: 1; }
+
+    /* AI Loading State */
+    .ai-loader {
+      position: absolute;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      color: var(--ink-muted);
+      font-size: 0.8rem; letter-spacing: 0.1em;
+      transition: opacity 0.3s;
+      z-index: 10;
+    }
+    .ai-loader.hidden { opacity: 0; pointer-events: none; }
+    
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid rgba(166, 124, 82, 0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .photo-content { padding: 24px; display: flex; flex-direction: column; justify-content: center; }
+
+    /* NAV */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(253, 250, 246, 0.95);
+      border-top: 1px solid var(--border-soft);
+      backdrop-filter: blur(12px);
+      padding: 10px 16px; display: flex; justify-content: center;
+      z-index: 100;
+    }
+    .nav-scroll { display: flex; gap: 8px; overflow-x: auto; }
+    .nav-btn {
+      padding: 8px 14px; border-radius: 99px;
+      border: 1px solid var(--border-soft); background: transparent;
+      color: var(--ink-muted); font-size: 0.75rem; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-btn.active { background: var(--ink-main); color: #fff; border-color: var(--ink-main); }
+    .nav-btn-dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; border: 1px solid currentColor; }
+    .nav-btn.active .nav-btn-dot { background: var(--accent); border-color: var(--accent); }
+
+    /* DRAWER */
+    .drawer {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fdfaf6; border-radius: 20px 20px 0 0;
+      max-height: 85vh; transform: translateY(105%);
+      transition: transform 0.3s; z-index: 160;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+      display: flex; flex-direction: column;
+    }
+    .drawer.active { transform: translateY(0); }
+    .drawer-header { padding: 16px 20px; border-bottom: 1px solid var(--border-soft); display: flex; justify-content: space-between; }
+    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 150; }
+    .backdrop.active { opacity: 1; pointer-events: auto; }
+
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <button id="edit-toggle" class="edit-toggle">✎ EDIT</button>
+
+  <div class="app-inner">
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow" id="day-eyebrow">DAY 01 · STRATEGY</div>
+          <h1 class="hero-title" id="day-title">Arrival & Winter Gear</h1>
+          <p class="hero-subtitle" id="day-subtitle">從工作模式登出，將第一天的重點放在「冬裝補齊」與「調整節奏」。</p>
+          <div class="hero-meta-row">
+            <div class="pill"><span id="day-date">12/15 Mon</span></div>
+            <div>📍 <span id="day-location">KIX · Rinku Town</span></div>
+          </div>
+        </div>
+        <div class="hero-secondary">
+          <div>
+            <h3 style="font-size:0.8rem; letter-spacing:0.1em; color:#bcaaa4; margin:0 0 8px;">STRATEGY</h3>
+            <p id="day-strategy" style="font-size:0.88rem; color:rgba(234, 221, 207, 0.9); margin:0;">臨空城核心任務：一次解決保暖外套與配件。</p>
+          </div>
+          <div class="tags" id="day-tags"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Timeline -->
+    <main id="timeline" class="timeline"></main>
+
+    <!-- AI Photo Break -->
+    <div class="photo-break">
+      <div class="photo-wrapper">
+        <img id="ai-image" class="photo-img-element" src="" alt="AI Generated View" />
+        <div id="ai-loader" class="ai-loader">
+          <div class="spinner"></div>
+          <span id="ai-status">AI 繪製中...</span>
+        </div>
+      </div>
+      <div class="photo-content">
+        <div class="eyebrow">AI GENERATED MOMENT</div>
+        <h3 id="photo-title">Title</h3>
+        <p id="photo-desc">Description</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <div class="nav-scroll" id="nav-container"></div>
+</nav>
+
+<!-- Drawer -->
+<div class="backdrop" id="backdrop"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div style="font-weight:600;">TRIP CHEAT SHEET</div>
+    <div style="cursor:pointer;" id="drawer-close">✕</div>
+  </div>
+  <div style="padding:20px;">
+    <p><strong>核心原則</strong>: 慢半拍 × 有策略的城市旅行</p>
+    <p><strong>住宿</strong>: GRANBELL HOTEL OSAKA NAMBA</p>
+    <p><strong>航班</strong>: JL812 (去) / JL815 (回)</p>
+  </div>
+</div>
+
+<script>
+  // --- AI CONFIGURATION ---
+  const apiKey = ""; // Environment will inject key here
+  
+  // Strict Photorealistic Prompts for Day 1-5
+  const PROMPTS = [
+    "Cinematic photography of Rinku Town Ferris Wheel at sunset, Osaka bay, golden hour, sparkling ocean, highly detailed, photorealistic, 8k, serene atmosphere.", 
+    "Photorealistic street photography of Kitahama Osaka river side cafes, retro architecture, morning light, peaceful atmosphere, high resolution, cinematic depth of field.", 
+    "Cinematic photography of Osaka Castle moat with reflection, winter sunlight, stone walls, majestic, photorealistic, 8k, nature and history.", 
+    "Close up portrait of a cute deer in Nara Park, soft focus forest background, cinematic lighting, photorealistic, highly detailed, peaceful nature.", 
+    "Cinematic view of Kansai International Airport observation deck, airplane wing, sunset sky, emotional travel vibe, photorealistic, glass window reflection." 
+  ];
+
+  // --- DATA MODEL ---
+  const itinerary = [
+    {
+      id: 0, label: "DAY 01", date: "12/15 Mon", loc: "KIX · Rinku",
+      title: "Arrival & Winter Gear", subtitle: "抵達與冬裝補齊：從工作模式登出。",
+      strategy: "核心任務：在臨空城一次解決保暖外套 (TNF/Patagonia)，避免後續分心。",
+      tags: ["WINTER GEAR", "SLOW START"],
+      photoTitle: "臨空城的日落", photoDesc: "海風略帶寒意，摩天輪下的夕陽宣告假期正式開始。",
+      timeline: [
+        { time: "11:50", title: "抵達關西機場", type: "ARRIVAL", desc: "JL812 落地。感受大阪的氣溫，確認 ICOCA。", mapQuery: "Kansai International Airport" },
+        { time: "13:30", title: "臨空城午餐", type: "LUNCH", desc: "Seaside Area 看海用餐。", mapQuery: "Rinku Town Seaside Park" },
+        { time: "15:00", title: "冬裝採購", type: "SHOPPING", desc: "Rinku Outlet 重點：TNF, BEAMS。買好外套直接穿上。", mapQuery: "Rinku Premium Outlets" },
+        { time: "19:00", title: "入住難波", type: "HOTEL", desc: "Granbell Hotel Check-in。", mapQuery: "GRANBELL HOTEL OSAKA NAMBA" }
+      ]
+    },
+    {
+      id: 1, label: "DAY 02", date: "12/16 Tue", loc: "Umeda · Kitahama",
+      title: "Urban Rhythm", subtitle: "梅田的效率與北濱的優雅。",
+      strategy: "上午解決彩妝，下午北濱放空。",
+      tags: ["CITY", "CAFE"],
+      photoTitle: "北濱的寧靜", photoDesc: "難波的喧囂之外，這裡是大阪最像歐洲的角落。",
+      timeline: [
+        { time: "10:00", title: "梅田購物", type: "SHOPPING", desc: "鎖定：Excel, Canmake, 3COINS。", mapQuery: "LUCUA Osaka" },
+        { time: "13:30", title: "北濱河畔", type: "CAFE", desc: "Gokan 本館或 &ISLAND。", mapQuery: "GOKAN Kitahama Main Store" },
+        { time: "15:30", title: "中崎町", type: "WALK", desc: "探索老屋改建的小店。", mapQuery: "Nakazakicho Station" },
+        { time: "19:00", title: "道頓堀", type: "DINNER", desc: "味乃家大阪燒。", mapQuery: "Ajinoya Honten" }
+      ]
+    },
+    {
+      id: 2, label: "DAY 03", date: "12/17 Wed", loc: "Osaka Castle",
+      title: "History & Green", subtitle: "護城河的倒影與冬日暖陽。",
+      strategy: "體力調節日，不一定要爬天守閣。",
+      tags: ["PARK", "RELAX"],
+      photoTitle: "護城河的倒影", photoDesc: "不需要爬上天守閣，光是沿著石牆走，就能感受到歷史的重量。",
+      timeline: [
+        { time: "10:00", title: "大阪城公園", type: "WALK", desc: "外圍散步，看銀杏與石牆。", mapQuery: "Osaka Castle Park" },
+        { time: "12:30", title: "Jo-Terrace", type: "LUNCH", desc: "公園旁的複合設施用餐。", mapQuery: "JO-TERRACE OSAKA" },
+        { time: "15:00", title: "市區備案", type: "BUFFER", desc: "心齋橋補貨或回飯店午睡。", mapQuery: "Shinsaibashi-suji Shopping Street" },
+        { time: "18:30", title: "福太郎", type: "DINNER", desc: "著名的蔥燒。", mapQuery: "Fukutaro Namba" }
+      ]
+    },
+    {
+      id: 3, label: "DAY 04", date: "12/18 Thu", loc: "Nara Park",
+      title: "Deer & Silence", subtitle: "整趟旅程最安靜的一天。",
+      strategy: "不看地圖，順著鹿的步調走。",
+      tags: ["NATURE", "DEER"],
+      photoTitle: "古都的眼神", photoDesc: "這裡的鹿比人更像主人。",
+      timeline: [
+        { time: "09:30", title: "前往奈良", type: "TRAIN", desc: "搭乘近鐵。", mapQuery: "Kintetsu-Nara Station" },
+        { time: "10:30", title: "Rokumei", type: "COFFEE", desc: "冠軍咖啡奈良本店。", mapQuery: "ROKUMEI COFFEE CO. NARA" },
+        { time: "12:00", title: "志津香", type: "LUNCH", desc: "釜飯，或奈良町定食。", mapQuery: "Kamameshi Shizuka Koen-ten" },
+        { time: "14:00", title: "春日大社", type: "WALK", desc: "避開遊客，走進樹林裡。", mapQuery: "Kasuga Taisha" }
+      ]
+    },
+    {
+      id: 4, label: "DAY 05", date: "12/19 Fri", loc: "KIX Airport",
+      title: "Sky & Reflection", subtitle: "透過機場玻璃窗好好道別。",
+      strategy: "回程重點是儀式感。",
+      tags: ["AIRPORT", "BYE"],
+      photoTitle: "離開的視角", photoDesc: "透過機場的玻璃窗，再看一次這座城市的天空。",
+      timeline: [
+        { time: "10:00", title: "退房", type: "CHECKOUT", desc: "行李寄放，補最後消耗品。", mapQuery: "GRANBELL HOTEL OSAKA NAMBA" },
+        { time: "14:30", title: "前往機場", type: "MOVE", desc: "搭乘 Rapi:t。", mapQuery: "Kansai International Airport" },
+        { time: "16:00", title: "Blue Bottle", type: "COFFEE", desc: "KIX 最後一杯咖啡。", mapQuery: "Blue Bottle Coffee Kansai International Airport Cafe" }
+      ]
+    }
+  ];
+
+  // --- STATE ---
+  const state = {
+    activeDay: 0,
+    imageCache: {} // Cache for generated base64 images
+  };
+
+  const els = {
+    title: document.getElementById('day-title'),
+    subtitle: document.getElementById('day-subtitle'),
+    date: document.getElementById('day-date'),
+    loc: document.getElementById('day-location'),
+    strategy: document.getElementById('day-strategy'),
+    tags: document.getElementById('day-tags'),
+    timeline: document.getElementById('timeline'),
+    nav: document.getElementById('nav-container'),
+    // Photo
+    photoImg: document.getElementById('ai-image'),
+    loader: document.getElementById('ai-loader'),
+    photoTitle: document.getElementById('photo-title'),
+    photoDesc: document.getElementById('photo-desc'),
+    aiStatus: document.getElementById('ai-status'),
+    // Drawer
+    drawer: document.getElementById('drawer'),
+    backdrop: document.getElementById('backdrop'),
+    drawerClose: document.getElementById('drawer-close')
+  };
+
+  // --- AI LOGIC ---
+  async function generateImage(idx) {
+    if (state.imageCache[idx]) return state.imageCache[idx];
+
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            instances: [{ prompt: PROMPTS[idx] }],
+            parameters: { sampleCount: 1 }
+          })
+        }
+      );
+      
+      if (!response.ok) throw new Error('AI Error');
+      const data = await response.json();
+      const base64 = data.predictions[0].bytesBase64Encoded;
+      const url = `data:image/png;base64,${base64}`;
+      state.imageCache[idx] = url;
+      return url;
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  }
+
+  async function loadDay(idx) {
+    state.activeDay = idx;
+    const data = itinerary[idx];
+
+    // Update UI
+    els.title.textContent = data.title;
+    els.subtitle.textContent = data.subtitle;
+    els.date.textContent = data.date;
+    els.loc.textContent = data.loc;
+    els.strategy.textContent = data.strategy;
+    els.tags.innerHTML = data.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    els.photoTitle.textContent = data.photoTitle;
+    els.photoDesc.textContent = data.photoDesc;
+
+    // Render Timeline
+    els.timeline.innerHTML = data.timeline.map(item => `
+      <div class="timeline-item">
+        <div class="timeline-time">
+          ${item.time}
+          <div class="timeline-dot"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <article class="timeline-card">
+          <div class="timeline-title">${item.title} <span class="timeline-type">${item.type}</span></div>
+          <div class="timeline-loc">
+            📍 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.mapQuery)}" target="_blank">${item.mapQuery}</a>
+          </div>
+          <div class="timeline-body">${item.desc}</div>
+        </article>
+      </div>
+    `).join('');
+
+    // Nav
+    document.querySelectorAll('.nav-btn').forEach((btn, i) => {
+      if(i < 5) {
+        btn.classList.toggle('active', i === idx);
+        const dot = btn.querySelector('.nav-btn-dot');
+        if(dot) dot.style.backgroundColor = i===idx ? 'var(--accent)' : 'transparent';
+        if(dot) dot.style.borderColor = i===idx ? 'var(--accent)' : 'currentColor';
+      }
+    });
+
+    // AI Image Generation Handling
+    els.photoImg.classList.remove('loaded');
+    els.loader.classList.remove('hidden');
+    els.aiStatus.textContent = "AI 繪製中...";
+
+    // 1. Check Cache First
+    if (state.imageCache[idx]) {
+      els.photoImg.src = state.imageCache[idx];
+      els.photoImg.onload = () => {
+        els.loader.classList.add('hidden');
+        els.photoImg.classList.add('loaded');
+      };
+    } else {
+      // 2. Generate
+      const imgUrl = await generateImage(idx);
+      if (imgUrl) {
+        els.photoImg.src = imgUrl;
+        els.photoImg.onload = () => {
+          els.loader.classList.add('hidden');
+          els.photoImg.classList.add('loaded');
+        };
+      } else {
+        els.aiStatus.textContent = "生成失敗 (API Key Error)";
+      }
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function init() {
+    const frag = document.createDocumentFragment();
+    itinerary.forEach((d, i) => {
+      const btn = document.createElement('button');
+      btn.className = `nav-btn ${i===0?'active':''}`;
+      btn.innerHTML = `<span class="nav-btn-dot"></span><span>${d.label}</span>`;
+      btn.onclick = () => loadDay(i);
+      frag.appendChild(btn);
+    });
+    const tripBtn = document.createElement('button');
+    tripBtn.className = 'nav-btn special';
+    tripBtn.innerHTML = `<span>TRIP</span>`;
+    tripBtn.style.borderColor = 'var(--accent)';
+    tripBtn.style.color = 'var(--ink-accent)';
+    tripBtn.onclick = openDrawer;
+    frag.appendChild(tripBtn);
+    els.nav.appendChild(frag);
+
+    document.getElementById('edit-toggle').onclick = () => {
+      const editing = document.body.classList.toggle('editing');
+      document.querySelectorAll('.timeline-title, .timeline-body').forEach(el => {
+        el.contentEditable = editing;
+        if(editing) el.style.outline = "1px dashed var(--accent)";
+        else el.style.outline = "none";
+      });
+    };
+
+    els.drawerClose.onclick = closeDrawer;
+    els.backdrop.onclick = closeDrawer;
+
+    loadDay(0);
+  }
+
+  function openDrawer() { els.drawer.classList.add('active'); els.backdrop.classList.add('active'); }
+  function closeDrawer() { els.drawer.classList.remove('active'); els.backdrop.classList.remove('active'); }
+
+  init();
+</script>
+</body>
+</html>
