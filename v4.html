@@ -1,4 +1,38 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="referrer" content="no-referrer" />
+  <title>Europe 30-Day Trip Planner</title>
+
+  <!-- React CDN + Babel standalone. This lets GitHub Pages run JSX in a single HTML file. -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #F5F0EB;
+    }
+    #root {
+      min-height: 100vh;
+    }
+    .boot-message {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 24px;
+      color: #6B5E54;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"><div class="boot-message">Loading Europe 30-Day Trip Planner...</div></div>
+
+  <script type="text/babel" data-presets="env,react">
+const { useState, useEffect, useMemo, useCallback } = React;
 
 // ============================================================
 // DATA MODEL
@@ -1836,7 +1870,7 @@ function TripPage() {
 // ============================================================
 // APP
 // ============================================================
-export default function App() {
+function App() {
   const [tab, setTab] = useState("today");
   const [dayIndex, setDayIndex] = useState(() => getTodayIndex(DAYS));
   const [scrollKey, setScrollKey] = useState(0);
@@ -1883,3 +1917,9 @@ export default function App() {
     </>
   );
 }
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+  </script>
+</body>
+</html>
