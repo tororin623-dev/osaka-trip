@@ -1,1079 +1,1885 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="referrer" content="no-referrer">
-  <title>Osaka 5-Day Strategy · Slow Travel Journal</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg-body: #f4f1ea;
-      --bg-card: #fdfaf6;
-      --bg-hero: #efece5;
-      --ink-main: #332c26;
-      --ink-muted: #7d7266;
-      --ink-soft: #a89c8e;
-      --ink-accent: #a67c52;
-      --border-soft: #e6ded5;
-      --border-strong: #cbbba8;
-      --accent: #b08d55;
-      --accent-soft: rgba(176, 141, 85, 0.12);
-      --shadow-soft: 0 10px 30px rgba(66, 56, 46, 0.08);
-    }
-
-    * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: var(--bg-body);
-      font-family: "Noto Serif TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink-main);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    body {
-      min-height: 100vh;
-      padding: 14px 10px 96px;
-    }
-
-    @media (min-width: 768px) {
-      body {
-        display: flex;
-        justify-content: center;
-        padding: 32px 20px 112px;
-      }
-    }
-
-    .app-shell {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      background: var(--bg-card);
-      border-radius: 20px;
-      border: 1px solid rgba(166, 124, 82, 0.2);
-      box-shadow: var(--shadow-soft);
-      padding: 20px 16px 104px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    @media (min-width: 768px) {
-      .app-shell { padding: 32px 32px 116px; }
-    }
-
-    .app-shell::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .app-inner { position: relative; z-index: 1; }
-
-    .edit-toggle {
-      position: absolute;
-      top: 18px;
-      right: 18px;
-      z-index: 50;
-      background: rgba(255, 255, 255, 0.64);
-      border: 1px solid var(--border-strong);
-      padding: 5px 12px;
-      border-radius: 999px;
-      font-family: system-ui, sans-serif;
-      font-size: 0.76rem;
-      color: var(--ink-muted);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      letter-spacing: 0.05em;
-      backdrop-filter: blur(8px);
-    }
-
-    .edit-toggle.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    [contenteditable="true"] {
-      outline: 1px dashed var(--accent);
-      outline-offset: 2px;
-      background: rgba(255, 255, 255, 0.55);
-      border-radius: 6px;
-      padding: 1px 4px;
-    }
-
-    .eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      font-family: system-ui, sans-serif;
-      font-weight: 600;
-    }
-
-    h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: 0.02em; }
-    p { margin: 0 0 0.8em; line-height: 1.75; font-size: 0.95rem; color: var(--ink-main); }
-
-    .hero {
-      background: var(--bg-hero);
-      border-radius: 18px;
-      padding: 24px 20px;
-      margin-bottom: 24px;
-      position: relative;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-      gap: 24px;
-    }
-
-    @media (max-width: 700px) {
-      .hero-grid { grid-template-columns: 1fr; }
-    }
-
-    .hero-title {
-      font-size: 1.62rem;
-      margin-top: 8px;
-      color: var(--ink-main);
-      transition: opacity 0.16s ease;
-    }
-
-    .hero-subtitle {
-      font-size: 0.92rem;
-      color: var(--ink-muted);
-      margin-top: 8px;
-      line-height: 1.6;
-      transition: opacity 0.16s ease;
-    }
-
-    .hero-meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
-      align-items: center;
-      font-size: 0.85rem;
-      color: var(--ink-muted);
-      font-family: system-ui, sans-serif;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.05);
-      font-size: 0.75rem;
-      color: var(--ink-muted);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-    }
-
-    .pill-icon {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .meta-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-secondary {
-      background: #2c241b;
-      border-radius: 14px;
-      padding: 16px;
-      color: #eaddcf;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 10px 20px rgba(44, 36, 27, 0.25);
-      min-height: 154px;
-    }
-
-    .hero-secondary h3 {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #bcaaa4;
-      margin-bottom: 8px;
-      font-family: system-ui, sans-serif;
-      font-weight: 700;
-    }
-
-    .hero-secondary p {
-      color: rgba(234, 221, 207, 0.92);
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-      line-height: 1.6;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tag {
-      padding: 3px 8px;
-      border: 1px solid rgba(255,255,255,0.22);
-      border-radius: 5px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.84);
-      font-family: system-ui, sans-serif;
-    }
-
-    .timeline {
-      margin-top: 10px;
-      padding-left: 10px;
-    }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 60px 1fr;
-      gap: 16px;
-      padding-bottom: 24px;
-      position: relative;
-    }
-
-    .timeline-time {
-      text-align: right;
-      font-size: 0.85rem;
-      color: var(--ink-muted);
-      font-family: system-ui, sans-serif;
-      padding-top: 2px;
-      position: relative;
-    }
-
-    .timeline-line {
-      position: absolute;
-      top: 24px;
-      right: -8px;
-      bottom: -16px;
-      width: 1px;
-      background: rgba(166,124,82,0.3);
-      z-index: 0;
-    }
-
-    .timeline-item:last-child .timeline-line { display: none; }
-
-    .timeline-dot {
-      position: absolute;
-      top: 6px;
-      right: -12px;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #fff;
-      border: 2px solid var(--accent);
-      z-index: 1;
-    }
-
-    .timeline-card {
-      background: #fff;
-      border: 1px solid var(--border-soft);
-      border-radius: 12px;
-      padding: 14px 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-
-    .timeline-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-      border-color: var(--border-strong);
-    }
-
-    .timeline-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 6px;
-      gap: 10px;
-    }
-
-    .timeline-title {
-      font-size: 1rem;
-      color: var(--ink-main);
-      font-weight: 600;
-    }
-
-    .timeline-type {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--ink-soft);
-      font-family: system-ui, sans-serif;
-      white-space: nowrap;
-    }
-
-    .timeline-location {
-      font-size: 0.8rem;
-      color: var(--ink-muted);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-family: system-ui, sans-serif;
-    }
-
-    .timeline-location a {
-      color: var(--ink-accent);
-      text-decoration: none;
-      border-bottom: 1px dashed transparent;
-    }
-
-    .timeline-location a:hover { border-bottom-color: var(--ink-accent); }
-
-    .timeline-body {
-      font-size: 0.92rem;
-      color: var(--ink-main);
-      line-height: 1.65;
-    }
-
-    .keyword-link {
-      color: var(--ink-accent);
-      font-weight: 600;
-      cursor: pointer;
-      border-bottom: 1px dotted var(--ink-accent);
-      transition: background 0.2s;
-      padding: 0 2px;
-      border-radius: 3px;
-    }
-
-    .keyword-link:hover { background: var(--accent-soft); }
-
-    .photo-break {
-      margin: 24px 0 10px;
-      background: #fff;
-      border: 1px solid var(--border-soft);
-      border-radius: 12px;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1fr;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    @media(min-width: 600px) {
-      .photo-break { grid-template-columns: 1.25fr 1fr; }
-    }
-
-    .photo-wrapper {
-      position: relative;
-      min-height: 300px;
-      background: linear-gradient(135deg, #e8ded1 0%, #d8c6b3 100%);
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    @media(min-width: 768px) {
-      .photo-wrapper { min-height: 360px; }
-    }
-
-    .photo-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      filter: contrast(0.96) saturate(0.94) brightness(0.99);
-      transform: scale(1.01);
-    }
-
-    .photo-wrapper::before {
-      content: "";
-      position: absolute;
-      inset: -20%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.14'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
-      opacity: 0.38;
-      pointer-events: none;
-      z-index: 2;
-      transform: rotate(2deg);
-    }
-
-    .photo-wrapper::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 20% 24%, rgba(255,230,190,.18) 0 17%, transparent 24%),
-        radial-gradient(circle at 82% 18%, rgba(255,255,255,.14) 0 12%, transparent 18%),
-        radial-gradient(ellipse at center, transparent 56%, rgba(0,0,0,.22) 100%);
-      pointer-events: none;
-      z-index: 3;
-      mix-blend-mode: soft-light;
-    }
-
-    .photo-content {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(10px);
-    }
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(253,250,246,0.95);
-      border-top: 1px solid var(--border-soft);
-      backdrop-filter: blur(12px);
-      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-    }
-
-    .nav-scroll {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      max-width: 100%;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-
-    .nav-scroll::-webkit-scrollbar { display: none; }
-
-    .nav-btn {
-      flex: 0 0 auto;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: transparent;
-      border: 1px solid var(--border-strong);
-      color: var(--ink-muted);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: system-ui, sans-serif;
-      white-space: nowrap;
-    }
-
-    .nav-btn-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: transparent;
-      border: 1px solid var(--ink-muted);
-    }
-
-    .nav-btn.active {
-      background: var(--ink-main);
-      color: #fff;
-      border-color: var(--ink-main);
-    }
-
-    .nav-btn.active .nav-btn-dot {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .nav-btn.special {
-      border-color: var(--accent);
-      color: var(--ink-accent);
-    }
-
-    .nav-btn.special.active {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(30,25,20,0.42);
-      z-index: 150;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-    }
-
-    .backdrop.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .drawer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #fdfaf6;
-      border-radius: 20px 20px 0 0;
-      max-height: 86vh;
-      transform: translateY(105%);
-      transition: transform 0.28s cubic-bezier(.2,.8,.2,1);
-      z-index: 160;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
-    }
-
-    .drawer.active { transform: translateY(0); }
-
-    .drawer-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border-soft);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(253,250,246,0.98);
-      border-radius: 20px 20px 0 0;
-    }
-
-    .drawer-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--ink-main);
-    }
-
-    .drawer-close {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--ink-muted);
-      cursor: pointer;
-      padding: 0 8px;
-    }
-
-    .drawer-content {
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    .strategy-card {
-      background: #fff;
-      border: 1px solid var(--border-soft);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 14px;
-    }
-
-    .strategy-card h3 {
-      font-size: 0.85rem;
-      color: var(--ink-accent);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin: 0 0 10px;
-      font-family: system-ui, sans-serif;
-      font-weight: 800;
-    }
-
-    .strategy-card p {
-      font-size: 0.92rem;
-      margin: 0 0 8px;
-    }
-
-    .strategy-list {
-      padding-left: 20px;
-      margin: 0;
-    }
-
-    .strategy-list li {
-      margin-bottom: 6px;
-      font-size: 0.92rem;
-      color: var(--ink-muted);
-      line-height: 1.55;
-    }
-
-    .modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(.96);
-      width: 92%;
-      max-width: 420px;
-      background: #fff;
-      border-radius: 16px;
-      padding: 22px;
-      z-index: 170;
-      opacity: 0;
-      pointer-events: none;
-      transition: all .18s ease;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.22);
-    }
-
-    .modal.active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .modal-h {
-      font-size: 1.1rem;
-      margin: 0 0 4px;
-    }
-
-    .modal-sub {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      letter-spacing: 0.1em;
-      margin-bottom: 14px;
-      font-family: system-ui, sans-serif;
-      font-weight: 700;
-    }
-
-    .modal-body {
-      font-size: 0.95rem;
-      color: var(--ink-muted);
-      line-height: 1.75;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="app-shell">
-    <button id="edit-toggle" class="edit-toggle">✎ EDIT</button>
-
-    <div class="app-inner">
-      <header class="hero">
-        <div class="hero-grid">
-          <div>
-            <div class="eyebrow" id="day-eyebrow">DAY 01 · STRATEGY</div>
-            <h1 class="hero-title" id="day-title">Arrival & Winter Gear</h1>
-            <p class="hero-subtitle" id="day-subtitle">...</p>
-
-            <div class="hero-meta-row">
-              <div class="pill"><span class="pill-icon"></span><span id="day-date">2025/12/15 · Mon</span></div>
-              <div class="meta-item">📍 <span id="day-location">KIX · Rinku Town</span></div>
-              <div class="meta-item">🌡️ <span id="weather-display">8°C</span></div>
+import { useState, useEffect, useMemo, useCallback } from "react";
+
+// ============================================================
+// DATA MODEL
+// ============================================================
+
+const ACCOMMODATIONS = {
+  paris_mercedes: {
+    id: "paris_mercedes",
+    name: "Hôtel Mercedes",
+    city: "paris",
+    address: "128 Av. de Wagram, 75017 Paris, France",
+    checkin: "15:00",
+    checkout: "11:30",
+    dates: "5/13 - 5/16",
+    nights: 3,
+    cancelPolicy: null,
+    mapQuery: "Hôtel Mercedes 128 Avenue de Wagram Paris",
+    notes: null,
+  },
+  paris_cdg: {
+    id: "paris_cdg",
+    name: "INNSiDE Paris CDG Airport",
+    city: "paris",
+    address: "9 rue du Voyageur Roissy Pole Ouest, 95700",
+    checkin: "14:00",
+    checkout: "12:00",
+    dates: "5/16 - 5/17",
+    nights: 1,
+    cost: "TWD 3,452",
+    cancelPolicy: "不可取消",
+    mapQuery: "INNSiDE Paris Charles de Gaulle Airport",
+    notes: "銜接 5/17 早班機",
+  },
+  prague_nobilis: {
+    id: "prague_nobilis",
+    name: "NOBILIS RESIDENCE",
+    city: "prague",
+    address: "nám. I. P. Pavlova 1787/1, Praha 2, 120 00",
+    checkin: "15:00",
+    checkout: null,
+    dates: "5/17 - 5/22",
+    nights: 5,
+    cancelPolicy: null,
+    mapQuery: "NOBILIS RESIDENCE Prague",
+    notes: null,
+  },
+  ck_bellevue: {
+    id: "ck_bellevue",
+    name: "Hotel Bellevue",
+    city: "cesky_krumlov",
+    address: "Latrán 77, Český Krumlov, 381 01",
+    checkin: "15:00",
+    checkout: "11:00",
+    dates: "5/22 - 5/24",
+    nights: 2,
+    cost: "TWD 10,520",
+    cancelPolicy: "5/18 前可取消",
+    mapQuery: "Hotel Bellevue Český Krumlov",
+    notes: null,
+  },
+  salzburg_hplus: {
+    id: "salzburg_hplus",
+    name: "H+ Hotel Salzburg",
+    city: "salzburg",
+    address: "Südtiroler Platz 13, 5020 Salzburg",
+    checkin: "15:00",
+    checkout: null,
+    dates: "5/24 - 5/28",
+    nights: 4,
+    cost: "TWD 21,654",
+    cancelPolicy: "5/22 前可取消",
+    mapQuery: "H+ Hotel Salzburg",
+    notes: null,
+  },
+  budapest_airbnb: {
+    id: "budapest_airbnb",
+    name: "Airbnb — Rooftop / French Balcony",
+    city: "budapest",
+    address: "Horváth Mihály tér 15, Budapest",
+    checkin: "16:00",
+    checkout: "10:00",
+    dates: "5/28 - 6/3",
+    nights: 6,
+    cost: "TWD 28,632",
+    cancelPolicy: "5/21 16:00 前取消可拿部分退款",
+    mapQuery: "Horváth Mihály tér 15 Budapest",
+    notes: "靠 Rákóczi tér / M4 動線。晚上走大路、用 M4 或叫車，不要穿小巷。",
+  },
+  vienna_adina: {
+    id: "vienna_adina",
+    name: "Adina Serviced Apartments Vienna",
+    city: "vienna",
+    address: "Karl-Popper-Straße 6, Favoriten, 1100 Vienna",
+    checkin: "15:00",
+    checkout: null,
+    dates: "6/3 - 6/11",
+    nights: 8,
+    mapQuery: "Adina Apartments Vienna Hauptbahnhof",
+    notes: "Wien Hbf 附近，銜接良好",
+  },
+};
+
+const TRANSPORTS = {
+  cdg_to_prague: {
+    id: "cdg_to_prague",
+    type: "flight",
+    label: "SmartWings QS1033",
+    date: "5/17",
+    departure: "07:45",
+    departureStation: "CDG T2D",
+    arrival: "09:40",
+    arrivalStation: "PRG T2",
+    status: "已訂",
+    seat: null,
+    notes: "Airbus A220-300",
+    cancelPolicy: null,
+  },
+  prague_to_ck: {
+    id: "prague_to_ck",
+    type: "bus",
+    label: "RegioJet Bus",
+    date: "5/22",
+    departure: "10:00",
+    departureStation: "Prague, Na Knížecí Platform 1",
+    arrival: "12:35",
+    arrivalStation: "Český Krumlov, Špičák",
+    status: "已出票 / 已付款",
+    seat: "Seats 21 / 22 · Relax bus",
+    notes: null,
+    cancelPolicy: null,
+  },
+  ck_to_salzburg: {
+    id: "ck_to_salzburg",
+    type: "shuttle",
+    label: "CK Shuttle",
+    date: "5/24",
+    departure: "12:40",
+    departureStation: "Hotel Bellevue, Latrán 77",
+    arrival: "~15:40",
+    arrivalStation: "Salzburg Hbf, Lastenstraße 1",
+    status: "已確認 / 不需 reconfirm",
+    seat: null,
+    notes: "Shared shuttle，Salzburg 端不是飯店門口，需自行步行到 H+ Hotel。",
+    cancelPolicy: null,
+  },
+  salzburg_to_budapest: {
+    id: "salzburg_to_budapest",
+    type: "train",
+    label: "ÖBB RJX 61",
+    date: "5/28",
+    departure: "09:07",
+    departureStation: "Salzburg Hbf",
+    arrival: "14:02",
+    arrivalStation: "Budapest-Kelenföld",
+    status: "已訂 / 不可退改",
+    seat: "Wagen 23 · Seat 24(走道) / 26(窗) · Quiet zone",
+    notes: null,
+    cancelPolicy: "不可退改",
+  },
+  budapest_to_vienna: {
+    id: "budapest_to_vienna",
+    type: "train",
+    label: "MÁV RJX 64",
+    date: "6/3",
+    departure: "11:55",
+    departureStation: "Budapest-Kelenföld",
+    arrival: "14:20",
+    arrivalStation: "Wien Hbf",
+    status: "已訂 / 不可退改",
+    seat: "Coach 23 · Seat 45 / 47",
+    notes: null,
+    cancelPolicy: "不可退改",
+  },
+  vienna_to_airport: {
+    id: "vienna_to_airport",
+    type: "train",
+    label: "Wien Hbf → Flughafen Wien",
+    date: "6/11",
+    departure: "~09:00",
+    departureStation: "Wien Hbf",
+    arrival: "~09:30",
+    arrivalStation: "Flughafen Wien",
+    status: "未訂",
+    seat: null,
+    notes: "目標 09:30 前到機場，12:30 BR066 離境。前一天買或現場買即可。",
+    cancelPolicy: null,
+  },
+};
+
+const CITIES = {
+  paris: { id: "paris", name: "巴黎", nameEn: "Paris", color: "#8B6F5E", emoji: "🇫🇷", nights: 4 },
+  prague: { id: "prague", name: "布拉格", nameEn: "Prague", color: "#9B4F3A", emoji: "🇨🇿", nights: 5 },
+  cesky_krumlov: { id: "cesky_krumlov", name: "克魯姆洛夫", nameEn: "Český Krumlov", color: "#6B7F3A", emoji: "🇨🇿", nights: 2 },
+  salzburg: { id: "salzburg", name: "薩爾茨堡", nameEn: "Salzburg", color: "#4A6B8A", emoji: "🇦🇹", nights: 4 },
+  budapest: { id: "budapest", name: "布達佩斯", nameEn: "Budapest", color: "#7A4A6B", emoji: "🇭🇺", nights: 6 },
+  vienna: { id: "vienna", name: "維也納", nameEn: "Vienna", color: "#5A6B4A", emoji: "🇦🇹", nights: 8 },
+};
+
+const DAYS = [
+  // ========== PARIS ==========
+  {
+    date: "5/13", weekday: "三", dayNum: 1, city: "paris", type: "arrival",
+    accommodation: "paris_mercedes",
+    title: "抵達巴黎・調時差・塞納河開場",
+    highlights: [
+      "08:25 抵達 CDG T1，入境、領行李",
+      "計程車或叫車到 Hôtel Mercedes（有大行李不建議 RER）",
+      "寄放行李，15:00 後正式入住",
+    ],
+    afternoon: "Petit Palais（免費常設展）→ 亞歷山大三世橋 → 塞納河散步",
+    evening: "體力好：Trocadéro 看鐵塔 / 塞納河遊船。累了就回飯店。",
+    doNot: ["不要同時排 Petit Palais + 美術館 + 鐵塔 + 遊船", "不要訂不可取消晚餐", "不要第一天塞滿博物館"],
+    backup: "如果完全沒力，跳過 Petit Palais，只在塞納河邊散步",
+  },
+  {
+    date: "5/14", weekday: "四", dayNum: 2, city: "paris", type: "sightseeing",
+    accommodation: "paris_mercedes",
+    title: "瑪黑區・聖母院・左岸選物",
+    highlights: [
+      "10:00 出門，Musée Carnavalet 或 Archives Nationales 二選一",
+      "Marché des Enfants Rouges 午餐",
+      "瑪黑散步：Place des Vosges → Rue des Rosiers → Notre-Dame → Île Saint-Louis",
+    ],
+    afternoon: "左岸選物：Marin Montagut、Petit Gramme Paris（店家有開才去）",
+    evening: "歌劇院區 / 住宿附近晚餐，不塞夜間活動",
+    doNot: ["不要跑巴士底歌劇院", "不要排 13 區或 Bercy", "不要把購物排成硬任務"],
+    backup: null,
+    alert: "Ascension Day 升天節，觀光區可活動但一般店家節奏可能變慢",
+  },
+  {
+    date: "5/15", weekday: "五", dayNum: 3, city: "paris", type: "sightseeing",
+    accommodation: "paris_mercedes",
+    title: "鵪鶉之丘壁畫・加尼葉宮・皇家宮殿",
+    highlights: [
+      "09:30 Butte-aux-Cailles 壁畫散步",
+      "La Maison d'Isabelle 可頌（排太長就跳過）",
+      "14:00-15:30 Palais Garnier 加尼葉宮",
+    ],
+    afternoon: "Ritz Paris Le Comptoir 甜點 → Palais Royal 皇家宮殿（適合傍晚光線）",
+    evening: "歌劇院區 / Palais Royal 周邊晚餐",
+    doNot: ["不要排奧賽、橘園", "不要晚上再排鐵塔或遊船（除非前兩天完全沒做）"],
+    backup: null,
+  },
+  {
+    date: "5/16", weekday: "六", dayNum: 4, city: "paris", type: "move",
+    accommodation: "paris_cdg",
+    transport: null,
+    title: "蒙馬特收尾 → 轉往 CDG 機場飯店",
+    highlights: [
+      "退房前整理大行李，Hôtel Mercedes 11:30 退房",
+      "蒙馬特：聖心堂 → 畫家廣場 → 周邊散步",
+      "下午回飯店取行李 → INNSiDE CDG Airport（14:00 入住）",
+    ],
+    afternoon: null,
+    evening: "機場飯店休息。確認隔天 CDG T2D 動線、行李重量、護照、起床時間。",
+    doNot: ["不要凡爾賽", "不要下午排大型博物館", "不要太晚才去 CDG"],
+    moveCard: {
+      from: "Hôtel Mercedes",
+      to: "INNSiDE Paris CDG Airport",
+      leaveBy: "下午早點出發",
+      transport: "RER B / 計程車到 CDG",
+      arrivalCheckin: "14:00",
+      ifDelay: "不影響，同天移動",
+    },
+  },
+  // ========== PARIS → PRAGUE ==========
+  {
+    date: "5/17", weekday: "日", dayNum: 5, city: "prague", type: "move",
+    accommodation: "prague_nobilis",
+    transport: "cdg_to_prague",
+    title: "巴黎 → 布拉格｜飛行日・舊城初探",
+    highlights: [
+      "07:45 SmartWings QS1033 CDG T2D 出發",
+      "09:40 抵達 PRG T2",
+      "前往 NOBILIS RESIDENCE 寄放行李",
+    ],
+    afternoon: "輕鬆走舊城廣場、天文鐘、住宿周邊",
+    evening: "簡單晚餐，早點休息",
+    doNot: ["不要排城堡區", "不要排查理大橋日落", "不要去遠景點"],
+    moveCard: {
+      from: "INNSiDE Paris CDG",
+      to: "NOBILIS RESIDENCE",
+      leaveBy: "05:30 起床，06:00 出發到 T2D",
+      transport: "SmartWings QS1033 → 59 trolleybus + Metro A",
+      arrivalCheckin: "15:00（先寄行李）",
+      ifDelay: "SmartWings 如延誤，下午行程全砍，直接去住宿",
+    },
+  },
+  // ========== PRAGUE ==========
+  {
+    date: "5/18", weekday: "一", dayNum: 6, city: "prague", type: "sightseeing",
+    accommodation: "prague_nobilis",
+    title: "城堡區・小城區・Petřín Hill",
+    highlights: [
+      "布拉格城堡 + 聖維特大教堂",
+      "小城區午餐",
+      "Petřín Hill 散步（依體力決定是否上塔）",
+    ],
+    afternoon: null,
+    evening: "河畔散步或住宿附近晚餐",
+    doNot: ["不要硬排太多室內博物館", "不要把舊城深度也塞進今天"],
+    alert: "城堡區電車可能受工程影響，需走 Pohořelec / Brusnice 一帶上山",
+  },
+  {
+    date: "5/19", weekday: "二", dayNum: 7, city: "prague", type: "sightseeing",
+    accommodation: "prague_nobilis",
+    title: "查理大橋・舊城・猶太區",
+    highlights: [
+      "早上去查理大橋（避開中午人潮）",
+      "舊城廣場 → 天文鐘 → 火藥塔",
+      "下午猶太區：Old Jewish Cemetery、Spanish Synagogue",
+    ],
+    afternoon: null,
+    evening: "河畔散步 / 短時段夜遊船 / 早休",
+    doNot: ["不要再塞 Kutná Hora", "不要太晚睡"],
+  },
+  {
+    date: "5/20", weekday: "三", dayNum: 8, city: "prague", type: "daytrip",
+    accommodation: "prague_nobilis",
+    title: "Kutná Hora Day Trip",
+    highlights: [
+      "搭火車前往 Kutná Hora",
+      "Sedlec Ossuary 人骨教堂",
+      "St. Barbara's Cathedral 聖芭芭拉教堂",
+    ],
+    afternoon: "下午回布拉格",
+    evening: "休息為主",
+    doNot: ["不要在 Kutná Hora 留到晚上", "不要回來後排大型夜間活動"],
+    alert: "Sedlec 仍在修復但持續開放，建議線上購票",
+  },
+  {
+    date: "5/21", weekday: "四", dayNum: 9, city: "prague", type: "buffer",
+    accommodation: "prague_nobilis",
+    title: "Vyšehrad・Vinohrady・洗衣補給",
+    highlights: [
+      "Vyšehrad 高堡區散步",
+      "Vinohrady / Žižkov 慢逛",
+      "洗衣、補給、整理行李",
+    ],
+    afternoon: null,
+    evening: "確認隔天 RegioJet：10:00 Na Knížecí Platform 1, Seats 21/22",
+    doNot: ["不要排遠距離景點", "不要晚睡"],
+  },
+  // ========== PRAGUE → CK ==========
+  {
+    date: "5/22", weekday: "五", dayNum: 10, city: "cesky_krumlov", type: "move",
+    accommodation: "ck_bellevue",
+    transport: "prague_to_ck",
+    title: "布拉格 → CK｜老城初探",
+    highlights: [
+      "10:00 RegioJet Bus 出發",
+      "12:35 抵達 Český Krumlov, Špičák",
+      "Hotel Bellevue 寄放行李（15:00 入住）",
+    ],
+    afternoon: "河畔散步、舊城廣場、熟悉地形",
+    evening: "CK 老城晚餐，早晚氛圍最好",
+    doNot: ["不要排城堡塔完整參觀", "不要安排獨木舟", "不要拖大行李走石板路"],
+    moveCard: {
+      from: "NOBILIS RESIDENCE",
+      to: "Hotel Bellevue",
+      leaveBy: "09:00 出門前往 Na Knížecí",
+      transport: "RegioJet Bus 10:00→12:35, Seats 21/22",
+      arrivalCheckin: "15:00（先寄行李）",
+      ifDelay: "RegioJet 如延誤，直接去飯店寄行李，下午行程縮減",
+    },
+  },
+  // ========== CK ==========
+  {
+    date: "5/23", weekday: "六", dayNum: 11, city: "cesky_krumlov", type: "sightseeing",
+    accommodation: "ck_bellevue",
+    title: "CK 完整停留日",
+    highlights: [
+      "早起看小鎮晨間氛圍",
+      "城堡塔 → 城堡庭院 → 城堡花園 → 高處看河灣",
+      "天氣好可獨木舟，否則老城慢逛",
+    ],
+    afternoon: null,
+    evening: "確認隔天 CK Shuttle：12:40 Hotel Bellevue 接，提前 5 分鐘等候",
+    doNot: ["不要把小鎮變打卡任務", "不要排太晚"],
+  },
+  // ========== CK → SALZBURG ==========
+  {
+    date: "5/24", weekday: "日", dayNum: 12, city: "salzburg", type: "move",
+    accommodation: "salzburg_hplus",
+    transport: "ck_to_salzburg",
+    title: "CK → 薩爾茨堡｜米拉貝爾花園",
+    highlights: [
+      "11:00 前退房，飯店寄放行李",
+      "12:40 CK Shuttle 接（Hotel Bellevue）",
+      "~15:40 抵達 Salzburg Hbf，步行到 H+ Hotel",
+    ],
+    afternoon: "入住後：Mirabell Garden → Getreidegasse",
+    evening: "簡單晚餐，早點休息",
+    doNot: ["不要排要塞", "不要排 Hallstatt / 國王湖", "不要把今天當景點日"],
+    moveCard: {
+      from: "Hotel Bellevue",
+      to: "H+ Hotel Salzburg",
+      leaveBy: "12:30 在大廳等候",
+      transport: "CK Shuttle 12:40→~15:40, Shared shuttle",
+      arrivalCheckin: "15:00",
+      ifDelay: "Shuttle 不太會誤點但若遲到，下午行程全砍",
+      warning: "Salzburg 端不是送到飯店門口，需步行到 H+ Hotel",
+    },
+  },
+  // ========== SALZBURG ==========
+  {
+    date: "5/25", weekday: "一", dayNum: 13, city: "salzburg", type: "sightseeing",
+    accommodation: "salzburg_hplus",
+    title: "要塞・莫札特・DomQuartier",
+    highlights: [
+      "上午：霍恩薩爾茨堡要塞（早點去避人潮）",
+      "老城午餐",
+      "下午：莫札特出生地 → DomQuartier → 主教座堂",
+    ],
+    afternoon: null,
+    evening: "老城晚餐或回 Hbf 附近休息",
+    doNot: ["不要安排購物為核心（Whit Monday 商店可能關）", "不要再塞遠程 day trip"],
+    alert: "5/25 Whit Monday 奧地利法定假日，景點可開但商店可能縮短",
+  },
+  {
+    date: "5/26", weekday: "二", dayNum: 14, city: "salzburg", type: "daytrip",
+    accommodation: "salzburg_hplus",
+    title: "Königssee 國王湖 Day Trip",
+    highlights: [
+      "Bus 840 → Berchtesgaden → 轉當地巴士到 Königssee",
+      "搭船到 St. Bartholomä",
+      "湖邊散步、午餐、拍照",
+    ],
+    afternoon: "14:30-15:00 前開始回程",
+    evening: "回 Salzburg 不排任何活動",
+    doNot: ["不要太晚離開 Königssee", "不要回來後再排重景點"],
+    backup: "天氣差直接改 Salzburg 慢活日",
+    alert: "船班遇濃霧/暴風/高水位可能停駛",
+  },
+  {
+    date: "5/27", weekday: "三", dayNum: 15, city: "salzburg", type: "conditional",
+    accommodation: "salzburg_hplus",
+    title: "Hallstatt 條件式｜或薩爾茨堡慢活",
+    highlights: [
+      "07:00 裁決：體力 OK + 天氣 OK → 啟動 Hallstatt",
+      "Hallstatt 版：火車經 Attnang-Puchheim → ferry 進村 → 湖邊散步",
+      "慢活版：河邊散步、咖啡館、補買、老城",
+    ],
+    afternoon: "Hallstatt 版 15:30 離開 / 慢活版自由安排",
+    evening: "整理行李，確認隔天 ÖBB RJX 61：09:07, Wagen 23, Seat 24/26",
+    doNot: ["不要排鹽礦（關閉至 6/30）", "不要排 Skywalk / 纜車", "不要晚睡"],
+    backup: "體力差或天氣差 → 留在 Salzburg",
+    conditionalRule: "A. 體力+天氣 OK → Hallstatt 輕量版 | B. 普通 → Salzburg 慢活 | C. 下雨/累 → 不去",
+  },
+  // ========== SALZBURG → BUDAPEST ==========
+  {
+    date: "5/28", weekday: "四", dayNum: 16, city: "budapest", type: "move",
+    accommodation: "budapest_airbnb",
+    transport: "salzburg_to_budapest",
+    title: "薩爾茨堡 → 布達佩斯｜純移動日",
+    highlights: [
+      "08:30 離開 H+ Hotel",
+      "09:07 ÖBB RJX 61 出發",
+      "14:02 抵達 Budapest-Kelenföld",
+    ],
+    afternoon: "M4 → Rákóczi tér → 步行到 Horváth Mihály tér 15。16:00 Airbnb 入住。",
+    evening: "附近超市補給，熟悉 M4 / 電車動線",
+    doNot: ["不要排布達城堡", "不要排漁人堡", "不要拖行李穿小巷", "不要訂不可取消晚餐"],
+    moveCard: {
+      from: "H+ Hotel Salzburg",
+      to: "Airbnb Horváth Mihály tér 15",
+      leaveBy: "08:30",
+      transport: "ÖBB RJX 61 09:07→14:02, Wagen 23, Seat 24/26, Quiet zone",
+      arrivalCheckin: "16:00（14:02-16:00 有行李空檔，事前問 host 能否寄放）",
+      ifDelay: "Railjet 如延誤，直接去住宿，取消一切下午計畫",
+    },
+  },
+  // ========== BUDAPEST ==========
+  {
+    date: "5/29", weekday: "五", dayNum: 17, city: "budapest", type: "sightseeing",
+    accommodation: "budapest_airbnb",
+    title: "中央市場 → Pest 側主線",
+    highlights: [
+      "上午：中央市場 Nagycsarnok（週五有開）",
+      "國會大廈周邊 → 多瑙河鞋紀念碑",
+      "聖伊什特萬大教堂 → Andrássy út → Opera",
+    ],
+    afternoon: "咖啡館休息",
+    evening: "避開 VII 區最熱鬧街道（球迷湧入）。建議往南 Ráday utca 一帶晚餐。",
+    doNot: ["不要深夜留在酒吧區", "不要拖太晚回住宿"],
+    alert: "5/29 歐冠球迷大量抵達，晚上避開 VII 區",
+  },
+  {
+    date: "5/30", weekday: "六", dayNum: 18, city: "budapest", type: "daytrip",
+    accommodation: "budapest_airbnb",
+    title: "Visegrád Day Trip｜避開歐冠決賽日",
+    highlights: [
+      "Nyugati 搭火車到 Nagymaros-Visegrád → 渡船進 Visegrád",
+      "Fellegvár 城堡 → 多瑙河灣全景",
+      "村內午餐 → 河岸散步",
+    ],
+    afternoon: "不急著回，視體力多停留",
+    evening: "避免 21:00 後停留市中心熱區。回住宿附近外帶晚餐。",
+    doNot: ["不要晚上排 Ruin Bar", "不要去 Puskás Aréna 周邊", "不要在市中心看人潮"],
+    alert: "⚽ UEFA Champions League Final — Puskás Aréna。全天離開市中心。",
+  },
+  {
+    date: "5/31", weekday: "日", dayNum: 19, city: "budapest", type: "sightseeing",
+    accommodation: "budapest_airbnb",
+    title: "Margaret Island・Széchenyi 溫泉修復日",
+    highlights: [
+      "上午：Margaret Island 散步（週日市場不開，改島上放鬆）",
+      "市區簡單午餐",
+      "下午：Széchenyi Bath 長時段放鬆",
+    ],
+    afternoon: null,
+    evening: "住宿附近晚餐，不排大型活動",
+    doNot: ["不要再排另一個大景點", "不要把溫泉當打卡 1 小時"],
+  },
+  {
+    date: "6/1", weekday: "一", dayNum: 20, city: "budapest", type: "sightseeing",
+    accommodation: "budapest_airbnb",
+    title: "Buda 側・布達城堡・漁人堡・洗衣",
+    highlights: [
+      "蓋勒特山 → 布達城堡區",
+      "馬加什教堂 → 漁人堡",
+      "下午回住宿洗衣 / 猶太區 Dohány Synagogue 可視狀況",
+    ],
+    afternoon: null,
+    evening: "漁人堡黃昏 / 多瑙河夜遊船（不硬排）",
+    doNot: ["不要再加 Visegrád / Szentendre", "不要擠掉洗衣時間"],
+  },
+  {
+    date: "6/2", weekday: "二", dayNum: 21, city: "budapest", type: "daytrip",
+    accommodation: "budapest_airbnb",
+    title: "Szentendre 半日｜整理行李",
+    highlights: [
+      "上午：HÉV 到 Szentendre（約 40 分鐘）",
+      "老街、藝廊、河岸散步、午餐",
+      "下午回布達佩斯",
+    ],
+    afternoon: "整理行李、超市補給、戰利品整理",
+    evening: "確認隔天：10:00 退房 → 11:55 MÁV RJX 64, Coach 23, Seat 45/47",
+    doNot: ["不要排遠程完整 day trip", "不要晚睡", "不要把行李留到 6/3 早上"],
+  },
+  // ========== BUDAPEST → VIENNA ==========
+  {
+    date: "6/3", weekday: "三", dayNum: 22, city: "vienna", type: "move",
+    accommodation: "vienna_adina",
+    transport: "budapest_to_vienna",
+    title: "布達佩斯 → 維也納｜到達散步",
+    highlights: [
+      "10:00 Airbnb 退房",
+      "11:55 MÁV RJX 64 出發",
+      "14:20 抵達 Wien Hbf → Adina Apartments",
+    ],
+    afternoon: "入住後輕鬆散步：Naschmarkt（如果還有攤位）或 Wien Hbf 周邊",
+    evening: "簡單晚餐，建立維也納長住節奏",
+    doNot: ["不要排 Schönbrunn", "不要排大型博物館", "不要把下午塞滿"],
+    moveCard: {
+      from: "Airbnb Horváth Mihály tér 15",
+      to: "Adina Serviced Apartments Vienna",
+      leaveBy: "10:00 退房 → 直接前往 Budapest-Kelenföld",
+      transport: "MÁV RJX 64 11:55→14:20, Coach 23, Seat 45/47",
+      arrivalCheckin: "15:00",
+      ifDelay: "Railjet 如延誤，Naschmarkt 取消，直接去住宿",
+    },
+  },
+  // ========== VIENNA ==========
+  {
+    date: "6/4", weekday: "四", dayNum: 23, city: "vienna", type: "sightseeing",
+    accommodation: "vienna_adina",
+    title: "Schönbrunn Palace・內城",
+    highlights: [
+      "上午：Schönbrunn Palace + 花園",
+      "中午回市中心",
+      "下午：Stephansdom → Graben → Kärntner Straße",
+    ],
+    afternoon: "咖啡館休息",
+    evening: "內城晚餐或回 Adina 休息",
+    doNot: ["不要把購物當核心（Corpus Christi 假日）", "不要再排 Belvedere"],
+    alert: "6/4 Corpus Christi，Schönbrunn 開放但購物節奏偏慢",
+  },
+  {
+    date: "6/5", weekday: "五", dayNum: 24, city: "vienna", type: "daytrip",
+    accommodation: "vienna_adina",
+    title: "Wachau Day Trip｜Melk + 船 + Krems",
+    highlights: [
+      "火車到 Melk → 參觀 Melk Abbey",
+      "DDSG 船到 Krems",
+      "Krems 回 Vienna",
+    ],
+    afternoon: null,
+    evening: "簡單晚餐，不排大景點",
+    doNot: ["不要變成多村落硬趕", "天氣不好可改 Vienna 室內日"],
+    alert: "DDSG 2026/4/25-10/4 每日航行，建議提前查票",
+  },
+  {
+    date: "6/6", weekday: "六", dayNum: 25, city: "vienna", type: "sightseeing",
+    accommodation: "vienna_adina",
+    title: "購物日｜Mariahilfer Straße",
+    highlights: [
+      "Mariahilfer Straße 主線購物（週六全開）",
+      "鎖定想買品項，集中處理",
+      "確認行李重量與回程空間",
+    ],
+    afternoon: null,
+    evening: "整理戰利品",
+    doNot: ["不要同時排博物館", "不要分散到其他天"],
+  },
+  {
+    date: "6/7", weekday: "日", dayNum: 26, city: "vienna", type: "sightseeing",
+    accommodation: "vienna_adina",
+    title: "Belvedere・Hundertwasserhaus・Prater",
+    highlights: [
+      "上午：Belvedere Upper（克林姆《吻》）",
+      "下午：Hundertwasserhaus → Prater 摩天輪",
+      "三個點都不依賴商店營業，適合週日",
+    ],
+    afternoon: null,
+    evening: "自由晚餐",
+    doNot: ["不要安排不可取消活動"],
+  },
+  {
+    date: "6/8", weekday: "一", dayNum: 27, city: "vienna", type: "sightseeing",
+    accommodation: "vienna_adina",
+    title: "博物館・洗衣・Heuriger",
+    highlights: [
+      "上午：KHM 藝術史博物館 或 Albertina（二選一）",
+      "下午：洗衣 / Vienna Woods / Kahlenberg（依天氣）",
+      "晚上：Heuriger 酒莊晚餐",
+    ],
+    afternoon: null,
+    evening: null,
+    doNot: ["不要兩座美術館連刷"],
+  },
+  {
+    date: "6/9", weekday: "二", dayNum: 28, city: "vienna", type: "daytrip",
+    accommodation: "vienna_adina",
+    title: "Bratislava 半日 Day Trip",
+    highlights: [
+      "Wien Hbf 搭 REX 到 Bratislava（約 1 小時）",
+      "老城 → 城堡山 → 藍色教堂 → 午餐",
+      "下午返回 Vienna",
+    ],
+    afternoon: null,
+    evening: "Vienna 簡單晚餐",
+    doNot: ["不要在 Bratislava 排太多博物館", "不要拖到太晚"],
+    backup: "天氣差或累了直接取消，改維也納補買 / 散步",
+  },
+  {
+    date: "6/10", weekday: "三", dayNum: 29, city: "vienna", type: "buffer",
+    accommodation: "vienna_adina",
+    title: "最後緩衝日｜備用槽",
+    highlights: [
+      "回訪喜歡的咖啡館 / 補前幾天未完成行程",
+      "補伴手禮",
+      "確認 6/11 機場交通：Wien Hbf → Flughafen Wien",
+    ],
+    afternoon: null,
+    evening: "最後晚餐，整理全部行李",
+    doNot: ["不要去 Bratislava / Wachau / Parndorf", "不要安排不可取消活動", "不要把機場交通留到 6/11 才研究"],
+    alert: "這天是備用槽：用來補回前面因天氣/體力取消的行程",
+  },
+  {
+    date: "6/11", weekday: "四", dayNum: 30, city: "vienna", type: "move",
+    accommodation: null,
+    transport: "vienna_to_airport",
+    title: "維也納 → 回程",
+    highlights: [
+      "08:45 離開 Adina",
+      "09:00 Wien Hbf → Flughafen Wien",
+      "12:30 BR066 離境",
+    ],
+    afternoon: null,
+    evening: null,
+    doNot: ["不要安排早午餐遠行", "不要臨時購物", "不要壓線到機場"],
+    moveCard: {
+      from: "Adina Serviced Apartments Vienna",
+      to: "Vienna Airport",
+      leaveBy: "08:45",
+      transport: "Wien Hbf → Flughafen Wien 直達",
+      arrivalCheckin: "09:30 前到機場",
+      ifDelay: "提早出門，不要冒險",
+      warning: "12:30 BR066 離境，09:30 前必須到",
+    },
+  },
+];
+
+const ENGLISH_TEMPLATES = [
+  { label: "寄放行李", text: "Hello, we have a reservation under [NAME]. Could we leave our luggage here until check-in time?" },
+  { label: "提前入住", text: "Hello, is it possible to check in a bit earlier? We understand if the room isn't ready yet." },
+  { label: "叫車", text: "Could you help us call a taxi to [DESTINATION], please?" },
+  { label: "退房", text: "We'd like to check out. Could we also leave our bags here for a few hours?" },
+  { label: "餐廳訂位", text: "Hello, do you have a table for two available tonight around 7pm?" },
+  { label: "問路", text: "Excuse me, could you tell me how to get to [PLACE]?" },
+  { label: "緊急求助", text: "I need help, please. Could you call an ambulance / the police?" },
+  { label: "過敏提醒", text: "I have a food allergy to [ITEM]. Could you check if this dish contains it?" },
+];
+
+const EMERGENCY = {
+  europe: "112（歐洲通用緊急號碼）",
+  taiwan: "駐外館處緊急聯絡：+886-800-085-095",
+  insurance: "旅遊平安險聯絡方式（出發前填入）",
+};
+
+// ============================================================
+// HELPERS
+// ============================================================
+
+function getTripDate(dateStr) {
+  const [m, d] = dateStr.split("/").map(Number);
+  return new Date(2026, m - 1, d);
+}
+
+function getTodayIndex(days) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  for (let i = 0; i < days.length; i++) {
+    const d = getTripDate(days[i].date);
+    if (d.getTime() === today.getTime()) return i;
+  }
+  // Before trip
+  const first = getTripDate(days[0].date);
+  if (today < first) return 0;
+  // After trip
+  return days.length - 1;
+}
+
+function getTypeLabel(type) {
+  const map = {
+    move: "移動日", sightseeing: "景點日", buffer: "緩衝日",
+    daytrip: "Day Trip", arrival: "抵達日", conditional: "條件式",
+  };
+  return map[type] || type;
+}
+
+function getTypeColor(type) {
+  const map = {
+    move: "#C4593C", sightseeing: "#4A7B6F", buffer: "#8B7355",
+    daytrip: "#2E6B8A", arrival: "#6B5B7B", conditional: "#8B6914",
+  };
+  return map[type] || "#666";
+}
+
+function openMap(query) {
+  window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`, "_blank");
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).catch(() => {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+  });
+}
+
+// ============================================================
+// STYLES
+// ============================================================
+const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #F5F0EB;
+  --bg-card: #FFFFFF;
+  --bg-warm: #FAF6F1;
+  --text-primary: #2C2420;
+  --text-secondary: #6B5E54;
+  --text-muted: #9B8E82;
+  --border: #E8E0D8;
+  --border-light: #F0EAE3;
+  --accent: #8B6F5E;
+  --accent-warm: #C4593C;
+  --accent-green: #4A7B6F;
+  --accent-blue: #2E6B8A;
+  --shadow-sm: 0 1px 3px rgba(44,36,32,0.06);
+  --shadow-md: 0 4px 12px rgba(44,36,32,0.08);
+  --shadow-lg: 0 8px 24px rgba(44,36,32,0.1);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Noto Sans TC', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body, html, #root {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  height: 100%;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 80px;
+}
+
+/* Bottom Nav */
+.bottom-nav {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-light);
+  padding: 6px 0 env(safe-area-inset-bottom, 8px);
+  z-index: 100;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+
+.nav-item svg { width: 22px; height: 22px; stroke-width: 1.8; transition: all 0.2s; }
+.nav-item span { font-size: 10px; font-weight: 400; color: var(--text-muted); transition: all 0.2s; }
+.nav-item.active svg { color: var(--accent-warm); }
+.nav-item.active span { color: var(--accent-warm); font-weight: 500; }
+.nav-item:not(.active) svg { color: var(--text-muted); }
+
+/* TODAY PAGE */
+.today-header {
+  padding: 20px 20px 0;
+}
+
+.today-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.today-date {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.today-weekday {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.today-city-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 4px;
+}
+
+.city-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+}
+
+.type-badge {
+  display: inline-flex;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+}
+
+.day-counter {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.today-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 16px 20px 12px;
+  line-height: 1.3;
+}
+
+.today-nav-arrows {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  margin-bottom: 12px;
+}
+
+.arrow-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--accent);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s;
+}
+.arrow-btn:hover { background: rgba(139,111,94,0.08); }
+.arrow-btn:disabled { opacity: 0.3; cursor: default; }
+.arrow-btn:disabled:hover { background: none; }
+
+/* SECTIONS */
+.section {
+  margin: 0 16px 12px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.section-header {
+  padding: 14px 16px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section-body { padding: 12px 16px 14px; }
+
+.highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.highlight-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.highlight-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.info-row {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  padding: 4px 0;
+}
+
+.do-not-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 13px;
+  color: var(--accent-warm);
+  line-height: 1.5;
+}
+
+.alert-box {
+  margin: 0 16px 12px;
+  background: #FFF8F0;
+  border: 1px solid #F0D0A0;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #8B6914;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* MOVE CARD */
+.move-card {
+  margin: 0 16px 12px;
+  background: linear-gradient(135deg, #FAF6F1, #F5EDE4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.move-card-header {
+  padding: 14px 16px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-warm);
+  letter-spacing: 0.5px;
+}
+
+.move-card-body { padding: 0 16px 14px; }
+
+.move-row {
+  display: flex;
+  padding: 6px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.move-label {
+  width: 80px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.move-value {
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.move-warning {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: rgba(196,89,60,0.08);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--accent-warm);
+  line-height: 1.5;
+}
+
+/* MAP BUTTON */
+.map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: rgba(74,123,111,0.1);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--accent-green);
+  font-weight: 500;
+  margin: 4px 4px 4px 0;
+  transition: background 0.2s;
+}
+.map-btn:hover { background: rgba(74,123,111,0.18); }
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: rgba(139,111,94,0.1);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: rgba(139,111,94,0.18); }
+.copy-btn.copied { background: var(--accent-green); color: white; }
+
+/* ROUTE PAGE */
+.route-list { padding: 12px 16px 20px; }
+
+.route-city-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 0 8px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.route-day-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  margin: 4px 0;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+.route-day-card:hover { border-color: var(--border); box-shadow: var(--shadow-md); }
+.route-day-card:active { transform: scale(0.98); }
+
+.route-day-date {
+  width: 44px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.route-day-date .d {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.route-day-date .wd {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.route-day-info { flex: 1; min-width: 0; }
+
+.route-day-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.route-day-summary {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* TRIP PAGE */
+.trip-section {
+  margin: 12px 16px;
+}
+
+.trip-section-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  padding-top: 8px;
+}
+
+.accommodation-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+
+.acc-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.acc-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.transport-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+
+.transport-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.transport-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.status-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: 6px;
+}
+.status-booked { background: rgba(74,123,111,0.12); color: var(--accent-green); }
+.status-pending { background: rgba(196,89,60,0.12); color: var(--accent-warm); }
+
+.template-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+}
+
+.template-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.template-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+/* PAGE HEADER */
+.page-header {
+  padding: 20px 20px 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.page-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* FILTER CHIPS */
+.filter-row {
+  display: flex;
+  gap: 6px;
+  padding: 0 16px 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.filter-row::-webkit-scrollbar { display: none; }
+
+.chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+}
+.chip.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+/* MOVE PAGE */
+.move-page-card {
+  margin: 8px 16px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.move-page-card:active { transform: scale(0.98); }
+
+.move-page-header {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.move-page-date {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.move-page-route {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.move-page-detail {
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* CONDITIONAL CARD */
+.conditional-box {
+  margin: 0 16px 12px;
+  background: #FFFBF0;
+  border: 1px solid #E8D8A0;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+}
+
+.conditional-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #8B6914;
+  margin-bottom: 8px;
+}
+
+.conditional-rule {
+  font-size: 13px;
+  color: #6B5910;
+  line-height: 1.7;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeIn 0.3s ease; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-primary);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  z-index: 200;
+  animation: fadeIn 0.2s ease;
+  pointer-events: none;
+}
+`;
+
+// ============================================================
+// COMPONENTS
+// ============================================================
+
+// Icons as simple SVG components
+const Icons = {
+  Today: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="16" r="1.5" fill="currentColor" stroke="none"/></svg>
+  ),
+  Route: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M6 8v2a4 4 0 004 4h4a4 4 0 014 4v0"/></svg>
+  ),
+  Move: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+  ),
+  Trip: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v6h6"/></svg>
+  ),
+  ChevronLeft: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+  ),
+  ChevronRight: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+  ),
+  MapPin: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+  ),
+  Copy: () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+  ),
+  Alert: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  ),
+};
+
+function Toast({ message }) {
+  if (!message) return null;
+  return <div className="toast">{message}</div>;
+}
+
+// ============================================================
+// TODAY PAGE
+// ============================================================
+function TodayPage({ dayIndex, setDayIndex, onGoToMoveDay }) {
+  const day = DAYS[dayIndex];
+  const city = CITIES[day.city];
+  const acc = day.accommodation ? ACCOMMODATIONS[day.accommodation] : null;
+  const transport = day.transport ? TRANSPORTS[day.transport] : null;
+  const [toast, setToast] = useState(null);
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 1500);
+  };
+
+  const handleCopy = (text) => {
+    copyText(text);
+    showToast("已複製");
+  };
+
+  return (
+    <div className="fade-in">
+      <Toast message={toast} />
+      {/* Header */}
+      <div className="today-header">
+        <div className="today-meta">
+          <span className="today-date">{day.date}</span>
+          <span className="today-weekday">（{day.weekday}）</span>
+        </div>
+        <div className="today-city-row">
+          <span className="city-badge" style={{ background: city.color }}>
+            {city.emoji} {city.name}
+          </span>
+          <span className="type-badge" style={{ background: getTypeColor(day.type) }}>
+            {getTypeLabel(day.type)}
+          </span>
+          <span className="day-counter">DAY {day.dayNum} / 30</span>
+        </div>
+      </div>
+
+      <div className="today-title">{day.title}</div>
+
+      {/* Day navigation */}
+      <div className="today-nav-arrows">
+        <button className="arrow-btn" disabled={dayIndex === 0} onClick={() => setDayIndex(dayIndex - 1)}>
+          <Icons.ChevronLeft /> {dayIndex > 0 ? DAYS[dayIndex - 1].date : ""}
+        </button>
+        <button className="arrow-btn" disabled={dayIndex === DAYS.length - 1} onClick={() => setDayIndex(dayIndex + 1)}>
+          {dayIndex < DAYS.length - 1 ? DAYS[dayIndex + 1].date : ""} <Icons.ChevronRight />
+        </button>
+      </div>
+
+      {/* Alert */}
+      {day.alert && (
+        <div className="alert-box">
+          <Icons.Alert />
+          <span>{day.alert}</span>
+        </div>
+      )}
+
+      {/* Conditional Rule */}
+      {day.conditionalRule && (
+        <div className="conditional-box">
+          <div className="conditional-title">當天早上裁決</div>
+          <div className="conditional-rule">
+            {day.conditionalRule.split("|").map((r, i) => (
+              <div key={i} style={{ padding: "2px 0" }}>{r.trim()}</div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Move Card */}
+      {day.moveCard && (
+        <div className="move-card">
+          <div className="move-card-header">🚂 移動操作卡</div>
+          <div className="move-card-body">
+            <div className="move-row"><span className="move-label">出發</span><span className="move-value">{day.moveCard.from}</span></div>
+            <div className="move-row"><span className="move-label">目的地</span><span className="move-value">{day.moveCard.to}</span></div>
+            <div className="move-row"><span className="move-label">離開時間</span><span className="move-value">{day.moveCard.leaveBy}</span></div>
+            <div className="move-row"><span className="move-label">交通</span><span className="move-value">{day.moveCard.transport}</span></div>
+            <div className="move-row"><span className="move-label">入住時間</span><span className="move-value">{day.moveCard.arrivalCheckin}</span></div>
+            <div className="move-row"><span className="move-label">延誤備案</span><span className="move-value">{day.moveCard.ifDelay}</span></div>
+            {day.moveCard.warning && <div className="move-warning">⚠️ {day.moveCard.warning}</div>}
+          </div>
+        </div>
+      )}
+
+      {/* Highlights */}
+      <div className="section">
+        <div className="section-header">今日重點</div>
+        <div className="section-body">
+          {day.highlights.map((h, i) => (
+            <div className="highlight-item" key={i}>
+              <span className="highlight-num">{i + 1}</span>
+              <span className="highlight-text">{h}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Afternoon / Evening */}
+      {(day.afternoon || day.evening) && (
+        <div className="section">
+          <div className="section-header">下午 & 晚上</div>
+          <div className="section-body">
+            {day.afternoon && <div className="info-row">{day.afternoon}</div>}
+            {day.evening && <div className="info-row" style={{ marginTop: 4, color: "var(--text-secondary)" }}>{day.evening}</div>}
+          </div>
+        </div>
+      )}
+
+      {/* Accommodation */}
+      {acc && (
+        <div className="section">
+          <div className="section-header">今日住宿</div>
+          <div className="section-body">
+            <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 4 }}>{acc.name}</div>
+            <div style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.6 }}>
+              {acc.address}<br />
+              入住 {acc.checkin}{acc.checkout ? ` / 退房 ${acc.checkout}` : ""}
+              {acc.cancelPolicy && <><br />{acc.cancelPolicy}</>}
+              {acc.notes && <><br /><span style={{ color: "var(--accent-warm)" }}>{acc.notes}</span></>}
+            </div>
+            <div style={{ marginTop: 8 }}>
+              <button className="map-btn" onClick={() => openMap(acc.mapQuery)}>
+                <Icons.MapPin /> Google Maps
+              </button>
+              <button className="copy-btn" onClick={() => handleCopy(acc.address)} style={{ marginLeft: 4 }}>
+                <Icons.Copy /> 複製地址
+              </button>
             </div>
           </div>
+        </div>
+      )}
 
-          <div class="hero-secondary">
-            <div>
-              <h3>今日策略 · STRATEGY</h3>
-              <p id="day-strategy">...</p>
+      {/* Transport */}
+      {transport && (
+        <div className="section">
+          <div className="section-header">交通資訊</div>
+          <div className="section-body">
+            <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 4 }}>{transport.label}</div>
+            <div style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.7 }}>
+              {transport.date} {transport.departure} → {transport.arrival}<br />
+              {transport.departureStation} → {transport.arrivalStation}<br />
+              {transport.seat && <>{transport.seat}<br /></>}
+              {transport.status}
+              {transport.notes && <><br />{transport.notes}</>}
             </div>
-            <div class="tags" id="day-tags"></div>
           </div>
         </div>
-      </header>
+      )}
 
-      <main id="timeline" class="timeline"></main>
-
-      <div class="photo-break">
-        <div class="photo-wrapper" id="photo-wrapper">
-          <img id="photo-img" class="photo-img" src="./assets/day1.png?v=final1" alt="Day visual" loading="eager" decoding="async" />
-        </div>
-        <div class="photo-content">
-          <div class="eyebrow">VIBE CHECK</div>
-          <h3 id="photo-title">Title</h3>
-          <p id="photo-desc">Description</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <nav class="bottom-nav">
-    <div class="nav-scroll" id="nav-container"></div>
-  </nav>
-
-  <div class="backdrop" id="backdrop"></div>
-
-  <div class="drawer" id="drawer">
-    <div class="drawer-header">
-      <div class="drawer-title">旅程小抄 · TRIP CHEAT SHEET</div>
-      <button class="drawer-close" id="drawer-close">✕</button>
-    </div>
-
-    <div class="drawer-content">
-      <div class="strategy-card">
-        <h3>核心原則 · CORE PRINCIPLES</h3>
-        <p>慢半拍 × 有策略的城市旅行。</p>
-        <ul class="strategy-list">
-          <li><strong>Day 1 冬裝先決：</strong>先解決保暖，後面不為了衣服打斷行程。</li>
-          <li><strong>Day 2 缺貨風險：</strong>彩妝與聯名品早上處理，看到就買，不回頭賭庫存。</li>
-          <li><strong>Day 3 體力調節：</strong>大阪城不硬爬，重點是樹影、護城河與光線。</li>
-          <li><strong>Day 4 奈良留白：</strong>不趕點，不追清單，順著鹿與樹走。</li>
-          <li><strong>Day 5 儀式感：</strong>最後一杯咖啡、最後一個窗外視角，把旅程收好。</li>
-        </ul>
-      </div>
-
-      <div class="strategy-card">
-        <h3>住宿 · HOTEL</h3>
-        <p><strong>GRANBELL HOTEL OSAKA NAMBA</strong></p>
-        <p style="font-size:0.88rem;color:var(--ink-muted);margin:0;">
-          大阪難波格蘭貝爾酒店<br>
-          〒556-0011 大阪市浪速區難波中2-6-7
-        </p>
-      </div>
-
-      <div class="strategy-card">
-        <h3>航班 · FLIGHTS (JL)</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-family:system-ui,sans-serif;">
-          <div>
-            <strong>去程 JL812</strong><br>
-            <span style="font-size:0.84rem;color:var(--ink-muted);">08:20 TPE → 11:50 KIX</span>
-          </div>
-          <div>
-            <strong>回程 JL815</strong><br>
-            <span style="font-size:0.84rem;color:var(--ink-muted);">19:20 KIX → 21:35 TPE</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="strategy-card">
-        <h3>照片策略 · PHOTO RULE</h3>
-        <ul class="strategy-list">
-          <li>每天只求一張「像封面」的照片，不追求數量。</li>
-          <li>先拍大畫面，再拍手上物件：咖啡、票根、購物袋、機翼。</li>
-          <li>照片不只是紀錄，是這一天的節奏標記。</li>
-        </ul>
-      </div>
-
-      <div class="strategy-card">
-        <h3>應急規則 · FALLBACK</h3>
-        <ul class="strategy-list">
-          <li>太冷：先進咖啡店，不硬撐。</li>
-          <li>太累：取消下一個點，保留晚餐。</li>
-          <li>買不到：不回頭追貨，改成「下次再買」。</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modal">
-    <h3 class="modal-h" id="modal-title">Title</h3>
-    <div class="modal-sub" id="modal-sub">Subtitle</div>
-    <div class="modal-body" id="modal-body">Content</div>
-  </div>
-
-  <script>
-    const LOCAL_IMAGES = [
-      "./assets/day1.png?v=final1",
-      "./assets/day2.png?v=final1",
-      "./assets/day3.png?v=final1",
-      "./assets/day4.png?v=final1",
-      "./assets/day5.png?v=final1"
-    ];
-
-    const modalDetails = {
-      "TNF": "The North Face：先看你會不會立刻穿上。這趟買的是保暖與抗風，不是戰利品。",
-      "BEAMS": "BEAMS：適合找基本款外層、針織與質感單品。重點是版型，不是折扣本身。",
-      "EXCEL": "EXCEL：熱門色容易缺貨。先鎖定色號，看到就收，不浪費精神在反覆比較。",
-      "CANMAKE": "CANMAKE：小物與熱門新色看到就買。這類品項適合早上處理。",
-      "CPB": "CPB：高單價請留在精神穩、光線好時試色，不要在疲勞狀態下做決定。"
-    };
-
-    const itinerary = [
-      {
-        id: 0,
-        label: "DAY 01",
-        date: "2025/12/15 · Mon",
-        location: "KIX · Rinku Town",
-        eyebrow: "DAY 01 · ARRIVAL",
-        title: "Arrival & Winter Gear",
-        subtitle: "從工作模式登出，將第一天重點放在「冬裝補齊」與「調整節奏」。",
-        strategy: "臨空城核心任務：一次解決保暖外套與冬季配件（<strong>TNF</strong> / <strong>BEAMS</strong>），避免後面幾天為了買衣服分心。",
-        tags: ["WINTER GEAR", "RINKU OUTLET", "SLOW START"],
-        weatherCity: "Osaka",
-        photo: {
-          title: "臨空城的夜色與風",
-          desc: "第一天不追景點，只把身體調到可以慢慢走的速度。"
-        },
-        timeline: [
-          { time: "11:50", type: "ARRIVAL", title: "抵達關西機場 (JL812)", location: "KIX Terminal 1", desc: "下機後不急著進市區。先確認 ICOCA、網路與保暖程度。" },
-          { time: "13:30", type: "LUNCH", title: "Rinku Town 午餐", location: "Rinku Town", desc: "在海邊餐廳簡單用餐，看海，讓身體切換。" },
-          { time: "15:00", type: "SHOPPING", title: "冬裝戰略採購", location: "Rinku Premium Outlets", desc: "目標明確：外套、發熱衣、圍巾。優先順序：TNF、BEAMS、好走的鞋。", keywords: ["TNF", "BEAMS"] },
-          { time: "18:30", type: "MOVE", title: "前往難波飯店", location: "GRANBELL HOTEL OSAKA NAMBA", desc: "Check-in 放置戰利品，建立五天基地。" },
-          { time: "20:00", type: "DINNER", title: "自由軒 難波本店", location: "Jiyuken Namba", desc: "簡單吃名物咖哩，早點休息。" }
-        ]
-      },
-      {
-        id: 1,
-        label: "DAY 02",
-        date: "2025/12/16 · Tue",
-        location: "Umeda · Kitahama",
-        eyebrow: "DAY 02 · CITY STRATEGY",
-        title: "Strategic Shopping & City Vibe",
-        subtitle: "先解決清單，再慢慢走：上午處理缺貨風險高的品項，下午留給河岸與咖啡。",
-        strategy: "上午精神最好時去梅田處理熱門彩妝（<strong>EXCEL</strong> / <strong>CANMAKE</strong>），下午完全放鬆，不背購物袋逛街。",
-        tags: ["SCARCITY SHOPPING", "KITAHAMA CAFE", "RIVER WALK"],
-        weatherCity: "Osaka",
-        photo: {
-          title: "北濱：像歐洲的那段河",
-          desc: "你要的不是更多行程，而是更好的空白品質。"
-        },
-        timeline: [
-          { time: "10:00", type: "SHOPPING", title: "梅田戰略購物", location: "LUCUA Osaka", desc: "鎖定缺貨高風險：EXCEL、CANMAKE。專櫃試色趁光線好。", keywords: ["EXCEL", "CANMAKE", "CPB"] },
-          { time: "13:30", type: "CHILL", title: "北濱河畔咖啡", location: "GOKAN Kitahama", desc: "看著河川發呆，讓購物腦關機。" },
-          { time: "15:30", type: "WALK", title: "中崎町散步", location: "Nakazakicho", desc: "老屋改建小店穿梭。只看不買也可以。" },
-          { time: "18:30", type: "DINNER", title: "道頓堀經典", location: "Dotonbori", desc: "大阪燒或章魚燒隨意，回飯店吃也行。" }
-        ]
-      },
-      {
-        id: 2,
-        label: "DAY 03",
-        date: "2025/12/17 · Wed",
-        location: "Osaka Castle Park",
-        eyebrow: "DAY 03 · SLOW DAY",
-        title: "Castle Park & Winter Sun",
-        subtitle: "把時間拉長：不急著進天守閣，重點是公園本身的樹影與護城河。",
-        strategy: "今日是體力調節日。如果昨天高單價還沒買齊，下午可作為備案時間。",
-        tags: ["OSAKA CASTLE", "JO-TERRACE", "RELAX"],
-        weatherCity: "Osaka",
-        photo: {
-          title: "大阪城：影子比人群更好看",
-          desc: "把焦點放在石牆、樹影、護城河反光。"
-        },
-        timeline: [
-          { time: "10:00", type: "WALK", title: "大阪城公園散步", location: "Osaka Castle Park", desc: "沿外圍慢慢走，找張長椅曬冬日太陽。" },
-          { time: "12:30", type: "LUNCH", title: "Jo-Terrace Osaka", location: "JO-TERRACE OSAKA", desc: "避開團客時段，吃得舒服就好。" },
-          { time: "15:00", type: "BUFFER", title: "市區備案 / 休息", location: "Shinsaibashi", desc: "補貨或回飯店午睡，二選一。" },
-          { time: "18:30", type: "DINNER", title: "福太郎 大阪燒", location: "Fukutaro Namba", desc: "蔥燒必點。排隊也當作旅程節奏的一部分。" }
-        ]
-      },
-      {
-        id: 3,
-        label: "DAY 04",
-        date: "2025/12/18 · Thu",
-        location: "Nara",
-        eyebrow: "DAY 04 · NATURE",
-        title: "Nara Day Trip",
-        subtitle: "鹿與樹的一天：把購物慾望降到最低，只帶相機與好走的心情。",
-        strategy: "奈良不是打卡清單，而是一個讓時間變慢的地方。不購物、不趕路，順著鹿的步調走。",
-        tags: ["DEER", "OLD TOWN", "NO SHOPPING"],
-        weatherCity: "Nara",
-        photo: {
-          title: "古都：安靜到能聽見自己",
-          desc: "鹿不是景點，是節奏的提醒。"
-        },
-        timeline: [
-          { time: "09:30", type: "TRAIN", title: "前往奈良", location: "Kintetsu-Nara Station", desc: "車程約 40 分鐘，讓腦袋慢慢放鬆。" },
-          { time: "10:30", type: "COFFEE", title: "Rokumei Coffee", location: "ROKUMEI COFFEE CO. NARA", desc: "先一杯冠軍咖啡，才開始走路。" },
-          { time: "12:00", type: "LUNCH", title: "志津香 釜飯", location: "Kamameshi Shizuka", desc: "排太久就改奈良町定食，別硬等。" },
-          { time: "14:00", type: "WALK", title: "奈良公園 & 老街", location: "Naramachi", desc: "避開最擁擠區，往參道或老街走。" },
-          { time: "17:30", type: "RETURN", title: "返回大阪", location: "Namba", desc: "晚餐隨意，今晚早點休息。" }
-        ]
-      },
-      {
-        id: 4,
-        label: "DAY 05",
-        date: "2025/12/19 · Fri",
-        location: "Namba · KIX",
-        eyebrow: "DAY 05 · DEPARTURE",
-        title: "Departure & Rituals",
-        subtitle: "把旅程折成書籤：最後的咖啡與最後的採買。",
-        strategy: "回程日的重點是「不遺漏」與「儀式感」。窗外視角留給自己。",
-        tags: ["LAST COFFEE", "LAST BUY", "GOODBYE"],
-        weatherCity: "Osaka",
-        photo: {
-          title: "機翼：旅程收束的角度",
-          desc: "不是結束，是把記憶折好。"
-        },
-        timeline: [
-          { time: "10:00", type: "CHECKOUT", title: "退房 & 寄放行李", location: "GRANBELL HOTEL OSAKA NAMBA", desc: "檢查床底與插座，別遺漏充電器。" },
-          { time: "12:00", type: "LUNCH", title: "最後的大阪味", location: "Namba", desc: "吃還沒吃到的，或簡單飯糰都行。" },
-          { time: "14:30", type: "MOVE", title: "前往關西機場", location: "Kansai International Airport", desc: "預留充裕時間，讓心情不慌。" },
-          { time: "16:00", type: "RITUAL", title: "機場儀式", location: "KIX Terminal 1", desc: "最後一杯咖啡、最後一次窗外視角、準備登機。" }
-        ]
-      }
-    ];
-
-    const state = { activeDay: 0 };
-
-    const els = {
-      timeline: document.getElementById('timeline'),
-      nav: document.getElementById('nav-container'),
-      drawer: document.getElementById('drawer'),
-      backdrop: document.getElementById('backdrop'),
-      modal: document.getElementById('modal'),
-
-      date: document.getElementById('day-date'),
-      location: document.getElementById('day-location'),
-      title: document.getElementById('day-title'),
-      subtitle: document.getElementById('day-subtitle'),
-      strategy: document.getElementById('day-strategy'),
-      tags: document.getElementById('day-tags'),
-      weather: document.getElementById('weather-display'),
-      eyebrow: document.getElementById('day-eyebrow'),
-
-      photoImg: document.getElementById('photo-img'),
-      photoTitle: document.getElementById('photo-title'),
-      photoDesc: document.getElementById('photo-desc'),
-
-      editToggle: document.getElementById('edit-toggle'),
-      closeDrawer: document.getElementById('drawer-close')
-    };
-
-    function init() {
-      renderNav();
-      loadDay(0);
-
-      els.editToggle.addEventListener('click', toggleEdit);
-      els.backdrop.addEventListener('click', closeAllOverlays);
-      els.closeDrawer.addEventListener('click', closeAllOverlays);
-
-      document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('keyword-link')) {
-          openModal(e.target.innerText, e.target.dataset.key);
-        }
-      });
-    }
-
-    function renderNav() {
-      const frag = document.createDocumentFragment();
-
-      itinerary.forEach((day, idx) => {
-        const btn = document.createElement('button');
-        btn.className = `nav-btn ${idx === 0 ? 'active' : ''}`;
-        btn.innerHTML = `<span class="nav-btn-dot"></span><span>${day.label}</span>`;
-        btn.onclick = () => loadDay(idx);
-        frag.appendChild(btn);
-      });
-
-      const tripBtn = document.createElement('button');
-      tripBtn.className = 'nav-btn special';
-      tripBtn.innerHTML = `<span>TRIP</span>`;
-      tripBtn.onclick = openDrawer;
-      frag.appendChild(tripBtn);
-
-      els.nav.innerHTML = '';
-      els.nav.appendChild(frag);
-    }
-
-    function loadDay(idx) {
-      state.activeDay = idx;
-      const data = itinerary[idx];
-
-      document.querySelectorAll('.nav-btn').forEach((b, i) => {
-        if (i < itinerary.length) b.classList.toggle('active', i === idx);
-      });
-
-      animateUpdate(els.title, data.title);
-      animateUpdate(els.subtitle, data.subtitle);
-
-      els.date.innerText = data.date;
-      els.location.innerText = data.location;
-      els.eyebrow.innerText = data.eyebrow;
-      els.strategy.innerHTML = data.strategy;
-      els.tags.innerHTML = data.tags.map(t => `<span class="tag">${t}</span>`).join('');
-
-      els.photoImg.src = LOCAL_IMAGES[idx];
-      els.photoTitle.innerText = data.photo.title;
-      els.photoDesc.innerText = data.photo.desc;
-
-      renderTimeline(data.timeline);
-      fetchWeather(data.weatherCity);
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function renderTimeline(items) {
-      els.timeline.innerHTML = items.map(item => {
-        let desc = item.desc;
-
-        if (item.keywords) {
-          item.keywords.forEach(kw => {
-            if (modalDetails[kw]) {
-              const safe = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-              desc = desc.replace(new RegExp(safe, 'g'), `<span class="keyword-link" data-key="${kw}">${kw}</span>`);
-            }
-          });
-        }
-
-        return `
-          <div class="timeline-item">
-            <div class="timeline-time">
-              ${item.time}
-              <div class="timeline-dot"></div>
-              <div class="timeline-line"></div>
-            </div>
-            <article class="timeline-card">
-              <div class="timeline-header">
-                <div class="timeline-title" contenteditable="false">${item.title}</div>
-                <div class="timeline-type">${item.type}</div>
+      {/* Do Not */}
+      {day.doNot && day.doNot.length > 0 && (
+        <div className="section">
+          <div className="section-header" style={{ color: "var(--accent-warm)" }}>今天不要做</div>
+          <div className="section-body">
+            {day.doNot.map((d, i) => (
+              <div className="do-not-item" key={i}>
+                <span>✕</span>
+                <span>{d}</span>
               </div>
-              <div class="timeline-location">
-                📍 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.location)}" target="_blank" rel="noopener noreferrer">${item.location}</a>
-              </div>
-              <div class="timeline-body" contenteditable="false">${desc}</div>
-            </article>
+            ))}
           </div>
-        `;
-      }).join('');
-    }
+        </div>
+      )}
 
-    function animateUpdate(el, html) {
-      el.style.opacity = 0;
-      setTimeout(() => {
-        el.innerHTML = html;
-        el.style.opacity = 1;
-      }, 120);
-    }
+      {/* Backup */}
+      {day.backup && (
+        <div className="section">
+          <div className="section-header">備案</div>
+          <div className="section-body">
+            <div className="info-row">{day.backup}</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
-    function openDrawer() {
-      els.backdrop.classList.add('active');
-      els.drawer.classList.add('active');
-    }
+// ============================================================
+// ROUTE PAGE
+// ============================================================
+function RoutePage({ onSelectDay }) {
+  const [filter, setFilter] = useState("all");
 
-    function closeAllOverlays() {
-      els.backdrop.classList.remove('active');
-      els.drawer.classList.remove('active');
-      els.modal.classList.remove('active');
-    }
+  const cityOrder = ["paris", "prague", "cesky_krumlov", "salzburg", "budapest", "vienna"];
+  const typeFilters = [
+    { key: "all", label: "全部" },
+    { key: "move", label: "移動日" },
+    { key: "sightseeing", label: "景點日" },
+    { key: "daytrip", label: "Day Trip" },
+    { key: "buffer", label: "緩衝日" },
+  ];
 
-    function openModal(title, key) {
-      const content = modalDetails[key] || "暫無詳細策略資訊。";
-      document.getElementById('modal-title').innerText = title;
-      document.getElementById('modal-sub').innerText = "SHOPPING STRATEGY";
-      document.getElementById('modal-body').innerText = content;
+  const filtered = filter === "all" ? DAYS : DAYS.filter(d => d.type === filter || (filter === "sightseeing" && d.type === "arrival"));
 
-      els.backdrop.classList.add('active');
-      els.modal.classList.add('active');
-    }
+  const grouped = {};
+  filtered.forEach((day, origIdx) => {
+    const realIdx = DAYS.indexOf(day);
+    if (!grouped[day.city]) grouped[day.city] = [];
+    grouped[day.city].push({ ...day, realIndex: realIdx });
+  });
 
-    function toggleEdit() {
-      const isOn = els.editToggle.classList.toggle('active');
-      els.editToggle.innerText = isOn ? '✓ SAVE' : '✎ EDIT';
+  return (
+    <div className="fade-in">
+      <div className="page-header">
+        <span className="page-title">Route</span>
+        <span className="page-subtitle">30 天完整路線</span>
+      </div>
+      <div className="filter-row">
+        {typeFilters.map(f => (
+          <button key={f.key} className={`chip ${filter === f.key ? "active" : ""}`} onClick={() => setFilter(f.key)}>
+            {f.label}
+          </button>
+        ))}
+      </div>
+      <div className="route-list">
+        {cityOrder.map(cid => {
+          if (!grouped[cid]) return null;
+          const c = CITIES[cid];
+          return (
+            <div key={cid}>
+              <div className="route-city-header">
+                <span>{c.emoji}</span>
+                <span>{c.nameEn}</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--text-muted)", fontWeight: 400 }}>{c.name}・{c.nights} 晚</span>
+              </div>
+              {grouped[cid].map(day => {
+                const [, d] = day.date.split("/");
+                return (
+                  <div className="route-day-card" key={day.date} onClick={() => onSelectDay(day.realIndex)}>
+                    <div className="route-day-date">
+                      <div className="d">{d}</div>
+                      <div className="wd">（{day.weekday}）</div>
+                    </div>
+                    <div className="route-day-info">
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                        <span className="type-badge" style={{ background: getTypeColor(day.type), fontSize: 10, padding: "2px 6px" }}>
+                          {getTypeLabel(day.type)}
+                        </span>
+                      </div>
+                      <div className="route-day-title">{day.title}</div>
+                      <div className="route-day-summary">{day.highlights[0]}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
-      [els.eyebrow, els.title, els.subtitle, els.strategy].forEach(el => {
-        el.setAttribute('contenteditable', isOn ? 'true' : 'false');
-      });
+// ============================================================
+// MOVE PAGE
+// ============================================================
+function MovePage({ onSelectDay }) {
+  const moveDays = DAYS.map((d, i) => ({ ...d, realIndex: i })).filter(d => d.moveCard);
 
-      document.querySelectorAll('.timeline-title, .timeline-body').forEach(el => {
-        el.setAttribute('contenteditable', isOn ? 'true' : 'false');
-      });
-    }
+  return (
+    <div className="fade-in">
+      <div className="page-header">
+        <span className="page-title">Move</span>
+        <span className="page-subtitle">{moveDays.length} 個移動日</span>
+      </div>
+      {moveDays.map(day => {
+        const mc = day.moveCard;
+        return (
+          <div className="move-page-card" key={day.date} onClick={() => onSelectDay(day.realIndex)}>
+            <div className="move-page-header">
+              <span className="move-page-date">{day.date}</span>
+              <span className="move-page-route">{mc.from} → {mc.to}</span>
+            </div>
+            <div className="move-page-detail">
+              離開：{mc.leaveBy}<br />
+              交通：{mc.transport}<br />
+              入住：{mc.arrivalCheckin}
+              {mc.warning && <><br /><span style={{ color: "var(--accent-warm)" }}>⚠️ {mc.warning}</span></>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
-    function fetchWeather(city) {
-      els.weather.innerText = "Loading...";
-      setTimeout(() => {
-        const temps = { "Osaka": "8°C", "Nara": "6°C" };
-        els.weather.innerText = temps[city] || "10°C";
-      }, 350);
-    }
+// ============================================================
+// TRIP PAGE
+// ============================================================
+function TripPage() {
+  const [toast, setToast] = useState(null);
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 1500);
+  };
+  const handleCopy = (text) => {
+    copyText(text);
+    showToast("已複製");
+  };
 
-    init();
-  </script>
-</body>
-</html>
+  const accList = Object.values(ACCOMMODATIONS);
+  const transList = Object.values(TRANSPORTS);
+
+  return (
+    <div className="fade-in">
+      <Toast message={toast} />
+      <div className="page-header">
+        <span className="page-title">Trip</span>
+        <span className="page-subtitle">旅行小抄</span>
+      </div>
+
+      {/* Accommodations */}
+      <div className="trip-section">
+        <div className="trip-section-title">住宿總表</div>
+        {accList.map(a => (
+          <div className="accommodation-card" key={a.id}>
+            <div className="acc-name">
+              {CITIES[a.city]?.emoji} {a.name}
+            </div>
+            <div className="acc-detail">
+              {a.dates}・{ACCOMMODATIONS[a.id].nights} 晚<br />
+              {a.address}<br />
+              入住 {a.checkin}{a.checkout ? ` / 退房 ${a.checkout}` : ""}
+              {a.cost && <><br />{a.cost}</>}
+              {a.cancelPolicy && <><br /><span style={{ color: "var(--accent-warm)" }}>{a.cancelPolicy}</span></>}
+              {a.notes && <><br />{a.notes}</>}
+            </div>
+            <div style={{ marginTop: 8 }}>
+              <button className="map-btn" onClick={() => openMap(a.mapQuery)}>
+                <Icons.MapPin /> Maps
+              </button>
+              <button className="copy-btn" onClick={() => handleCopy(a.address)} style={{ marginLeft: 4 }}>
+                <Icons.Copy /> 地址
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Transports */}
+      <div className="trip-section">
+        <div className="trip-section-title">交通總表</div>
+        {transList.map(t => (
+          <div className="transport-card" key={t.id}>
+            <div className="transport-label">
+              {t.label}
+              <span className={`status-tag ${t.status.includes("未訂") ? "status-pending" : "status-booked"}`}>
+                {t.status.split("/")[0].trim()}
+              </span>
+            </div>
+            <div className="transport-detail">
+              {t.date} {t.departure} → {t.arrival}<br />
+              {t.departureStation} → {t.arrivalStation}
+              {t.seat && <><br />{t.seat}</>}
+              {t.notes && <><br />{t.notes}</>}
+              {t.cancelPolicy && <><br /><span style={{ color: "var(--accent-warm)" }}>{t.cancelPolicy}</span></>}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* English Templates */}
+      <div className="trip-section">
+        <div className="trip-section-title">英文訊息模板</div>
+        {ENGLISH_TEMPLATES.map((tpl, i) => (
+          <div className="template-card" key={i}>
+            <div className="template-label">{tpl.label}</div>
+            <div className="template-text">{tpl.text}</div>
+            <button className="copy-btn" onClick={() => handleCopy(tpl.text)}>
+              <Icons.Copy /> 一鍵複製
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Emergency */}
+      <div className="trip-section">
+        <div className="trip-section-title">緊急聯絡</div>
+        <div className="accommodation-card">
+          <div className="acc-detail" style={{ lineHeight: 2 }}>
+            歐洲緊急號碼：<strong>112</strong><br />
+            駐外館處：<strong>+886-800-085-095</strong><br />
+            旅平險：出發前填入保險公司電話
+          </div>
+        </div>
+      </div>
+
+      <div style={{ height: 40 }} />
+    </div>
+  );
+}
+
+// ============================================================
+// APP
+// ============================================================
+export default function App() {
+  const [tab, setTab] = useState("today");
+  const [dayIndex, setDayIndex] = useState(() => getTodayIndex(DAYS));
+  const [scrollKey, setScrollKey] = useState(0);
+
+  const mainRef = useCallback(node => {
+    if (node) node.scrollTop = 0;
+  }, [scrollKey]);
+
+  const goToDay = (idx) => {
+    setDayIndex(idx);
+    setTab("today");
+    setScrollKey(k => k + 1);
+  };
+
+  const handleTabChange = (t) => {
+    setTab(t);
+    setScrollKey(k => k + 1);
+  };
+
+  return (
+    <>
+      <style>{CSS}</style>
+      <div className="app">
+        <div className="main-content" ref={mainRef} key={scrollKey}>
+          {tab === "today" && <TodayPage dayIndex={dayIndex} setDayIndex={(i) => { setDayIndex(i); setScrollKey(k => k + 1); }} />}
+          {tab === "route" && <RoutePage onSelectDay={goToDay} />}
+          {tab === "move" && <MovePage onSelectDay={goToDay} />}
+          {tab === "trip" && <TripPage />}
+        </div>
+        <nav className="bottom-nav">
+          {[
+            { key: "today", label: "Today", Icon: Icons.Today },
+            { key: "route", label: "Route", Icon: Icons.Route },
+            { key: "move", label: "Move", Icon: Icons.Move },
+            { key: "trip", label: "Trip", Icon: Icons.Trip },
+          ].map(({ key, label, Icon }) => (
+            <button key={key} className={`nav-item ${tab === key ? "active" : ""}`} onClick={() => handleTabChange(key)}>
+              <Icon />
+              <span>{label}</span>
+            </button>
+          ))}
+        </nav>
+      </div>
+    </>
+  );
+}
