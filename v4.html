@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="no-referrer">
   <title>Osaka 5-Day Strategy · Slow Travel Journal</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,27 +15,22 @@
       --bg-body: #f4f1ea;
       --bg-card: #fdfaf6;
       --bg-hero: #efece5;
-      --bg-chip: #fffbf5;
-
       --ink-main: #332c26;
       --ink-muted: #7d7266;
       --ink-soft: #a89c8e;
       --ink-accent: #a67c52;
-
       --border-soft: #e6ded5;
       --border-strong: #cbbba8;
-
       --accent: #b08d55;
       --accent-soft: rgba(176, 141, 85, 0.12);
-
       --shadow-soft: 0 10px 30px rgba(66, 56, 46, 0.08);
-      --radius-card: 16px;
     }
 
     * { box-sizing: border-box; }
 
     html, body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background: var(--bg-body);
       font-family: "Noto Serif TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink-main);
@@ -42,10 +38,17 @@
       text-rendering: optimizeLegibility;
     }
 
-    body { min-height: 100vh; padding: 14px 10px 96px; }
+    body {
+      min-height: 100vh;
+      padding: 14px 10px 96px;
+    }
 
     @media (min-width: 768px) {
-      body { display: flex; justify-content: center; padding: 32px 20px 110px; }
+      body {
+        display: flex;
+        justify-content: center;
+        padding: 32px 20px 112px;
+      }
     }
 
     .app-shell {
@@ -56,48 +59,51 @@
       border-radius: 20px;
       border: 1px solid rgba(166, 124, 82, 0.2);
       box-shadow: var(--shadow-soft);
-      padding: 20px 16px 110px;
+      padding: 20px 16px 104px;
       position: relative;
       overflow: hidden;
     }
 
     @media (min-width: 768px) {
-      .app-shell { padding: 32px 32px 120px; }
+      .app-shell { padding: 32px 32px 116px; }
     }
 
-    /* subtle texture overlay */
-    .app-shell::before{
-      content:"";
-      position:absolute; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events:none;
-      z-index:0;
+    .app-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
     }
-    .app-inner{ position:relative; z-index:1; }
 
-    /* EDIT */
+    .app-inner { position: relative; z-index: 1; }
+
     .edit-toggle {
       position: absolute;
-      top: 18px; right: 18px;
+      top: 18px;
+      right: 18px;
       z-index: 50;
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.64);
       border: 1px solid var(--border-strong);
       padding: 5px 12px;
       border-radius: 999px;
       font-family: system-ui, sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--ink-muted);
       cursor: pointer;
       transition: all 0.2s ease;
       letter-spacing: 0.05em;
       backdrop-filter: blur(8px);
     }
+
     .edit-toggle.active {
       background: var(--accent);
       color: #fff;
       border-color: var(--accent);
     }
-    [contenteditable="true"]{
+
+    [contenteditable="true"] {
       outline: 1px dashed var(--accent);
       outline-offset: 2px;
       background: rgba(255, 255, 255, 0.55);
@@ -111,443 +117,532 @@
       text-transform: uppercase;
       color: var(--ink-soft);
       font-family: system-ui, sans-serif;
-      font-weight: 500;
+      font-weight: 600;
     }
-    h1,h2,h3,h4{ margin:0; font-weight:600; letter-spacing:0.02em; }
-    p{ margin:0 0 .8em; line-height:1.75; font-size:.95rem; color:var(--ink-main); }
 
-    /* HERO */
-    .hero{
+    h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: 0.02em; }
+    p { margin: 0 0 0.8em; line-height: 1.75; font-size: 0.95rem; color: var(--ink-main); }
+
+    .hero {
       background: var(--bg-hero);
       border-radius: 18px;
       padding: 24px 20px;
       margin-bottom: 24px;
       position: relative;
     }
-    .hero-grid{
-      display:grid;
+
+    .hero-grid {
+      display: grid;
       grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
       gap: 24px;
     }
-    @media (max-width: 700px){ .hero-grid{ grid-template-columns: 1fr; } }
 
-    .hero-title{ font-size: 1.62rem; margin-top: 8px; color: var(--ink-main); }
-    .hero-subtitle{ font-size: 0.92rem; color: var(--ink-muted); margin-top: 8px; line-height: 1.6; }
+    @media (max-width: 700px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
 
-    .hero-meta-row{
-      display:flex; flex-wrap:wrap; gap:12px;
-      margin-top:16px; align-items:center;
-      font-size:.85rem; color: var(--ink-muted);
+    .hero-title {
+      font-size: 1.62rem;
+      margin-top: 8px;
+      color: var(--ink-main);
+      transition: opacity 0.16s ease;
+    }
+
+    .hero-subtitle {
+      font-size: 0.92rem;
+      color: var(--ink-muted);
+      margin-top: 8px;
+      line-height: 1.6;
+      transition: opacity 0.16s ease;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
       font-family: system-ui, sans-serif;
     }
-    .pill{
-      display:inline-flex; align-items:center; gap:6px;
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       padding: 4px 12px;
       border-radius: 999px;
-      background:#fff;
+      background: #fff;
       border: 1px solid rgba(0,0,0,0.05);
-      font-size: .75rem;
+      font-size: 0.75rem;
       color: var(--ink-muted);
       box-shadow: 0 1px 2px rgba(0,0,0,0.03);
     }
-    .pill-icon{ width:6px; height:6px; border-radius:50%; background: var(--accent); }
-    .meta-item{ display:inline-flex; align-items:center; gap:6px; }
 
-    .hero-secondary{
-      background:#2c241b;
-      border-radius:14px;
-      padding:16px;
-      color:#eaddcf;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      box-shadow: 0 10px 20px rgba(44,36,27,.25);
-      min-height: 150px;
+    .pill-icon {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
     }
-    .hero-secondary h3{
-      font-size:.8rem;
-      text-transform:uppercase;
-      letter-spacing:.15em;
-      color:#bcaaa4;
-      margin-bottom:8px;
-      font-family:system-ui,sans-serif;
-      font-weight:600;
+
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .hero-secondary p{
-      color: rgba(234,221,207,.92);
-      font-size: .9rem;
+
+    .hero-secondary {
+      background: #2c241b;
+      border-radius: 14px;
+      padding: 16px;
+      color: #eaddcf;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 20px rgba(44, 36, 27, 0.25);
+      min-height: 154px;
+    }
+
+    .hero-secondary h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #bcaaa4;
+      margin-bottom: 8px;
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+    }
+
+    .hero-secondary p {
+      color: rgba(234, 221, 207, 0.92);
+      font-size: 0.9rem;
       margin-bottom: 12px;
       line-height: 1.6;
     }
-    .tags{ display:flex; flex-wrap:wrap; gap:6px; }
-    .tag{
-      padding:3px 8px;
-      border:1px solid rgba(255,255,255,.22);
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      padding: 3px 8px;
+      border: 1px solid rgba(255,255,255,0.22);
       border-radius: 5px;
-      font-size: .7rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: .06em;
-      color: rgba(255,255,255,.82);
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.84);
       font-family: system-ui, sans-serif;
     }
 
-    /* TIMELINE */
-    .timeline{ margin-top: 10px; padding-left: 10px; }
-    .timeline-item{
-      display:grid;
+    .timeline {
+      margin-top: 10px;
+      padding-left: 10px;
+    }
+
+    .timeline-item {
+      display: grid;
       grid-template-columns: 60px 1fr;
       gap: 16px;
       padding-bottom: 24px;
       position: relative;
     }
-    .timeline-time{
-      text-align:right;
-      font-size:.85rem;
+
+    .timeline-time {
+      text-align: right;
+      font-size: 0.85rem;
       color: var(--ink-muted);
       font-family: system-ui, sans-serif;
-      padding-top:2px;
+      padding-top: 2px;
       position: relative;
     }
-    .timeline-line{
-      position:absolute;
+
+    .timeline-line {
+      position: absolute;
       top: 24px;
       right: -8px;
       bottom: -16px;
-      width:1px;
-      background: rgba(166,124,82,.3);
-      z-index:0;
+      width: 1px;
+      background: rgba(166,124,82,0.3);
+      z-index: 0;
     }
-    .timeline-item:last-child .timeline-line{ display:none; }
-    .timeline-dot{
-      position:absolute;
-      top:6px;
-      right:-12px;
-      width:9px; height:9px;
-      border-radius:50%;
-      background:#fff;
-      border:2px solid var(--accent);
-      z-index:1;
+
+    .timeline-item:last-child .timeline-line { display: none; }
+
+    .timeline-dot {
+      position: absolute;
+      top: 6px;
+      right: -12px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--accent);
+      z-index: 1;
     }
-    .timeline-card{
-      background:#fff;
+
+    .timeline-card {
+      background: #fff;
       border: 1px solid var(--border-soft);
       border-radius: 12px;
       padding: 14px 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
-    .timeline-card:hover{
+
+    .timeline-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(0,0,0,0.06);
       border-color: var(--border-strong);
     }
-    .timeline-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:baseline;
-      margin-bottom:6px;
-      gap:10px;
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+      gap: 10px;
     }
-    .timeline-title{
+
+    .timeline-title {
       font-size: 1rem;
       color: var(--ink-main);
       font-weight: 600;
     }
-    .timeline-type{
-      font-size: .7rem;
+
+    .timeline-type {
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: .1em;
+      letter-spacing: 0.1em;
       color: var(--ink-soft);
       font-family: system-ui, sans-serif;
-      white-space:nowrap;
+      white-space: nowrap;
     }
-    .timeline-location{
-      font-size:.8rem;
+
+    .timeline-location {
+      font-size: 0.8rem;
       color: var(--ink-muted);
       margin-bottom: 8px;
-      display:flex;
-      align-items:center;
-      gap:4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
       font-family: system-ui, sans-serif;
     }
-    .timeline-location a{
+
+    .timeline-location a {
       color: var(--ink-accent);
-      text-decoration:none;
+      text-decoration: none;
       border-bottom: 1px dashed transparent;
     }
-    .timeline-location a:hover{ border-bottom-color: var(--ink-accent); }
-    .timeline-body{ font-size:.92rem; color: var(--ink-main); line-height:1.65; }
 
-    .keyword-link{
+    .timeline-location a:hover { border-bottom-color: var(--ink-accent); }
+
+    .timeline-body {
+      font-size: 0.92rem;
+      color: var(--ink-main);
+      line-height: 1.65;
+    }
+
+    .keyword-link {
       color: var(--ink-accent);
       font-weight: 600;
-      cursor:pointer;
-      border-bottom:1px dotted var(--ink-accent);
-      transition: background .2s;
+      cursor: pointer;
+      border-bottom: 1px dotted var(--ink-accent);
+      transition: background 0.2s;
       padding: 0 2px;
       border-radius: 3px;
     }
-    .keyword-link:hover{ background: var(--accent-soft); }
 
-    /* PHOTO BREAK (local image + film overlays) */
-    .photo-break{
+    .keyword-link:hover { background: var(--accent-soft); }
+
+    .photo-break {
       margin: 24px 0 10px;
-      background:#fff;
+      background: #fff;
       border: 1px solid var(--border-soft);
       border-radius: 12px;
-      overflow:hidden;
-      display:grid;
+      overflow: hidden;
+      display: grid;
       grid-template-columns: 1fr;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-    @media(min-width: 600px){ .photo-break{ grid-template-columns: 1.2fr 1fr; } }
 
-    .photo-wrapper{
-      position:relative;
-      min-height: 260px;
+    @media(min-width: 600px) {
+      .photo-break { grid-template-columns: 1.25fr 1fr; }
+    }
+
+    .photo-wrapper {
+      position: relative;
+      min-height: 300px;
       background: linear-gradient(135deg, #e8ded1 0%, #d8c6b3 100%);
-      overflow:hidden;
-      isolation:isolate;
+      overflow: hidden;
+      isolation: isolate;
     }
 
-    /* the image */
-    .photo-img{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit:cover;
-      filter: contrast(.92) saturate(.9) brightness(.98);
-      transform: scale(1.02);
+    @media(min-width: 768px) {
+      .photo-wrapper { min-height: 360px; }
     }
 
-    /* film grain */
-    .photo-wrapper::before{
-      content:"";
-      position:absolute; inset:-20%;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+    .photo-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: contrast(0.96) saturate(0.94) brightness(0.99);
+      transform: scale(1.01);
+    }
+
+    .photo-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.14'/%3E%3C/svg%3E");
       mix-blend-mode: overlay;
-      opacity:.55;
-      pointer-events:none;
-      z-index:2;
+      opacity: 0.38;
+      pointer-events: none;
+      z-index: 2;
       transform: rotate(2deg);
     }
 
-    /* window grid */
-    .photo-wrapper::after{
-      content:"";
-      position:absolute; inset:0;
+    .photo-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
       background:
-        linear-gradient(to right, rgba(255,255,255,.10) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.10) 1px, transparent 1px);
-      background-size: 120px 120px;
+        radial-gradient(circle at 20% 24%, rgba(255,230,190,.18) 0 17%, transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(255,255,255,.14) 0 12%, transparent 18%),
+        radial-gradient(ellipse at center, transparent 56%, rgba(0,0,0,.22) 100%);
+      pointer-events: none;
+      z-index: 3;
       mix-blend-mode: soft-light;
-      opacity: .25;
-      pointer-events:none;
-      z-index:3;
     }
 
-    /* bokeh + vignette layer */
-    .photo-overlay{
-      position:absolute; inset:0;
-      z-index:4;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 18% 22%, rgba(255,230,190,.35) 0 18%, transparent 22%),
-        radial-gradient(circle at 70% 28%, rgba(255,240,220,.22) 0 14%, transparent 18%),
-        radial-gradient(circle at 88% 62%, rgba(255,225,190,.18) 0 16%, transparent 20%),
-        radial-gradient(circle at 30% 80%, rgba(255,255,255,.10) 0 18%, transparent 22%),
-        radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.25) 100%);
-      mix-blend-mode: screen;
-      opacity: .9;
-    }
-
-    /* landmark silhouette */
-    .photo-silhouette{
-      position:absolute; inset:0;
-      z-index:5;
-      pointer-events:none;
-      opacity:.22;
-      mix-blend-mode: multiply;
-      background-repeat:no-repeat;
-      background-position: 92% 88%;
-      background-size: 40% auto;
-      filter: blur(.15px);
-    }
-
-    /* per-day silhouette SVGs */
-    .sil-day1{ /* street skyline */
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300'%3E%3Cpath d='M40 260V170h40v30h30v-70h50v40h30v-90h60v60h40v-40h40v100h30v-60h60v30h30v-50h50v120H40z' fill='%232c241b'/%3E%3Cpath d='M420 170c40-30 80-30 120 0' stroke='%232c241b' stroke-width='10' fill='none' opacity='.7'/%3E%3C/svg%3E");
-    }
-    .sil-day2{ /* river bridge */
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300'%3E%3Cpath d='M60 230c80-70 160-70 240 0s160 70 240 0' stroke='%232c241b' stroke-width='14' fill='none'/%3E%3Cpath d='M60 230v50h480v-50' fill='%232c241b' opacity='.65'/%3E%3Ccircle cx='120' cy='230' r='10' fill='%232c241b'/%3E%3Ccircle cx='480' cy='230' r='10' fill='%232c241b'/%3E%3C/svg%3E");
-    }
-    .sil-day3{ /* osaka castle */
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300'%3E%3Cpath d='M160 260v-80h40v-40h40v-30h40v30h40v40h40v80H160z' fill='%232c241b'/%3E%3Cpath d='M200 140h200l-20-30H220z' fill='%232c241b' opacity='.75'/%3E%3Cpath d='M240 110h120l-10-20h-100z' fill='%232c241b' opacity='.75'/%3E%3Cpath d='M300 70v-20' stroke='%232c241b' stroke-width='10'/%3E%3Ccircle cx='300' cy='45' r='10' fill='%232c241b'/%3E%3C/svg%3E");
-    }
-    .sil-day4{ /* deer */
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300'%3E%3Cpath d='M220 250c0-40 20-70 60-90 40-20 90-10 120 20 20 20 30 50 20 70-10 20-30 30-60 30h-50l-10 30h-40l-10-30h-30z' fill='%232c241b'/%3E%3Cpath d='M340 150c20-20 30-40 30-60 20 10 30 30 30 50' stroke='%232c241b' stroke-width='10' fill='none'/%3E%3Cpath d='M300 150c-10-30-20-50-40-70-20 20-20 40-10 60' stroke='%232c241b' stroke-width='10' fill='none'/%3E%3C/svg%3E");
-    }
-    .sil-day5{ /* wing */
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300'%3E%3Cpath d='M80 210c140-80 280-110 440-120-90 60-150 110-220 180-80-20-150-40-220-60z' fill='%232c241b'/%3E%3Cpath d='M320 175c30-20 60-30 110-45' stroke='%23fdfaf6' stroke-width='10' opacity='.25'/%3E%3C/svg%3E");
-    }
-
-    .photo-content{
+    .photo-content {
       padding: 24px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      background: rgba(255,255,255,0.78);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255,255,255,0.82);
       backdrop-filter: blur(10px);
     }
 
-    /* BOTTOM NAV */
-    .bottom-nav{
-      position: fixed; bottom:0; left:0; right:0;
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       background: rgba(253,250,246,0.95);
       border-top: 1px solid var(--border-soft);
       backdrop-filter: blur(12px);
       padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
       z-index: 100;
-      display:flex;
-      justify-content:center;
+      display: flex;
+      justify-content: center;
     }
-    .nav-scroll{
-      display:flex;
+
+    .nav-scroll {
+      display: flex;
       gap: 8px;
-      overflow-x:auto;
+      overflow-x: auto;
       padding-bottom: 4px;
       max-width: 100%;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
-    .nav-scroll::-webkit-scrollbar{ display:none; }
 
-    .nav-btn{
-      flex:0 0 auto;
+    .nav-scroll::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      flex: 0 0 auto;
       padding: 8px 14px;
       border-radius: 999px;
       background: transparent;
       border: 1px solid var(--border-strong);
       color: var(--ink-muted);
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .05em;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
       cursor: pointer;
-      transition: all .2s;
-      display:flex;
-      align-items:center;
-      gap:6px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       font-family: system-ui, sans-serif;
-      white-space:nowrap;
+      white-space: nowrap;
     }
-    .nav-btn-dot{
-      width:6px;height:6px;border-radius:50%;
+
+    .nav-btn-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
       background: transparent;
       border: 1px solid var(--ink-muted);
     }
-    .nav-btn.active{
+
+    .nav-btn.active {
       background: var(--ink-main);
-      color:#fff;
+      color: #fff;
       border-color: var(--ink-main);
     }
-    .nav-btn.active .nav-btn-dot{
+
+    .nav-btn.active .nav-btn-dot {
       background: var(--accent);
       border-color: var(--accent);
     }
-    .nav-btn.special{
+
+    .nav-btn.special {
       border-color: var(--accent);
       color: var(--ink-accent);
     }
-    .nav-btn.special.active{
+
+    .nav-btn.special.active {
       background: var(--accent);
-      color:#fff;
+      color: #fff;
     }
 
-    /* DRAWER + MODAL */
-    .backdrop{
-      position: fixed; inset:0;
+    .backdrop {
+      position: fixed;
+      inset: 0;
       background: rgba(30,25,20,0.42);
-      z-index:150;
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .25s;
+      z-index: 150;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
     }
-    .backdrop.active{ opacity:1; pointer-events:auto; }
 
-    .drawer{
-      position: fixed; bottom:0; left:0; right:0;
+    .backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       background: #fdfaf6;
       border-radius: 20px 20px 0 0;
-      max-height: 85vh;
+      max-height: 86vh;
       transform: translateY(105%);
-      transition: transform .28s cubic-bezier(.2,.8,.2,1);
-      z-index:160;
-      display:flex;
-      flex-direction:column;
-      box-shadow: 0 -10px 40px rgba(0,0,0,.2);
+      transition: transform 0.28s cubic-bezier(.2,.8,.2,1);
+      z-index: 160;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
     }
-    .drawer.active{ transform: translateY(0); }
 
-    .drawer-header{
+    .drawer.active { transform: translateY(0); }
+
+    .drawer-header {
       padding: 16px 20px;
       border-bottom: 1px solid var(--border-soft);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: rgba(253,250,246,0.98);
       border-radius: 20px 20px 0 0;
     }
-    .drawer-title{ font-size: 1rem; font-weight: 700; color: var(--ink-main); }
-    .drawer-close{ background:none; border:none; font-size: 1.5rem; color: var(--ink-muted); cursor:pointer; padding: 0 8px; }
-    .drawer-content{ padding: 20px; overflow-y:auto; }
 
-    .strategy-card{
-      background:#fff;
+    .drawer-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink-main);
+    }
+
+    .drawer-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--ink-muted);
+      cursor: pointer;
+      padding: 0 8px;
+    }
+
+    .drawer-content {
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .strategy-card {
+      background: #fff;
       border: 1px solid var(--border-soft);
       border-radius: 12px;
       padding: 16px;
       margin-bottom: 14px;
     }
-    .strategy-card h3{
-      font-size:.85rem;
+
+    .strategy-card h3 {
+      font-size: 0.85rem;
       color: var(--ink-accent);
       text-transform: uppercase;
-      letter-spacing:.1em;
+      letter-spacing: 0.1em;
       margin: 0 0 10px;
       font-family: system-ui, sans-serif;
       font-weight: 800;
     }
-    .strategy-card p{ font-size:.92rem; margin: 0 0 8px; }
-    .strategy-list{ padding-left: 20px; margin:0; }
-    .strategy-list li{ margin-bottom: 6px; font-size:.92rem; color: var(--ink-muted); line-height:1.55; }
 
-    .modal{
+    .strategy-card p {
+      font-size: 0.92rem;
+      margin: 0 0 8px;
+    }
+
+    .strategy-list {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .strategy-list li {
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+      color: var(--ink-muted);
+      line-height: 1.55;
+    }
+
+    .modal {
       position: fixed;
-      top: 50%; left: 50%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%) scale(.96);
       width: 92%;
       max-width: 420px;
-      background:#fff;
+      background: #fff;
       border-radius: 16px;
       padding: 22px;
-      z-index:170;
-      opacity:0;
-      pointer-events:none;
+      z-index: 170;
+      opacity: 0;
+      pointer-events: none;
       transition: all .18s ease;
       box-shadow: 0 20px 60px rgba(0,0,0,0.22);
     }
-    .backdrop.active .modal{ opacity:1; pointer-events:auto; transform: translate(-50%, -50%) scale(1); }
-    .modal-h{ font-size: 1.1rem; margin:0 0 4px; }
-    .modal-sub{
-      font-size:.75rem;
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-h {
+      font-size: 1.1rem;
+      margin: 0 0 4px;
+    }
+
+    .modal-sub {
+      font-size: 0.75rem;
       text-transform: uppercase;
       color: var(--ink-soft);
-      letter-spacing: .1em;
+      letter-spacing: 0.1em;
       margin-bottom: 14px;
       font-family: system-ui, sans-serif;
       font-weight: 700;
     }
-    .modal-body{
-      font-size: .95rem;
+
+    .modal-body {
+      font-size: 0.95rem;
       color: var(--ink-muted);
       line-height: 1.75;
     }
@@ -569,7 +664,7 @@
             <div class="hero-meta-row">
               <div class="pill"><span class="pill-icon"></span><span id="day-date">2025/12/15 · Mon</span></div>
               <div class="meta-item">📍 <span id="day-location">KIX · Rinku Town</span></div>
-              <div class="meta-item">🌡️ <span id="weather-display">Loading...</span></div>
+              <div class="meta-item">🌡️ <span id="weather-display">8°C</span></div>
             </div>
           </div>
 
@@ -587,9 +682,7 @@
 
       <div class="photo-break">
         <div class="photo-wrapper" id="photo-wrapper">
-          <img id="photo-img" class="photo-img" src="" alt="" />
-          <div class="photo-overlay"></div>
-          <div id="photo-silhouette" class="photo-silhouette sil-day1"></div>
+          <img id="photo-img" class="photo-img" src="./assets/day1.png?v=final1" alt="Day visual" loading="eager" decoding="async" />
         </div>
         <div class="photo-content">
           <div class="eyebrow">VIBE CHECK</div>
@@ -600,28 +693,28 @@
     </div>
   </div>
 
-  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-scroll" id="nav-container"></div>
   </nav>
 
-  <!-- Drawer -->
   <div class="backdrop" id="backdrop"></div>
+
   <div class="drawer" id="drawer">
     <div class="drawer-header">
       <div class="drawer-title">旅程小抄 · TRIP CHEAT SHEET</div>
       <button class="drawer-close" id="drawer-close">✕</button>
     </div>
+
     <div class="drawer-content">
       <div class="strategy-card">
         <h3>核心原則 · CORE PRINCIPLES</h3>
-        <p>慢半拍 × 有策略的城市旅行（你要的是精緻、不是塞滿）。</p>
+        <p>慢半拍 × 有策略的城市旅行。</p>
         <ul class="strategy-list">
-          <li><strong>Day 1 冬裝先決：</strong>外套、發熱衣、圍巾一次搞定。後面不背購物袋跑行程。</li>
-          <li><strong>Day 2 缺貨風險：</strong>彩妝 / 聯名看到就買，避免後悔回頭。</li>
-          <li><strong>Day 3 體力調節：</strong>大阪城是「光影＋樹影」，不是「打卡爬樓」。</li>
-          <li><strong>Day 4 奈良留白：</strong>不追點、不趕路，跟著鹿走，讓腦袋變安靜。</li>
-          <li><strong>Day 5 儀式感收尾：</strong>最後一杯咖啡＋最後一個窗外視角＝旅程書籤。</li>
+          <li><strong>Day 1 冬裝先決：</strong>先解決保暖，後面不為了衣服打斷行程。</li>
+          <li><strong>Day 2 缺貨風險：</strong>彩妝與聯名品早上處理，看到就買，不回頭賭庫存。</li>
+          <li><strong>Day 3 體力調節：</strong>大阪城不硬爬，重點是樹影、護城河與光線。</li>
+          <li><strong>Day 4 奈良留白：</strong>不趕點，不追清單，順著鹿與樹走。</li>
+          <li><strong>Day 5 儀式感：</strong>最後一杯咖啡、最後一個窗外視角，把旅程收好。</li>
         </ul>
       </div>
 
@@ -649,17 +742,25 @@
       </div>
 
       <div class="strategy-card">
-        <h3>當日微規則 · MICRO RULES</h3>
+        <h3>照片策略 · PHOTO RULE</h3>
         <ul class="strategy-list">
-          <li><strong>購物袋上限：</strong>一天最多 1 袋，超過就回飯店放。</li>
-          <li><strong>決策疲勞：</strong>午餐前不做「高單價」決策，留到精神最穩時。</li>
-          <li><strong>照片策略：</strong>每天只要 1 張「像封面」的照片就夠。</li>
+          <li>每天只求一張「像封面」的照片，不追求數量。</li>
+          <li>先拍大畫面，再拍手上物件：咖啡、票根、購物袋、機翼。</li>
+          <li>照片不只是紀錄，是這一天的節奏標記。</li>
+        </ul>
+      </div>
+
+      <div class="strategy-card">
+        <h3>應急規則 · FALLBACK</h3>
+        <ul class="strategy-list">
+          <li>太冷：先進咖啡店，不硬撐。</li>
+          <li>太累：取消下一個點，保留晚餐。</li>
+          <li>買不到：不回頭追貨，改成「下次再買」。</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- Modal -->
   <div class="modal" id="modal">
     <h3 class="modal-h" id="modal-title">Title</h3>
     <div class="modal-sub" id="modal-sub">Subtitle</div>
@@ -667,25 +768,22 @@
   </div>
 
   <script>
-    /* ========== LOCAL IMAGES (你 repo 的 assets) ========== */
     const LOCAL_IMAGES = [
-      "./assets/day1.png?v=10",
-      "./assets/day2.png?v=10",
-      "./assets/day3.png?v=10",
-      "./assets/day4.png?v=10",
-      "./assets/day5.png?v=10",
+      "./assets/day1.png?v=final1",
+      "./assets/day2.png?v=final1",
+      "./assets/day3.png?v=final1",
+      "./assets/day4.png?v=final1",
+      "./assets/day5.png?v=final1"
     ];
 
-    /* ========== MODAL DETAILS ========== */
     const modalDetails = {
-      "TNF": "臨空城買外套的重點：只看你會『立刻穿上』的保暖層，避免買到漂亮但不實穿。優先挑中長版或可抗風材質。",
-      "BEAMS": "Outlet 的 BEAMS 很適合買『質感基本款』。先抓版型（肩線/衣長），再決定顏色，避免衝動款。",
-      "EXCEL": "Excel 熱門色常缺貨。建議先鎖定色號，進店直接問，買到就收工。",
-      "CANMAKE": "重點是『當季新色』與小物。看到就買，別期待隔天還有。",
-      "CPB": "高單價請在『精神最好、光線最好』的時段試色。退稅流程要留時間。",
+      "TNF": "The North Face：先看你會不會立刻穿上。這趟買的是保暖與抗風，不是戰利品。",
+      "BEAMS": "BEAMS：適合找基本款外層、針織與質感單品。重點是版型，不是折扣本身。",
+      "EXCEL": "EXCEL：熱門色容易缺貨。先鎖定色號，看到就收，不浪費精神在反覆比較。",
+      "CANMAKE": "CANMAKE：小物與熱門新色看到就買。這類品項適合早上處理。",
+      "CPB": "CPB：高單價請留在精神穩、光線好時試色，不要在疲勞狀態下做決定。"
     };
 
-    /* ========== DATA MODEL (保留你 v4 的敘事結構) ========== */
     const itinerary = [
       {
         id: 0,
@@ -700,18 +798,14 @@
         weatherCity: "Osaka",
         photo: {
           title: "臨空城的夜色與風",
-          desc: "第一天不追景點，只把身體調到『可以慢慢走』的速度。",
-          silhouetteClass: "sil-day1"
+          desc: "第一天不追景點，只把身體調到可以慢慢走的速度。"
         },
         timeline: [
-          { time: "11:50", type: "ARRIVAL", title: "抵達關西機場 (JL812)", location: "KIX T1", desc: "下機後不急著進市區。先確認 ICOCA、網路與保暖程度。" },
+          { time: "11:50", type: "ARRIVAL", title: "抵達關西機場 (JL812)", location: "KIX Terminal 1", desc: "下機後不急著進市區。先確認 ICOCA、網路與保暖程度。" },
           { time: "13:30", type: "LUNCH", title: "Rinku Town 午餐", location: "Rinku Town", desc: "在海邊餐廳簡單用餐，看海，讓身體切換。" },
-          { time: "15:00", type: "SHOPPING", title: "冬裝戰略採購", location: "Rinku Premium Outlets",
-            desc: "目標明確：外套、發熱衣、圍巾。優先順序：1) TNF 2) BEAMS 3) 鞋（好走）。",
-            keywords: ["TNF","BEAMS"]
-          },
+          { time: "15:00", type: "SHOPPING", title: "冬裝戰略採購", location: "Rinku Premium Outlets", desc: "目標明確：外套、發熱衣、圍巾。優先順序：TNF、BEAMS、好走的鞋。", keywords: ["TNF", "BEAMS"] },
           { time: "18:30", type: "MOVE", title: "前往難波飯店", location: "GRANBELL HOTEL OSAKA NAMBA", desc: "Check-in 放置戰利品，建立五天基地。" },
-          { time: "20:00", type: "DINNER", title: "自由軒 難波本店", location: "自由軒 難波本店", desc: "簡單吃名物咖哩，早點休息。" }
+          { time: "20:00", type: "DINNER", title: "自由軒 難波本店", location: "Jiyuken Namba", desc: "簡單吃名物咖哩，早點休息。" }
         ]
       },
       {
@@ -722,22 +816,18 @@
         eyebrow: "DAY 02 · CITY STRATEGY",
         title: "Strategic Shopping & City Vibe",
         subtitle: "先解決清單，再慢慢走：上午處理缺貨風險高的品項，下午留給河岸與咖啡。",
-        strategy: "上午精神最好時去梅田處理熱門彩妝（<strong>EXCEL</strong>/<strong>CANMAKE</strong>），下午完全放鬆，不背購物袋逛街。",
+        strategy: "上午精神最好時去梅田處理熱門彩妝（<strong>EXCEL</strong> / <strong>CANMAKE</strong>），下午完全放鬆，不背購物袋逛街。",
         tags: ["SCARCITY SHOPPING", "KITAHAMA CAFE", "RIVER WALK"],
         weatherCity: "Osaka",
         photo: {
           title: "北濱：像歐洲的那段河",
-          desc: "你要的不是更多行程，而是更好的『空白品質』。",
-          silhouetteClass: "sil-day2"
+          desc: "你要的不是更多行程，而是更好的空白品質。"
         },
         timeline: [
-          { time: "10:00", type: "SHOPPING", title: "梅田戰略購物", location: "LUCUA / Grand Front",
-            desc: "鎖定缺貨高風險：EXCEL、CANMAKE。專櫃試色趁光線好。",
-            keywords: ["EXCEL","CANMAKE","CPB"]
-          },
-          { time: "13:30", type: "CHILL", title: "北濱河畔咖啡", location: "GOKAN 五感本館", desc: "看著河川發呆，讓購物腦關機。" },
+          { time: "10:00", type: "SHOPPING", title: "梅田戰略購物", location: "LUCUA Osaka", desc: "鎖定缺貨高風險：EXCEL、CANMAKE。專櫃試色趁光線好。", keywords: ["EXCEL", "CANMAKE", "CPB"] },
+          { time: "13:30", type: "CHILL", title: "北濱河畔咖啡", location: "GOKAN Kitahama", desc: "看著河川發呆，讓購物腦關機。" },
           { time: "15:30", type: "WALK", title: "中崎町散步", location: "Nakazakicho", desc: "老屋改建小店穿梭。只看不買也可以。" },
-          { time: "18:30", type: "DINNER", title: "道頓堀經典", location: "Dotonbori", desc: "大阪燒 / 章魚燒隨意，回飯店吃也行。" }
+          { time: "18:30", type: "DINNER", title: "道頓堀經典", location: "Dotonbori", desc: "大阪燒或章魚燒隨意，回飯店吃也行。" }
         ]
       },
       {
@@ -753,14 +843,13 @@
         weatherCity: "Osaka",
         photo: {
           title: "大阪城：影子比人群更好看",
-          desc: "把焦點放在石牆、樹影、護城河反光。",
-          silhouetteClass: "sil-day3"
+          desc: "把焦點放在石牆、樹影、護城河反光。"
         },
         timeline: [
           { time: "10:00", type: "WALK", title: "大阪城公園散步", location: "Osaka Castle Park", desc: "沿外圍慢慢走，找張長椅曬冬日太陽。" },
           { time: "12:30", type: "LUNCH", title: "Jo-Terrace Osaka", location: "JO-TERRACE OSAKA", desc: "避開團客時段，吃得舒服就好。" },
           { time: "15:00", type: "BUFFER", title: "市區備案 / 休息", location: "Shinsaibashi", desc: "補貨或回飯店午睡，二選一。" },
-          { time: "18:30", type: "DINNER", title: "福太郎 大阪燒", location: "福太郎 本店", desc: "蔥燒必點。排隊也當作旅程節奏的一部分。" }
+          { time: "18:30", type: "DINNER", title: "福太郎 大阪燒", location: "Fukutaro Namba", desc: "蔥燒必點。排隊也當作旅程節奏的一部分。" }
         ]
       },
       {
@@ -776,13 +865,12 @@
         weatherCity: "Nara",
         photo: {
           title: "古都：安靜到能聽見自己",
-          desc: "鹿不是景點，是節奏的提醒。",
-          silhouetteClass: "sil-day4"
+          desc: "鹿不是景點，是節奏的提醒。"
         },
         timeline: [
           { time: "09:30", type: "TRAIN", title: "前往奈良", location: "Kintetsu-Nara Station", desc: "車程約 40 分鐘，讓腦袋慢慢放鬆。" },
           { time: "10:30", type: "COFFEE", title: "Rokumei Coffee", location: "ROKUMEI COFFEE CO. NARA", desc: "先一杯冠軍咖啡，才開始走路。" },
-          { time: "12:00", type: "LUNCH", title: "志津香 釜飯", location: "釜飯 志津香 公園店", desc: "排太久就改奈良町定食，別硬等。" },
+          { time: "12:00", type: "LUNCH", title: "志津香 釜飯", location: "Kamameshi Shizuka", desc: "排太久就改奈良町定食，別硬等。" },
           { time: "14:00", type: "WALK", title: "奈良公園 & 老街", location: "Naramachi", desc: "避開最擁擠區，往參道或老街走。" },
           { time: "17:30", type: "RETURN", title: "返回大阪", location: "Namba", desc: "晚餐隨意，今晚早點休息。" }
         ]
@@ -800,20 +888,18 @@
         weatherCity: "Osaka",
         photo: {
           title: "機翼：旅程收束的角度",
-          desc: "不是結束，是把記憶折好。",
-          silhouetteClass: "sil-day5"
+          desc: "不是結束，是把記憶折好。"
         },
         timeline: [
           { time: "10:00", type: "CHECKOUT", title: "退房 & 寄放行李", location: "GRANBELL HOTEL OSAKA NAMBA", desc: "檢查床底與插座，別遺漏充電器。" },
           { time: "12:00", type: "LUNCH", title: "最後的大阪味", location: "Namba", desc: "吃還沒吃到的，或簡單飯糰都行。" },
           { time: "14:30", type: "MOVE", title: "前往關西機場", location: "Kansai International Airport", desc: "預留充裕時間，讓心情不慌。" },
-          { time: "16:00", type: "RITUAL", title: "機場儀式", location: "KIX", desc: "最後一杯咖啡＋最後一次窗外視角。" }
+          { time: "16:00", type: "RITUAL", title: "機場儀式", location: "KIX Terminal 1", desc: "最後一杯咖啡、最後一次窗外視角、準備登機。" }
         ]
       }
     ];
 
-    /* ========== STATE + ELEMENTS ========== */
-    const state = { activeDay: 0, weather: {} };
+    const state = { activeDay: 0 };
 
     const els = {
       timeline: document.getElementById('timeline'),
@@ -831,17 +917,15 @@
       weather: document.getElementById('weather-display'),
       eyebrow: document.getElementById('day-eyebrow'),
 
-      photoWrapper: document.getElementById('photo-wrapper'),
       photoImg: document.getElementById('photo-img'),
       photoTitle: document.getElementById('photo-title'),
       photoDesc: document.getElementById('photo-desc'),
-      photoSilhouette: document.getElementById('photo-silhouette'),
 
       editToggle: document.getElementById('edit-toggle'),
-      closeDrawer: document.getElementById('drawer-close'),
+      closeDrawer: document.getElementById('drawer-close')
     };
 
-    function init(){
+    function init() {
       renderNav();
       loadDay(0);
 
@@ -850,18 +934,18 @@
       els.closeDrawer.addEventListener('click', closeAllOverlays);
 
       document.addEventListener('click', (e) => {
-        if(e.target.classList.contains('keyword-link')){
+        if (e.target.classList.contains('keyword-link')) {
           openModal(e.target.innerText, e.target.dataset.key);
         }
       });
     }
 
-    function renderNav(){
+    function renderNav() {
       const frag = document.createDocumentFragment();
 
       itinerary.forEach((day, idx) => {
         const btn = document.createElement('button');
-        btn.className = `nav-btn ${idx===0?'active':''}`;
+        btn.className = `nav-btn ${idx === 0 ? 'active' : ''}`;
         btn.innerHTML = `<span class="nav-btn-dot"></span><span>${day.label}</span>`;
         btn.onclick = () => loadDay(idx);
         frag.appendChild(btn);
@@ -877,12 +961,12 @@
       els.nav.appendChild(frag);
     }
 
-    function loadDay(idx){
+    function loadDay(idx) {
       state.activeDay = idx;
       const data = itinerary[idx];
 
-      document.querySelectorAll('.nav-btn').forEach((b,i)=>{
-        if(i < itinerary.length) b.classList.toggle('active', i===idx);
+      document.querySelectorAll('.nav-btn').forEach((b, i) => {
+        if (i < itinerary.length) b.classList.toggle('active', i === idx);
       });
 
       animateUpdate(els.title, data.title);
@@ -891,16 +975,12 @@
       els.date.innerText = data.date;
       els.location.innerText = data.location;
       els.eyebrow.innerText = data.eyebrow;
-
       els.strategy.innerHTML = data.strategy;
-      els.tags.innerHTML = data.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+      els.tags.innerHTML = data.tags.map(t => `<span class="tag">${t}</span>`).join('');
 
-      /* Photo: local image + per-day silhouette */
       els.photoImg.src = LOCAL_IMAGES[idx];
       els.photoTitle.innerText = data.photo.title;
       els.photoDesc.innerText = data.photo.desc;
-
-      els.photoSilhouette.className = `photo-silhouette ${data.photo.silhouetteClass}`;
 
       renderTimeline(data.timeline);
       fetchWeather(data.weatherCity);
@@ -908,13 +988,13 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function renderTimeline(items){
-      els.timeline.innerHTML = items.map(item=>{
+    function renderTimeline(items) {
+      els.timeline.innerHTML = items.map(item => {
         let desc = item.desc;
 
-        if(item.keywords){
-          item.keywords.forEach(kw=>{
-            if(modalDetails[kw]){
+        if (item.keywords) {
+          item.keywords.forEach(kw => {
+            if (modalDetails[kw]) {
               const safe = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
               desc = desc.replace(new RegExp(safe, 'g'), `<span class="keyword-link" data-key="${kw}">${kw}</span>`);
             }
@@ -934,7 +1014,7 @@
                 <div class="timeline-type">${item.type}</div>
               </div>
               <div class="timeline-location">
-                📍 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.location)}" target="_blank">${item.location}</a>
+                📍 <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.location)}" target="_blank" rel="noopener noreferrer">${item.location}</a>
               </div>
               <div class="timeline-body" contenteditable="false">${desc}</div>
             </article>
@@ -943,56 +1023,54 @@
       }).join('');
     }
 
-    function animateUpdate(el, html){
+    function animateUpdate(el, html) {
       el.style.opacity = 0;
-      setTimeout(()=>{ el.innerHTML = html; el.style.opacity = 1; }, 140);
+      setTimeout(() => {
+        el.innerHTML = html;
+        el.style.opacity = 1;
+      }, 120);
     }
 
-    function openDrawer(){
+    function openDrawer() {
       els.backdrop.classList.add('active');
       els.drawer.classList.add('active');
     }
 
-    function closeAllOverlays(){
+    function closeAllOverlays() {
       els.backdrop.classList.remove('active');
       els.drawer.classList.remove('active');
-      els.modal.style.opacity = 0;
-      els.modal.style.pointerEvents = 'none';
+      els.modal.classList.remove('active');
     }
 
-    function openModal(title, key){
+    function openModal(title, key) {
       const content = modalDetails[key] || "暫無詳細策略資訊。";
       document.getElementById('modal-title').innerText = title;
       document.getElementById('modal-sub').innerText = "SHOPPING STRATEGY";
       document.getElementById('modal-body').innerText = content;
 
       els.backdrop.classList.add('active');
-      els.modal.style.opacity = 1;
-      els.modal.style.pointerEvents = 'auto';
+      els.modal.classList.add('active');
     }
 
-    function toggleEdit(){
+    function toggleEdit() {
       const isOn = els.editToggle.classList.toggle('active');
       els.editToggle.innerText = isOn ? '✓ SAVE' : '✎ EDIT';
 
-      // hero editable set (你要改內容時用)
-      [els.eyebrow, els.title, els.subtitle, els.strategy].forEach(el=>{
+      [els.eyebrow, els.title, els.subtitle, els.strategy].forEach(el => {
         el.setAttribute('contenteditable', isOn ? 'true' : 'false');
       });
 
-      // timeline editable
-      document.querySelectorAll('.timeline-title, .timeline-body').forEach(el=>{
+      document.querySelectorAll('.timeline-title, .timeline-body').forEach(el => {
         el.setAttribute('contenteditable', isOn ? 'true' : 'false');
       });
     }
 
-    async function fetchWeather(city){
-      // 你要穩定：先用 Mock，不打 API（你出門去機場用得到的就是穩）
+    function fetchWeather(city) {
       els.weather.innerText = "Loading...";
-      setTimeout(()=>{
-        const temps = { "Osaka":"8°C", "Nara":"6°C" };
+      setTimeout(() => {
+        const temps = { "Osaka": "8°C", "Nara": "6°C" };
         els.weather.innerText = temps[city] || "10°C";
-      }, 450);
+      }, 350);
     }
 
     init();
